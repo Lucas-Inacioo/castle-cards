@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=4 uid="uid://cesq67uqhe7y4"]
+[gd_scene load_steps=15 format=4 uid="uid://cesq67uqhe7y4"]
 
 [ext_resource type="Script" uid="uid://j26ihxg5u3dv" path="res://scripts/main.gd" id="1_ig7tw"]
 [ext_resource type="Texture2D" uid="uid://cbqmfg4bv8leq" path="res://arts/blocks.tres" id="2_0wfyh"]
 [ext_resource type="Script" uid="uid://cugpe7opfkil7" path="res://scenes/camera_movement.gd" id="2_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://c3eqr8wutwr6t" path="res://scenes/player_castle.tscn" id="5_tbgi4"]
 [ext_resource type="Texture2D" uid="uid://pfr2n6jbno3r" path="res://arts/Cards.png" id="5_tefeu"]
+[ext_resource type="Texture2D" uid="uid://cmqdmrted7qy2" path="res://arts/Moon.png" id="6_tefeu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sugp2"]
 texture = ExtResource("2_0wfyh")
@@ -123,6 +124,14 @@ region = Rect2(1, 73, 23, 34)
 atlas = ExtResource("5_tefeu")
 region = Rect2(1, 109, 23, 34)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_tefeu"]
+atlas = ExtResource("5_tefeu")
+region = Rect2(351, 1, 23, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ya4ey"]
+atlas = ExtResource("5_tefeu")
+region = Rect2(351, 1, 23, 34)
+
 [node name="Main" type="Node2D"]
 script = ExtResource("1_ig7tw")
 
@@ -142,43 +151,108 @@ position = Vector2(0, -1)
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="CardsContainer" type="MarginContainer" parent="UI"]
-anchors_preset = -1
+[node name="Control" type="Control" parent="UI"]
+custom_minimum_size = Vector2(640, 360)
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
-anchor_bottom = 0.22200002
-offset_bottom = -39.920006
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CardsContainer" type="MarginContainer" parent="UI/Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -320.0
+offset_right = 320.0
+offset_bottom = 84.0
+grow_horizontal = 2
 size_flags_horizontal = 6
 theme_override_constants/margin_top = 16
 
-[node name="CenterContainer" type="CenterContainer" parent="UI/CardsContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="UI/Control/CardsContainer"]
 custom_minimum_size = Vector2(640, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HboxContainer" type="HBoxContainer" parent="UI/CardsContainer/CenterContainer"]
+[node name="HboxContainer" type="HBoxContainer" parent="UI/Control/CardsContainer/CenterContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
 
-[node name="Card1" type="TextureRect" parent="UI/CardsContainer/CenterContainer/HboxContainer"]
+[node name="Card1" type="TextureRect" parent="UI/Control/CardsContainer/CenterContainer/HboxContainer"]
 custom_minimum_size = Vector2(46, 68)
 layout_mode = 2
 texture = SubResource("AtlasTexture_o6xl0")
 expand_mode = 1
 
-[node name="Card2" type="TextureRect" parent="UI/CardsContainer/CenterContainer/HboxContainer"]
+[node name="Card2" type="TextureRect" parent="UI/Control/CardsContainer/CenterContainer/HboxContainer"]
 custom_minimum_size = Vector2(46, 68)
 layout_mode = 2
 texture = SubResource("AtlasTexture_tipki")
 expand_mode = 1
 
-[node name="Card3" type="TextureRect" parent="UI/CardsContainer/CenterContainer/HboxContainer"]
+[node name="Card3" type="TextureRect" parent="UI/Control/CardsContainer/CenterContainer/HboxContainer"]
 custom_minimum_size = Vector2(46, 68)
 layout_mode = 2
 texture = SubResource("AtlasTexture_85g3d")
 expand_mode = 1
 
-[node name="Card4" type="TextureRect" parent="UI/CardsContainer/CenterContainer/HboxContainer"]
+[node name="Card4" type="TextureRect" parent="UI/Control/CardsContainer/CenterContainer/HboxContainer"]
 custom_minimum_size = Vector2(46, 68)
 layout_mode = 2
 texture = SubResource("AtlasTexture_choun")
+expand_mode = 1
+
+[node name="MoonContainer" type="MarginContainer" parent="UI/Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -80.0
+offset_bottom = 80.0
+grow_horizontal = 0
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+
+[node name="MoonButton" type="TextureButton" parent="UI/Control/MoonContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture_normal = ExtResource("6_tefeu")
+stretch_mode = 5
+
+[node name="SlotsContainer" type="MarginContainer" parent="UI/Control"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -320.0
+offset_top = -68.0
+offset_right = 320.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 6
+
+[node name="CenterContainer" type="CenterContainer" parent="UI/Control/SlotsContainer"]
+custom_minimum_size = Vector2(640, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HboxContainer" type="HBoxContainer" parent="UI/Control/SlotsContainer/CenterContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+
+[node name="CardSlotResource" type="TextureRect" parent="UI/Control/SlotsContainer/CenterContainer/HboxContainer"]
+custom_minimum_size = Vector2(46, 68)
+layout_mode = 2
+texture = SubResource("AtlasTexture_tefeu")
+expand_mode = 1
+
+[node name="CardSlotUpgrade" type="TextureRect" parent="UI/Control/SlotsContainer/CenterContainer/HboxContainer"]
+custom_minimum_size = Vector2(46, 68)
+layout_mode = 2
+texture = SubResource("AtlasTexture_ya4ey")
 expand_mode = 1
