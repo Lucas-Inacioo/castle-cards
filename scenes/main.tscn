@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://cesq67uqhe7y4"]
+[gd_scene load_steps=16 format=4 uid="uid://cesq67uqhe7y4"]
 
 [ext_resource type="Script" uid="uid://j26ihxg5u3dv" path="res://scripts/main.gd" id="1_ig7tw"]
 [ext_resource type="Texture2D" uid="uid://cbqmfg4bv8leq" path="res://arts/blocks.tres" id="2_0wfyh"]
@@ -108,6 +108,9 @@ tile_offset_axis = 1
 tile_size = Vector2i(16, 8)
 sources/0 = SubResource("TileSetAtlasSource_sugp2")
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tefeu"]
+bg_color = Color(0.36862746, 0.6156863, 0.88235295, 1)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_o6xl0"]
 atlas = ExtResource("5_tefeu")
 region = Rect2(1, 1, 23, 34)
@@ -159,6 +162,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="CardsContainer" type="MarginContainer" parent="UI/Control"]
 layout_mode = 1
@@ -177,29 +181,33 @@ custom_minimum_size = Vector2(640, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HboxContainer" type="HBoxContainer" parent="UI/Control/CardsContainer/CenterContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="UI/Control/CardsContainer/CenterContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tefeu")
+
+[node name="HboxContainer" type="HBoxContainer" parent="UI/Control/CardsContainer/CenterContainer/PanelContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
 
-[node name="Card1" type="TextureRect" parent="UI/Control/CardsContainer/CenterContainer/HboxContainer"]
+[node name="Card1" type="TextureRect" parent="UI/Control/CardsContainer/CenterContainer/PanelContainer/HboxContainer"]
 custom_minimum_size = Vector2(46, 68)
 layout_mode = 2
 texture = SubResource("AtlasTexture_o6xl0")
 expand_mode = 1
 
-[node name="Card2" type="TextureRect" parent="UI/Control/CardsContainer/CenterContainer/HboxContainer"]
+[node name="Card2" type="TextureRect" parent="UI/Control/CardsContainer/CenterContainer/PanelContainer/HboxContainer"]
 custom_minimum_size = Vector2(46, 68)
 layout_mode = 2
 texture = SubResource("AtlasTexture_tipki")
 expand_mode = 1
 
-[node name="Card3" type="TextureRect" parent="UI/Control/CardsContainer/CenterContainer/HboxContainer"]
+[node name="Card3" type="TextureRect" parent="UI/Control/CardsContainer/CenterContainer/PanelContainer/HboxContainer"]
 custom_minimum_size = Vector2(46, 68)
 layout_mode = 2
 texture = SubResource("AtlasTexture_85g3d")
 expand_mode = 1
 
-[node name="Card4" type="TextureRect" parent="UI/Control/CardsContainer/CenterContainer/HboxContainer"]
+[node name="Card4" type="TextureRect" parent="UI/Control/CardsContainer/CenterContainer/PanelContainer/HboxContainer"]
 custom_minimum_size = Vector2(46, 68)
 layout_mode = 2
 texture = SubResource("AtlasTexture_choun")
