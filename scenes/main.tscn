@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://cesq67uqhe7y4"]
+[gd_scene load_steps=27 format=4 uid="uid://cesq67uqhe7y4"]
 
 [ext_resource type="Script" uid="uid://j26ihxg5u3dv" path="res://scripts/main.gd" id="1_ig7tw"]
 [ext_resource type="Texture2D" uid="uid://cbqmfg4bv8leq" path="res://assets/blocks.tres" id="2_0wfyh"]
@@ -10,7 +10,9 @@
 [ext_resource type="Script" uid="uid://cdlaxu23bgm8" path="res://scripts/card_instance.gd" id="6_tipki"]
 [ext_resource type="Script" uid="uid://y2m66dbeexww" path="res://scripts/card_slot.gd" id="8_tipki"]
 [ext_resource type="Script" uid="uid://bo5aidl2nplrt" path="res://scripts/day_end_button.gd" id="9_choun"]
+[ext_resource type="Texture2D" uid="uid://dx40q28ygu1k5" path="res://assets/Heart.png" id="10_eb6dy"]
 [ext_resource type="Script" uid="uid://dcw2mh34ub2on" path="res://scripts/slots.gd" id="10_ya4ey"]
+[ext_resource type="Texture2D" uid="uid://cgs3bmdwkhfv0" path="res://assets/Numbers.png" id="11_trceg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sugp2"]
 texture = ExtResource("2_0wfyh")
@@ -113,12 +115,12 @@ tile_offset_axis = 1
 tile_size = Vector2i(16, 8)
 sources/0 = SubResource("TileSetAtlasSource_sugp2")
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_eb6dy"]
+atlas = ExtResource("5_tefeu")
+region = Rect2(1, 1, 23, 34)
+
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_choun"]
 load_path = "res://.godot/imported/Cards.png-a68bad7341bcb9bee82f69eb0fb9238c.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_eb6dy"]
-atlas = SubResource("CompressedTexture2D_choun")
-region = Rect2(1, 1, 23, 34)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_trceg"]
 atlas = SubResource("CompressedTexture2D_choun")
@@ -140,6 +142,14 @@ region = Rect2(1, 73, 23, 34)
 atlas = ExtResource("5_tefeu")
 region = Rect2(1, 109, 23, 34)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_jbj1t"]
+atlas = ExtResource("11_trceg")
+region = Rect2(0, 0, 7, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_muem4"]
+atlas = ExtResource("11_trceg")
+region = Rect2(40, 0, 7, 10)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_jkv2x"]
 atlas = ExtResource("5_tefeu")
 region = Rect2(251, 73, 23, 34)
@@ -150,8 +160,8 @@ region = Rect2(251, 109, 23, 34)
 
 [node name="Main" type="Node2D" node_paths=PackedStringArray("card_container", "slots_container")]
 script = ExtResource("1_ig7tw")
-card_container = NodePath("UI/Control/CardsContainer/CenterContainer/CardsAvailable")
-slots_container = NodePath("UI/Control/SlotsContainer/CenterContainer/Slots")
+card_container = NodePath("UI/Control/CardsMargin/CenterContainer/CardsAvailable")
+slots_container = NodePath("UI/Control/SlotsMargin/SlotsCenter/SlotsContainer")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 script = ExtResource("2_o6xl0")
@@ -178,7 +188,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="CardsContainer" type="MarginContainer" parent="UI/Control"]
+[node name="CardsMargin" type="MarginContainer" parent="UI/Control"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -190,17 +200,17 @@ grow_horizontal = 2
 size_flags_horizontal = 6
 theme_override_constants/margin_top = 16
 
-[node name="CenterContainer" type="CenterContainer" parent="UI/Control/CardsContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="UI/Control/CardsMargin"]
 custom_minimum_size = Vector2(640, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="CardsAvailable" type="HBoxContainer" parent="UI/Control/CardsContainer/CenterContainer"]
+[node name="CardsAvailable" type="HBoxContainer" parent="UI/Control/CardsMargin/CenterContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
 script = ExtResource("5_85g3d")
 
-[node name="ShieldCard" type="TextureRect" parent="UI/Control/CardsContainer/CenterContainer/CardsAvailable"]
+[node name="ShieldCard" type="TextureRect" parent="UI/Control/CardsMargin/CenterContainer/CardsAvailable"]
 custom_minimum_size = Vector2(46, 68)
 layout_mode = 2
 texture = SubResource("AtlasTexture_eb6dy")
@@ -208,14 +218,14 @@ expand_mode = 1
 script = ExtResource("6_tipki")
 card_type = 2
 
-[node name="PendentRounds1" type="TextureRect" parent="UI/Control/CardsContainer/CenterContainer/CardsAvailable/ShieldCard"]
+[node name="PendentRounds1" type="TextureRect" parent="UI/Control/CardsMargin/CenterContainer/CardsAvailable/ShieldCard"]
 visible = false
 custom_minimum_size = Vector2(46, 68)
 layout_mode = 0
 texture = SubResource("AtlasTexture_trceg")
 expand_mode = 1
 
-[node name="PendentRounds2" type="TextureRect" parent="UI/Control/CardsContainer/CenterContainer/CardsAvailable/ShieldCard"]
+[node name="PendentRounds2" type="TextureRect" parent="UI/Control/CardsMargin/CenterContainer/CardsAvailable/ShieldCard"]
 visible = false
 custom_minimum_size = Vector2(46, 68)
 layout_mode = 0
@@ -224,7 +234,7 @@ offset_bottom = 68.0
 texture = SubResource("AtlasTexture_a8y0u")
 expand_mode = 1
 
-[node name="HeartsCard" type="TextureRect" parent="UI/Control/CardsContainer/CenterContainer/CardsAvailable"]
+[node name="HeartsCard" type="TextureRect" parent="UI/Control/CardsMargin/CenterContainer/CardsAvailable"]
 custom_minimum_size = Vector2(46, 68)
 layout_mode = 2
 texture = SubResource("AtlasTexture_tipki")
@@ -232,14 +242,14 @@ expand_mode = 1
 script = ExtResource("6_tipki")
 card_type = 3
 
-[node name="PendentRounds1" type="TextureRect" parent="UI/Control/CardsContainer/CenterContainer/CardsAvailable/HeartsCard"]
+[node name="PendentRounds1" type="TextureRect" parent="UI/Control/CardsMargin/CenterContainer/CardsAvailable/HeartsCard"]
 visible = false
 custom_minimum_size = Vector2(46, 68)
 layout_mode = 0
 texture = SubResource("AtlasTexture_trceg")
 expand_mode = 1
 
-[node name="PendentRounds2" type="TextureRect" parent="UI/Control/CardsContainer/CenterContainer/CardsAvailable/HeartsCard"]
+[node name="PendentRounds2" type="TextureRect" parent="UI/Control/CardsMargin/CenterContainer/CardsAvailable/HeartsCard"]
 visible = false
 custom_minimum_size = Vector2(46, 68)
 layout_mode = 0
@@ -248,7 +258,7 @@ offset_bottom = 68.0
 texture = SubResource("AtlasTexture_a8y0u")
 expand_mode = 1
 
-[node name="SwordCard" type="TextureRect" parent="UI/Control/CardsContainer/CenterContainer/CardsAvailable"]
+[node name="SwordCard" type="TextureRect" parent="UI/Control/CardsMargin/CenterContainer/CardsAvailable"]
 custom_minimum_size = Vector2(46, 68)
 layout_mode = 2
 texture = SubResource("AtlasTexture_85g3d")
@@ -256,14 +266,14 @@ expand_mode = 1
 script = ExtResource("6_tipki")
 card_type = 1
 
-[node name="PendentRounds1" type="TextureRect" parent="UI/Control/CardsContainer/CenterContainer/CardsAvailable/SwordCard"]
+[node name="PendentRounds1" type="TextureRect" parent="UI/Control/CardsMargin/CenterContainer/CardsAvailable/SwordCard"]
 visible = false
 custom_minimum_size = Vector2(46, 68)
 layout_mode = 0
 texture = SubResource("AtlasTexture_trceg")
 expand_mode = 1
 
-[node name="PendentRounds2" type="TextureRect" parent="UI/Control/CardsContainer/CenterContainer/CardsAvailable/SwordCard"]
+[node name="PendentRounds2" type="TextureRect" parent="UI/Control/CardsMargin/CenterContainer/CardsAvailable/SwordCard"]
 visible = false
 custom_minimum_size = Vector2(46, 68)
 layout_mode = 0
@@ -272,7 +282,7 @@ offset_bottom = 68.0
 texture = SubResource("AtlasTexture_a8y0u")
 expand_mode = 1
 
-[node name="PersonCard" type="TextureRect" parent="UI/Control/CardsContainer/CenterContainer/CardsAvailable"]
+[node name="PersonCard" type="TextureRect" parent="UI/Control/CardsMargin/CenterContainer/CardsAvailable"]
 custom_minimum_size = Vector2(46, 68)
 layout_mode = 2
 texture = SubResource("AtlasTexture_choun")
@@ -280,14 +290,14 @@ expand_mode = 1
 script = ExtResource("6_tipki")
 card_type = 4
 
-[node name="PendentRounds1" type="TextureRect" parent="UI/Control/CardsContainer/CenterContainer/CardsAvailable/PersonCard"]
+[node name="PendentRounds1" type="TextureRect" parent="UI/Control/CardsMargin/CenterContainer/CardsAvailable/PersonCard"]
 visible = false
 custom_minimum_size = Vector2(46, 68)
 layout_mode = 0
 texture = SubResource("AtlasTexture_trceg")
 expand_mode = 1
 
-[node name="PendentRounds2" type="TextureRect" parent="UI/Control/CardsContainer/CenterContainer/CardsAvailable/PersonCard"]
+[node name="PendentRounds2" type="TextureRect" parent="UI/Control/CardsMargin/CenterContainer/CardsAvailable/PersonCard"]
 visible = false
 custom_minimum_size = Vector2(46, 68)
 layout_mode = 0
@@ -296,7 +306,7 @@ offset_bottom = 68.0
 texture = SubResource("AtlasTexture_a8y0u")
 expand_mode = 1
 
-[node name="MoonContainer" type="MarginContainer" parent="UI/Control"]
+[node name="MoonMargin" type="MarginContainer" parent="UI/Control"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -307,14 +317,47 @@ grow_horizontal = 0
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 
-[node name="MoonButton" type="TextureButton" parent="UI/Control/MoonContainer"]
-custom_minimum_size = Vector2(64, 64)
+[node name="MoonButton" type="TextureButton" parent="UI/Control/MoonMargin"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
+size_flags_vertical = 4
 texture_normal = ExtResource("6_tefeu")
-stretch_mode = 5
+stretch_mode = 4
 script = ExtResource("9_choun")
 
-[node name="SlotsContainer" type="MarginContainer" parent="UI/Control"]
+[node name="HealthMargin" type="MarginContainer" parent="UI/Control"]
+layout_mode = 1
+offset_right = 80.0
+offset_bottom = 80.0
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+
+[node name="HealthHbox" type="HBoxContainer" parent="UI/Control/HealthMargin"]
+layout_mode = 2
+
+[node name="HealthIcon" type="TextureRect" parent="UI/Control/HealthMargin/HealthHbox"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("10_eb6dy")
+expand_mode = 1
+
+[node name="Number1" type="TextureRect" parent="UI/Control/HealthMargin/HealthHbox"]
+custom_minimum_size = Vector2(14, 20)
+layout_mode = 2
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_jbj1t")
+expand_mode = 1
+
+[node name="Number2" type="TextureRect" parent="UI/Control/HealthMargin/HealthHbox"]
+custom_minimum_size = Vector2(14, 20)
+layout_mode = 2
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_muem4")
+expand_mode = 1
+
+[node name="SlotsMargin" type="MarginContainer" parent="UI/Control"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -329,24 +372,24 @@ grow_vertical = 0
 size_flags_horizontal = 6
 theme_override_constants/margin_bottom = 16
 
-[node name="CenterContainer" type="CenterContainer" parent="UI/Control/SlotsContainer"]
+[node name="SlotsCenter" type="CenterContainer" parent="UI/Control/SlotsMargin"]
 custom_minimum_size = Vector2(640, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Slots" type="HBoxContainer" parent="UI/Control/SlotsContainer/CenterContainer"]
+[node name="SlotsContainer" type="HBoxContainer" parent="UI/Control/SlotsMargin/SlotsCenter"]
 layout_mode = 2
 size_flags_horizontal = 6
 script = ExtResource("10_ya4ey")
 
-[node name="CardSlotResource" type="TextureRect" parent="UI/Control/SlotsContainer/CenterContainer/Slots"]
+[node name="CardSlotResource" type="TextureRect" parent="UI/Control/SlotsMargin/SlotsCenter/SlotsContainer"]
 custom_minimum_size = Vector2(46, 68)
 layout_mode = 2
 texture = SubResource("AtlasTexture_jkv2x")
 expand_mode = 1
 script = ExtResource("8_tipki")
 
-[node name="CardSlotUpgrade" type="TextureRect" parent="UI/Control/SlotsContainer/CenterContainer/Slots"]
+[node name="CardSlotUpgrade" type="TextureRect" parent="UI/Control/SlotsMargin/SlotsCenter/SlotsContainer"]
 custom_minimum_size = Vector2(46, 68)
 layout_mode = 2
 texture = SubResource("AtlasTexture_ya4ey")
@@ -354,4 +397,4 @@ expand_mode = 1
 script = ExtResource("8_tipki")
 slot_type = 1
 
-[connection signal="pressed" from="UI/Control/MoonContainer/MoonButton" to="." method="_end_day_button_pressed"]
+[connection signal="pressed" from="UI/Control/MoonMargin/MoonButton" to="." method="_end_day_button_pressed"]

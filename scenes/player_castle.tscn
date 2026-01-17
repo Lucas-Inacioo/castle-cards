@@ -1,11 +1,6 @@
-[gd_scene load_steps=10 format=4 uid="uid://c3eqr8wutwr6t"]
+[gd_scene load_steps=4 format=4 uid="uid://c3eqr8wutwr6t"]
 
 [ext_resource type="Texture2D" uid="uid://cbqmfg4bv8leq" path="res://assets/blocks.tres" id="1_juhgo"]
-[ext_resource type="Script" uid="uid://cd7b86e5l0ahe" path="res://scripts/player_castle.gd" id="1_pq3iw"]
-[ext_resource type="Texture2D" uid="uid://lm816he2m336" path="res://assets/Shield.png" id="2_p7ca1"]
-[ext_resource type="Texture2D" uid="uid://dx40q28ygu1k5" path="res://assets/Heart.png" id="3_pq3iw"]
-[ext_resource type="Texture2D" uid="uid://gpq1387ux8bh" path="res://assets/Sword.png" id="4_h406e"]
-[ext_resource type="Texture2D" uid="uid://dus5kesdfqjot" path="res://assets/Person.png" id="5_8pjt8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gt7f7"]
 texture = ExtResource("1_juhgo")
@@ -109,23 +104,7 @@ tile_offset_axis = 1
 tile_size = Vector2i(16, 8)
 sources/0 = SubResource("TileSetAtlasSource_gt7f7")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wo57w"]
-bg_color = Color(0.3702263, 0.6161929, 0.8809675, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.8, 0.14509805, 0.8, 1)
-corner_radius_top_left = 7
-corner_radius_top_right = 7
-corner_radius_bottom_right = 7
-corner_radius_bottom_left = 7
-anti_aliasing = false
-
-[node name="PlayerCastle" type="Node2D" node_paths=PackedStringArray("hover_timer", "castle_stats_popup")]
-script = ExtResource("1_pq3iw")
-hover_timer = NodePath("Tilemap/HoverArea/HoverTimer")
-castle_stats_popup = NodePath("CastleStatsPopup")
+[node name="PlayerCastle" type="Node2D"]
 
 [node name="Tilemap" type="Node2D" parent="."]
 
@@ -158,70 +137,4 @@ z_index = 5
 tile_map_data = PackedByteArray("AAABAP//AAAAAAYAAAABAP3/AAAAAAYAAAABAPv/AAAAAAYAAAABAPn/AAAAAAYAAAABAPf/AAAAAAYAAAD///f/AAAAAAYAAAD9//f/AAAAAAYAAAD7//f/AAAAAAYAAAD5//f/AAAAAAYAAAD5//n/AAAAAAYAAAD5//v/AAAAAAYAAAD5//3/AAAAAAYAAAD5////AAAAAAYAAAD7////AAAAAAYAAAD9////AAAAAAYAAAD/////AAAAAAYAAAABAP7/AAABAAYAAAABAPz/AAABAAYAAAABAPr/AAABAAYAAAABAPj/AAABAAYAAAAAAPf/AAABAAYAAAD+//f/AAABAAYAAAD8//f/AAABAAYAAAD6//f/AAABAAYAAAD5//j/AAABAAYAAAD5//r/AAABAAYAAAD5//z/AAABAAYAAAD5//7/AAABAAYAAAD6////AAABAAYAAAD8////AAABAAYAAAD+////AAABAAYAAAAAAP//AAABAAYAAAA=")
 tile_set = SubResource("TileSet_lw7r8")
 
-[node name="HoverArea" type="Area2D" parent="Tilemap"]
-visible = false
-z_index = 10
-disable_mode = 1
-
-[node name="HoverCollision" type="CollisionPolygon2D" parent="Tilemap/HoverArea"]
-polygon = PackedVector2Array(-49, 16, -48, -33, 23, -69, 95, -33, 95, 16, 25, 52)
-
-[node name="HoverTimer" type="Timer" parent="Tilemap/HoverArea"]
-wait_time = 0.5
-one_shot = true
-
-[node name="CastleStatsPopup" type="PanelContainer" parent="."]
-visible = false
-z_index = 10
-offset_left = 73.0
-offset_top = -77.0
-offset_right = 113.0
-offset_bottom = 1.0
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_wo57w")
-
-[node name="AllStatsContainer" type="VBoxContainer" parent="CastleStatsPopup"]
-z_index = 10
-layout_mode = 2
-mouse_filter = 2
-
-[node name="ShieldStatus" type="HBoxContainer" parent="CastleStatsPopup/AllStatsContainer"]
-layout_mode = 2
-mouse_filter = 2
-
-[node name="ShieldsIcon" type="TextureRect" parent="CastleStatsPopup/AllStatsContainer/ShieldStatus"]
-layout_mode = 2
-mouse_filter = 2
-texture = ExtResource("2_p7ca1")
-
-[node name="LifeStatus" type="HBoxContainer" parent="CastleStatsPopup/AllStatsContainer"]
-layout_mode = 2
-mouse_filter = 2
-
-[node name="LifeIcon" type="TextureRect" parent="CastleStatsPopup/AllStatsContainer/LifeStatus"]
-layout_mode = 2
-mouse_filter = 2
-texture = ExtResource("3_pq3iw")
-
-[node name="DamageStatus" type="HBoxContainer" parent="CastleStatsPopup/AllStatsContainer"]
-layout_mode = 2
-mouse_filter = 2
-
-[node name="SwordIcon" type="TextureRect" parent="CastleStatsPopup/AllStatsContainer/DamageStatus"]
-layout_mode = 2
-mouse_filter = 2
-texture = ExtResource("4_h406e")
-
-[node name="PopulationStatus" type="HBoxContainer" parent="CastleStatsPopup/AllStatsContainer"]
-layout_mode = 2
-mouse_filter = 2
-
-[node name="PersonIcon" type="TextureRect" parent="CastleStatsPopup/AllStatsContainer/PopulationStatus"]
-layout_mode = 2
-mouse_filter = 2
-texture = ExtResource("5_8pjt8")
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[connection signal="mouse_entered" from="Tilemap/HoverArea" to="." method="mouse_entered_hover"]
-[connection signal="mouse_exited" from="Tilemap/HoverArea" to="." method="mouse_exited_hover"]
