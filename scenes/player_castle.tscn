@@ -166,7 +166,7 @@ disable_mode = 1
 polygon = PackedVector2Array(-49, 16, -48, -33, 23, -69, 95, -33, 95, 16, 25, 52)
 
 [node name="HoverTimer" type="Timer" parent="Tilemap/HoverArea"]
-wait_time = 1.2999999999999998
+wait_time = 0.5
 one_shot = true
 
 [node name="CastleStatsPopup" type="PanelContainer" parent="."]

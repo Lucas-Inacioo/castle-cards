@@ -10,12 +10,12 @@ const ZOOM_STEP := 0.4
 func _input(event: InputEvent) -> void:
 	# Zoom in and out with the mouse wheel
 	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_WHEEL_DOWN and event.pressed:
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP and event.pressed:
 			# Zoom must be pixel perfect
 			zoom += Vector2(ZOOM_STEP, ZOOM_STEP)
 			if zoom.x > MAX_ZOOM_OUT:
 				zoom = Vector2(MAX_ZOOM_OUT, MAX_ZOOM_OUT)
-		elif event.button_index == MOUSE_BUTTON_WHEEL_UP and event.pressed:
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN and event.pressed:
 			zoom -= Vector2(ZOOM_STEP, ZOOM_STEP)
 			if zoom.x < MAX_ZOOM_IN:
 				zoom = Vector2(MAX_ZOOM_IN, MAX_ZOOM_IN)

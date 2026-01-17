@@ -6,6 +6,15 @@ func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 	if not data.has("card_type") || not data.has("texture"):
 		return false
 
+	var card_type: GameData.CardType = data["card_type"]
+	match slot_type:
+		GameData.SlotType.RESOURCE:
+			if GameData.current_upgrade_card == card_type:
+				return false
+		GameData.SlotType.UPGRADE:
+			if GameData.current_resource_card == card_type:
+				return false
+
 	return true
 
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
