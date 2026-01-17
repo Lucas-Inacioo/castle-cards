@@ -1,9 +1,10 @@
-[gd_scene load_steps=27 format=4 uid="uid://cesq67uqhe7y4"]
+[gd_scene load_steps=28 format=4 uid="uid://cesq67uqhe7y4"]
 
 [ext_resource type="Script" uid="uid://j26ihxg5u3dv" path="res://scripts/main.gd" id="1_ig7tw"]
 [ext_resource type="Texture2D" uid="uid://cbqmfg4bv8leq" path="res://assets/blocks.tres" id="2_0wfyh"]
 [ext_resource type="Script" uid="uid://dy25e6tep5878" path="res://scripts/camera_movement.gd" id="2_o6xl0"]
 [ext_resource type="Script" uid="uid://dkrfncih148n2" path="res://scripts/cards_container.gd" id="5_85g3d"]
+[ext_resource type="PackedScene" uid="uid://ctm3p6km8n28v" path="res://scenes/enemy_1.tscn" id="5_a8y0u"]
 [ext_resource type="PackedScene" uid="uid://c3eqr8wutwr6t" path="res://scenes/player_castle.tscn" id="5_tbgi4"]
 [ext_resource type="Texture2D" uid="uid://pfr2n6jbno3r" path="res://assets/Cards.png" id="5_tefeu"]
 [ext_resource type="Texture2D" uid="uid://cmqdmrted7qy2" path="res://assets/Moon.png" id="6_tefeu"]
@@ -175,6 +176,9 @@ tile_set = SubResource("TileSet_jyhfs")
 
 [node name="PlayerCastle" parent="TileSet" instance=ExtResource("5_tbgi4")]
 position = Vector2(0, -1)
+
+[node name="EnemyVariant1" parent="TileSet" instance=ExtResource("5_a8y0u")]
+position = Vector2(-179, 6)
 
 [node name="UI" type="CanvasLayer" parent="."]
 

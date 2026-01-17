@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cbqmfg4bv8leq" path="res://assets/blocks.tres" id="1_juhgo"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gt7f7"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_juhgo"]
 texture = ExtResource("1_juhgo")
 texture_region_size = Vector2i(18, 18)
 0:0/0 = 0
@@ -102,7 +102,7 @@ tile_shape = 1
 tile_layout = 5
 tile_offset_axis = 1
 tile_size = Vector2i(16, 8)
-sources/0 = SubResource("TileSetAtlasSource_gt7f7")
+sources/0 = SubResource("TileSetAtlasSource_juhgo")
 
 [node name="PlayerCastle" type="Node2D"]
 
@@ -136,5 +136,3 @@ tile_set = SubResource("TileSet_lw7r8")
 z_index = 5
 tile_map_data = PackedByteArray("AAABAP//AAAAAAYAAAABAP3/AAAAAAYAAAABAPv/AAAAAAYAAAABAPn/AAAAAAYAAAABAPf/AAAAAAYAAAD///f/AAAAAAYAAAD9//f/AAAAAAYAAAD7//f/AAAAAAYAAAD5//f/AAAAAAYAAAD5//n/AAAAAAYAAAD5//v/AAAAAAYAAAD5//3/AAAAAAYAAAD5////AAAAAAYAAAD7////AAAAAAYAAAD9////AAAAAAYAAAD/////AAAAAAYAAAABAP7/AAABAAYAAAABAPz/AAABAAYAAAABAPr/AAABAAYAAAABAPj/AAABAAYAAAAAAPf/AAABAAYAAAD+//f/AAABAAYAAAD8//f/AAABAAYAAAD6//f/AAABAAYAAAD5//j/AAABAAYAAAD5//r/AAABAAYAAAD5//z/AAABAAYAAAD5//7/AAABAAYAAAD6////AAABAAYAAAD8////AAABAAYAAAD+////AAABAAYAAAAAAP//AAABAAYAAAA=")
 tile_set = SubResource("TileSet_lw7r8")
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
