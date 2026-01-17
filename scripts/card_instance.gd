@@ -20,3 +20,13 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
   }
 
   return return_data
+
+func update_card_display() -> void:
+  var card_status = GameData.cards_status[card_type]
+  var upgrade_level = card_status.upgrade_level
+
+  const ATLAS_CELL_WIDTH = 25
+  texture.region.position = Vector2(
+	ATLAS_CELL_WIDTH * upgrade_level + 1,
+	texture.region.position.y,
+  )

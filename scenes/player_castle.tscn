@@ -159,6 +159,7 @@ tile_map_data = PackedByteArray("AAABAP//AAAAAAYAAAABAP3/AAAAAAYAAAABAPv/AAAAAAY
 tile_set = SubResource("TileSet_lw7r8")
 
 [node name="HoverArea" type="Area2D" parent="Tilemap"]
+visible = false
 z_index = 10
 disable_mode = 1
 
