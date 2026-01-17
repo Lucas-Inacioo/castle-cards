@@ -39,13 +39,13 @@ var card_data = {
 var cards_status = {
 	CardType.ATTACK: {
 		upgrade_level = 0,
-		is_upgrading = true,
-		rounds_until_upgrade_complete = 2,
+		is_upgrading = false,
+		rounds_until_upgrade_complete = 0,
 	},
 	CardType.DEFENSE: {
 		upgrade_level = 0,
-		is_upgrading = true,
-		rounds_until_upgrade_complete = 2,
+		is_upgrading = false,
+		rounds_until_upgrade_complete = 0,
 	},
 	CardType.HEALTH: {
 		upgrade_level = 0,

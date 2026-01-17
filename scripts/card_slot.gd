@@ -1,5 +1,8 @@
 extends TextureRect
 
+const EMPTY_RESOURCE_REGION = Rect2(Vector2(251, 73), Vector2(23, 34))
+const EMPTY_UPGRADE_REGION = Rect2(Vector2(251, 109), Vector2(23, 34))
+
 @export var slot_type: GameData.SlotType
 
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
@@ -26,3 +29,12 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 			GameData.current_resource_card = card_type as GameData.CardType
 		GameData.SlotType.UPGRADE:
 			GameData.current_upgrade_card = card_type as GameData.CardType
+
+func clear_slot() -> void:
+	match slot_type:
+		GameData.SlotType.RESOURCE:
+			GameData.current_resource_card = GameData.CardType.NONE
+			texture.region = EMPTY_RESOURCE_REGION
+		GameData.SlotType.UPGRADE:
+			GameData.current_upgrade_card = GameData.CardType.NONE
+			texture.region = EMPTY_UPGRADE_REGION
