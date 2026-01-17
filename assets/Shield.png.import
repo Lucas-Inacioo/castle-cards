@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://hgxdet5k0cyf"
-path="res://.godot/imported/CuteCardsPixel.png-919428facd45cda0602f72df863c56d2.ctex"
+uid="uid://lm816he2m336"
+path="res://.godot/imported/Shield.png-263ac5c6e89d170bf3e5519e418d5045.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://arts/CuteCardsPixel.png"
-dest_files=["res://.godot/imported/CuteCardsPixel.png-919428facd45cda0602f72df863c56d2.ctex"]
+source_file="res://assets/Shield.png"
+dest_files=["res://.godot/imported/Shield.png-263ac5c6e89d170bf3e5519e418d5045.ctex"]
 
 [params]
 

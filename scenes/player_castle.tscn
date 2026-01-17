@@ -1,11 +1,11 @@
 [gd_scene load_steps=10 format=4 uid="uid://c3eqr8wutwr6t"]
 
-[ext_resource type="Texture2D" uid="uid://cbqmfg4bv8leq" path="res://arts/blocks.tres" id="1_juhgo"]
+[ext_resource type="Texture2D" uid="uid://cbqmfg4bv8leq" path="res://assets/blocks.tres" id="1_juhgo"]
 [ext_resource type="Script" uid="uid://cd7b86e5l0ahe" path="res://scripts/player_castle.gd" id="1_pq3iw"]
-[ext_resource type="Texture2D" uid="uid://lm816he2m336" path="res://arts/Shield.png" id="2_p7ca1"]
-[ext_resource type="Texture2D" uid="uid://dx40q28ygu1k5" path="res://arts/Heart.png" id="3_pq3iw"]
-[ext_resource type="Texture2D" uid="uid://gpq1387ux8bh" path="res://arts/Sword.png" id="4_h406e"]
-[ext_resource type="Texture2D" uid="uid://dus5kesdfqjot" path="res://arts/Person.png" id="5_8pjt8"]
+[ext_resource type="Texture2D" uid="uid://lm816he2m336" path="res://assets/Shield.png" id="2_p7ca1"]
+[ext_resource type="Texture2D" uid="uid://dx40q28ygu1k5" path="res://assets/Heart.png" id="3_pq3iw"]
+[ext_resource type="Texture2D" uid="uid://gpq1387ux8bh" path="res://assets/Sword.png" id="4_h406e"]
+[ext_resource type="Texture2D" uid="uid://dus5kesdfqjot" path="res://assets/Person.png" id="5_8pjt8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gt7f7"]
 texture = ExtResource("1_juhgo")
