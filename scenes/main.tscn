@@ -140,7 +140,7 @@ region = Rect2(1, 73, 23, 34)
 atlas = ExtResource("5_tefeu")
 region = Rect2(1, 109, 23, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_tefeu"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_jkv2x"]
 atlas = ExtResource("5_tefeu")
 region = Rect2(251, 73, 23, 34)
 
@@ -342,7 +342,7 @@ script = ExtResource("10_ya4ey")
 [node name="CardSlotResource" type="TextureRect" parent="UI/Control/SlotsContainer/CenterContainer/Slots"]
 custom_minimum_size = Vector2(46, 68)
 layout_mode = 2
-texture = SubResource("AtlasTexture_tefeu")
+texture = SubResource("AtlasTexture_jkv2x")
 expand_mode = 1
 script = ExtResource("8_tipki")
 

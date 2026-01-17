@@ -22,13 +22,15 @@ func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	var card_type: GameData.CardType = data["card_type"]
-	texture = data["texture"]
+
+	var dropped_tex: Texture2D = data["texture"]
+	texture = dropped_tex.duplicate(true)
 
 	match slot_type:
 		GameData.SlotType.RESOURCE:
-			GameData.current_resource_card = card_type as GameData.CardType
+			GameData.current_resource_card = card_type
 		GameData.SlotType.UPGRADE:
-			GameData.current_upgrade_card = card_type as GameData.CardType
+			GameData.current_upgrade_card = card_type
 
 func clear_slot() -> void:
 	match slot_type:
