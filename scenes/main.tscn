@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=4 uid="uid://cesq67uqhe7y4"]
+[gd_scene load_steps=31 format=4 uid="uid://cesq67uqhe7y4"]
 
 [ext_resource type="Script" uid="uid://j26ihxg5u3dv" path="res://scripts/main.gd" id="1_ig7tw"]
 [ext_resource type="Texture2D" uid="uid://cbqmfg4bv8leq" path="res://assets/blocks.tres" id="2_0wfyh"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://cfiyjphxxi4xc" path="res://scripts/enemies_controller.gd" id="5_jkv2x"]
 [ext_resource type="Texture2D" uid="uid://pfr2n6jbno3r" path="res://assets/Cards.png" id="5_tefeu"]
 [ext_resource type="Script" uid="uid://bwb4itymdn4y6" path="res://scripts/waves_controller.gd" id="6_jbj1t"]
+[ext_resource type="Script" uid="uid://b2yq8axi7inkd" path="res://scripts/allies-controller.gd" id="6_muem4"]
 [ext_resource type="Texture2D" uid="uid://cmqdmrted7qy2" path="res://assets/Moon.png" id="6_tefeu"]
 [ext_resource type="Script" uid="uid://cdlaxu23bgm8" path="res://scripts/card_instance.gd" id="6_tipki"]
 [ext_resource type="Script" uid="uid://y2m66dbeexww" path="res://scripts/card_slot.gd" id="8_tipki"]
@@ -161,9 +162,10 @@ region = Rect2(251, 73, 23, 34)
 atlas = ExtResource("5_tefeu")
 region = Rect2(251, 109, 23, 34)
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("card_container", "slots_container", "world_tile_controller", "enemies_controller", "waves_controller")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("card_container", "resource_slot", "slots_container", "world_tile_controller", "enemies_controller", "waves_controller")]
 script = ExtResource("1_ig7tw")
 card_container = NodePath("UI/Control/CardsMargin/CenterContainer/CardsAvailable")
+resource_slot = NodePath("UI/Control/SlotsMargin/SlotsCenter/SlotsContainer/CardSlotResource")
 slots_container = NodePath("UI/Control/SlotsMargin/SlotsCenter/SlotsContainer")
 world_tile_controller = NodePath("TileSet")
 enemies_controller = NodePath("Enemies")
@@ -183,6 +185,9 @@ tile_set = SubResource("TileSet_jyhfs")
 
 [node name="Enemies" type="Node2D" parent="."]
 script = ExtResource("5_jkv2x")
+
+[node name="Allies" type="Node2D" parent="."]
+script = ExtResource("6_muem4")
 
 [node name="Waves" type="Node2D" parent="."]
 script = ExtResource("6_jbj1t")

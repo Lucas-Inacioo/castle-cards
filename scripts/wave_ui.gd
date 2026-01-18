@@ -1,4 +1,4 @@
-extends Node2D
+extends Control
 
 #region Children Nodes
 @export var rounds_indicator: TextureRect

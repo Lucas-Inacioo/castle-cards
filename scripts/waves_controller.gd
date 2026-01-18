@@ -32,3 +32,6 @@ func check_waves() -> void:
 				wave.position,
 				wave.enemies_to_spawn,
 			)
+
+func defend_waves() -> void:
+	pass

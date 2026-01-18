@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://dhcjtjo4f1foq"]
 
 [ext_resource type="Texture2D" uid="uid://tddscnpnxcsb" path="res://assets/block_numbers_gb_01.png" id="1_3be7j"]
-[ext_resource type="Script" uid="uid://cah6s1r53hgve" path="res://scenes/wave_ui.gd" id="1_bldpt"]
+[ext_resource type="Script" uid="uid://cah6s1r53hgve" path="res://scripts/wave_ui.gd" id="1_bldpt"]
 [ext_resource type="Texture2D" uid="uid://y56tqwddrft5" path="res://assets/Clock.png" id="2_ie5me"]
 [ext_resource type="Script" uid="uid://1lr8k3h7da6d" path="res://wave_ui_element.gd" id="2_ke5q7"]
 [ext_resource type="Texture2D" uid="uid://lm816he2m336" path="res://assets/Shield.png" id="5_17rmw"]
@@ -11,14 +11,20 @@
 atlas = ExtResource("1_3be7j")
 region = Rect2(16, 0, 8, 16)
 
-[node name="WaveUI" type="Node2D" node_paths=PackedStringArray("rounds_indicator", "defense_indicator", "attack_indicator")]
+[node name="WaveUI" type="Control" node_paths=PackedStringArray("rounds_indicator", "defense_indicator", "attack_indicator")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_bldpt")
 rounds_indicator = NodePath("Control/VBoxContainer/RoundsIndicator/RoundsUntilCastle")
 defense_indicator = NodePath("Control/VBoxContainer/DefenseIndicator/WaveDefense")
 attack_indicator = NodePath("Control/VBoxContainer/AttackIndicator/WaveAttack")
 
 [node name="Control" type="Control" parent="."]
-layout_mode = 3
+layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -31,7 +37,7 @@ grow_horizontal = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="Control"]
 layout_mode = 0
 offset_right = 40.0
-offset_bottom = 40.0
+offset_bottom = 56.0
 
 [node name="RoundsIndicator" type="HBoxContainer" parent="Control/VBoxContainer"]
 layout_mode = 2

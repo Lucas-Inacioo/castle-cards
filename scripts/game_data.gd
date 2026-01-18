@@ -67,7 +67,7 @@ var cards_status = {
 
 var building_data = {
 	BuildingType.PLAYER_CASTLE: {
-		"enemy_type": null,
+		"enemy_type": "res://scenes/castle_people.tscn",
 		"scene": "res://scenes/player_castle.tscn",
 	},
 	BuildingType.ENEMY_BASE_VARIANT_1: {

@@ -1,5 +1,8 @@
 extends TextureRect
 
+signal defense_card_dropped()
+signal attack_card_dropped()
+
 const EMPTY_RESOURCE_REGION = Rect2(Vector2(251, 73), Vector2(23, 34))
 const EMPTY_UPGRADE_REGION = Rect2(Vector2(251, 109), Vector2(23, 34))
 
@@ -29,6 +32,10 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	match slot_type:
 		GameData.SlotType.RESOURCE:
 			GameData.current_resource_card = card_type
+			if card_type == GameData.CardType.DEFENSE:
+				defense_card_dropped.emit()
+			if card_type == GameData.CardType.ATTACK:
+				attack_card_dropped.emit()
 		GameData.SlotType.UPGRADE:
 			GameData.current_upgrade_card = card_type
 
