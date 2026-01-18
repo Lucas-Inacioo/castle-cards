@@ -73,10 +73,12 @@ var units_data = {
   GameData.UnitType.ORC: {
     "hp": 2,
     "damage": 1,
+    "scene": load("res://scenes/units/orc.tscn"),
   },
   GameData.UnitType.SKELETON: {
     "hp": 1,
     "damage": 3,
+    "scene": load("res://scenes/units/skeleton.tscn"),
   },
 }
 

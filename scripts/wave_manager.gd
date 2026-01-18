@@ -28,11 +28,13 @@ func fight_waves() -> void:
 		var base_position = bases.get(str(base_id))
 		var castle_position = bases.get(str(castle_id))
 		if base_position and castle_position:
-			var ally := _spawn_ally(castle_position.position)
-			var enemy := _spawn_enemy(base_position.position)
+			var enemy_type = bases[ str(base_id) ].enemy_type
 
-			ally.set_attributes(bases[ str(castle_id) ].enemy_type)
-			enemy.set_attributes(bases[ str(base_id) ].enemy_type)
+			var ally := _spawn_ally(castle_position.position)
+			var enemy := _spawn_enemy(base_position.position, enemy_type)
+
+			ally.set_attributes(GameData.UnitType.SOLDIER)
+			enemy.set_attributes(enemy_type)
 
 			ally.move_towards(enemy)
 			enemy.move_towards(ally)
@@ -46,8 +48,8 @@ func _spawn_ally(pos: Vector2) -> Node2D:
 	get_parent().add_child(inst)
 	return inst
 
-func _spawn_enemy(pos: Vector2) -> Node2D:
-	var scene = load("res://scenes/units/orc.tscn")
+func _spawn_enemy(pos: Vector2, enemy_type: GameData.UnitType) -> Node2D:
+	var scene = GameData.units_data.get(enemy_type).get("scene")
 	var inst = scene.instantiate()
 	inst.global_position = pos
 	get_parent().add_child(inst)
