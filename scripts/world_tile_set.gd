@@ -3,6 +3,7 @@ extends Node2D
 signal building_created(building_type: GameData.BuildingType, place_cell: Vector2i)
 
 const MIN_DIST_CELLS = 32
+const SAFEZONE_DIST_CELLS = 64
 
 #region Children Nodes
 @export var tile_map_ground: TileMapLayer
@@ -26,16 +27,17 @@ func _spawn_initial() -> void:
 	stamp_building_scene(GameData.BuildingType.PLAYER_CASTLE, Vector2i(0, 0))
 
 	# Initial enemy bases
-	for i in range(20):
+	for i in range(16):
 		spawn_enemy_base_random()
 
 func spawn_enemy_base_random() -> void:
 	var max_attempts = 2000
 
 	for i in range(max_attempts):
+		# Get random candidate position
 		var candidate = Vector2i(
-			randi_range(-50, 50),
-			randi_range(-50, 50)
+			randi_range(-125, 125),
+			randi_range(-125, 125)
 		)
 
 		if not can_place_center(candidate):
@@ -45,8 +47,10 @@ func spawn_enemy_base_random() -> void:
 		var random_variant = randi() % 2
 		if random_variant == 0:
 			stamp_building_scene(GameData.BuildingType.ENEMY_BASE_VARIANT_1, candidate)
+			break
 		else:
 			stamp_building_scene(GameData.BuildingType.ENEMY_BASE_VARIANT_2, candidate)
+			break
 
 func stamp_building_scene(
 	building: GameData.BuildingType,
@@ -154,5 +158,8 @@ func _insert_layer_sorted_by_z(parent_node: Node, layer_to_add: TileMapLayer) ->
 func can_place_center(candidate: Vector2i) -> bool:
 	for center in placed_centers:
 		if center.distance_to(candidate) < MIN_DIST_CELLS:
+			return false
+		# Safezone near the castle (origin)
+		if candidate.distance_to(Vector2i.ZERO) < SAFEZONE_DIST_CELLS:
 			return false
 	return true

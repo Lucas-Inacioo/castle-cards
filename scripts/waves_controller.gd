@@ -15,7 +15,7 @@ func building_created(building_type: GameData.BuildingType, place_position: Vect
 	var wave_info = {
 		"building_type": building_type,
 		"position": place_position,
-		"enemies_to_spawn": 3 + int(GameData.current_day / 10),
+		"enemies_to_spawn": 2 + int(GameData.current_day / 10),
 		"rounds_since_last_spawn": 0,
 	}
 	waves_data.append(wave_info)

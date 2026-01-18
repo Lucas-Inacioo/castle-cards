@@ -67,7 +67,6 @@ var cards_status = {
 
 var building_data = {
 	BuildingType.PLAYER_CASTLE: {
-		"max_health": 100,
 		"enemy_type": null,
 		"scene": "res://scenes/player_castle.tscn",
 	},
@@ -92,3 +91,5 @@ var building_data = {
 var current_resource_card: GameData.CardType = GameData.CardType.NONE
 var current_upgrade_card: GameData.CardType = GameData.CardType.NONE
 var current_day: int = 1
+var max_castle_health: int = 100
+var current_castle_health: int = 100

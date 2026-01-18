@@ -53,7 +53,7 @@ func wave_created(
 	var building_data = GameData.building_data.get(building_type)
 
 	var vector_to_castle = (Vector2.ZERO - wave_start_position).normalized()
-	var spawn_offset_distance = 50.0
+	var spawn_offset_distance = 150.0
 	var spawn_position = wave_start_position + vector_to_castle * spawn_offset_distance
 
 	var wave_defense_value = building_data.get("defense") * number_of_enemies
