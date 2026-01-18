@@ -131,12 +131,12 @@ var bases_data = {
   1: {
     "rounds_between_attacks": 4,
     "base_attack": 2,
-    "base_shield": 4,
+    "base_shield": 1,
   },
   2: {
     "rounds_between_attacks": 2,
-    "base_attack": 5,
-    "base_shield": 3,
+    "base_attack": 1,
+    "base_shield": 1,
   },
 }
 
