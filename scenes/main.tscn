@@ -152,9 +152,13 @@ region = Rect2(251, 73, 23, 34)
 atlas = ExtResource("5_tefeu")
 region = Rect2(251, 109, 23, 34)
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("wave_manager")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("wave_manager", "end_day_button", "card_container", "resource_slots_container", "upgrade_slots_container")]
 script = ExtResource("1_tipki")
 wave_manager = NodePath("WaveManager")
+end_day_button = NodePath("UI/Control/MoonMargin/MoonButton")
+card_container = NodePath("UI/Control/CardsMargin/CenterContainer/CardsAvailable")
+resource_slots_container = NodePath("UI/Control/SlotsMargin/SlotsCenter/SlotsContainer/CardSlotResource")
+upgrade_slots_container = NodePath("UI/Control/SlotsMargin/SlotsCenter/SlotsContainer/CardSlotUpgrade")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 script = ExtResource("1_tefeu")
@@ -447,5 +451,3 @@ slot_type = 1
 stream = ExtResource("13_trceg")
 volume_db = -15.0
 autoplay = true
-
-[connection signal="pressed" from="UI/Control/MoonMargin/MoonButton" to="." method="_end_day_button_pressed"]

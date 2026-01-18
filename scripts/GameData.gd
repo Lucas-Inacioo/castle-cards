@@ -101,3 +101,6 @@ var bases_data = {
 
 var current_resource_card: GameData.CardType = GameData.CardType.NONE
 var current_upgrade_card: GameData.CardType = GameData.CardType.NONE
+
+var current_castle_health: int = 100
+var max_castle_health: int = 100

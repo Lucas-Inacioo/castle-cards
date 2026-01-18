@@ -19,10 +19,23 @@ func _ready() -> void:
 			"position": base.global_position,
 			"enemy_type": base.get("enemy_type"),
 			"rounds_between_attacks": base_data.get("rounds_between_attacks"),
+			"rounds_since_last_attack": 0,
 			"base_shield": base_data.get("base_shield"),
 			"base_attack": base_data.get("base_attack")
 		}
 		base.base_ui_element.setup(base_data)
+
+func check_waves() -> void:
+	for base_id in bases.keys():
+		if base_id == "0":
+			continue  # Skip castle base
+		var base_info = bases[base_id]
+		base_info.rounds_since_last_attack += 1
+		var rounds_between_attacks = base_info.rounds_between_attacks
+		if base_info.rounds_since_last_attack >= rounds_between_attacks:
+			schedule_fight(int(base_id))
+			base_info.rounds_since_last_attack = 0
+		bases[base_id] = base_info
 
 func schedule_fight(base_id: int) -> void:
 	scheduled_fights.append(base_id)

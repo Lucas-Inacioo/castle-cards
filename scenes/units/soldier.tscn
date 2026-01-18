@@ -125,7 +125,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"Attack",
-"speed": 5.0
+"speed": 13.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -142,7 +142,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"Die",
-"speed": 5.0
+"speed": 13.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -194,7 +194,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"Walk",
-"speed": 5.0
+"speed": 13.0
 }]
 
 [node name="Soldier" type="CharacterBody2D" node_paths=PackedStringArray("animation")]
@@ -204,7 +204,7 @@ animation = NodePath("SoldierSprite")
 [node name="SoldierSprite" type="AnimatedSprite2D" parent="."]
 z_index = 3
 sprite_frames = SubResource("SpriteFrames_57a42")
-animation = &"Die"
+animation = &"Attack"
 
 [node name="WalkTimer" type="Timer" parent="SoldierSprite"]
 wait_time = 5.0
