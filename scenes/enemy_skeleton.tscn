@@ -130,6 +130,7 @@ animations = [{
 }]
 
 [node name="EnemySkeleton" type="AnimatedSprite2D" node_paths=PackedStringArray("walk_timer")]
+z_index = 3
 sprite_frames = SubResource("SpriteFrames_57a42")
 animation = &"Walk"
 script = ExtResource("3_dhonu")

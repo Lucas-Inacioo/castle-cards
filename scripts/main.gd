@@ -10,7 +10,7 @@ extends Node2D
 func _ready() -> void:
 	get_window().content_scale_factor = 0.1
 
-	world_tile_controller.structure_created.connect(enemies_controller.structure_created)
+	world_tile_controller.building_created.connect(enemies_controller.building_created)
 
 func _end_day_button_pressed() -> void:
 	GameData.current_day += 1

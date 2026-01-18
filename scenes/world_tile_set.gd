@@ -1,6 +1,6 @@
 extends Node2D
 
-signal structure_created(structure_type: GameData.BuildingType, place_cell: Vector2i)
+signal building_created(building_type: GameData.BuildingType, place_cell: Vector2i)
 
 const MIN_DIST_CELLS = 32
 
@@ -11,7 +11,7 @@ const MIN_DIST_CELLS = 32
 # Used as cache for already existent layers
 var world_layer_by_z_index: Dictionary = {}
 
-# To avoid placing structures on the same spot
+# To avoid placing buildings on the same spot
 var placed_centers: Array[Vector2i] = []
 
 func _ready() -> void:
@@ -23,7 +23,7 @@ func _ready() -> void:
 
 func _spawn_initial() -> void:
 	# Spawn player castle at origin
-	stamp_structure_scene(GameData.BuildingType.PLAYER_CASTLE, Vector2i(0, 0))
+	stamp_building_scene(GameData.BuildingType.PLAYER_CASTLE, Vector2i(0, 0))
 
 	# Initial enemy bases
 	for i in range(20):
@@ -41,33 +41,33 @@ func spawn_enemy_base_random() -> void:
 		if not can_place_center(candidate):
 			continue
 
-		# Valid location → place structure
+		# Valid location → place building
 		var random_variant = randi() % 2
 		if random_variant == 0:
-			stamp_structure_scene(GameData.BuildingType.ENEMY_BASE_VARIANT_1, candidate)
+			stamp_building_scene(GameData.BuildingType.ENEMY_BASE_VARIANT_1, candidate)
 		else:
-			stamp_structure_scene(GameData.BuildingType.ENEMY_BASE_VARIANT_2, candidate)
+			stamp_building_scene(GameData.BuildingType.ENEMY_BASE_VARIANT_2, candidate)
 
-func stamp_structure_scene(
-	structure: GameData.BuildingType,
+func stamp_building_scene(
+	building: GameData.BuildingType,
 	place_cell: Vector2i,
 ) -> void:
-	var structure_data = GameData.building_data.get(structure)
-	var structure_scene = load(structure_data.get("scene"))
+	var building_data = GameData.building_data.get(building)
+	var building_scene = load(building_data.get("scene"))
 
-	var structure_instance = structure_scene.instantiate()
-	var structure_tile_map = structure_instance.get_node("Tilemap")
+	var building_instance = building_scene.instantiate()
+	var building_tile_map = building_instance.get_node("Tilemap")
 
-	# Collect all TileMapLayers from the structure's TileMap node
-	var structure_layers: Array[TileMapLayer] = []
-	for layer in structure_tile_map.get_children():
-		structure_layers.append(layer)
+	# Collect all TileMapLayers from the building's TileMap node
+	var building_layers: Array[TileMapLayer] = []
+	for layer in building_tile_map.get_children():
+		building_layers.append(layer)
 
 	# Compute one common anchor for ALL layers so they align together
 	# This uses the minimum used_rect.position across layers (top-left in map coords)
-	var anchor_cell = _compute_anchor_cell(structure_layers)
+	var anchor_cell = _compute_anchor_cell(building_layers)
 
-	for layer in structure_layers:
+	for layer in building_layers:
 		var target_layer = _get_or_create_world_layer_for_z(layer.z_index)
 
 		# Copy cells
@@ -86,12 +86,12 @@ func stamp_structure_scene(
 		# Force immediate refresh of the target layer
 		target_layer.update_internals()
 
-	structure_instance.queue_free()
+	building_instance.queue_free()
 	placed_centers.append(place_cell)
 
 	# Emit signal with global position of tile center
-	structure_created.emit(
-		structure,
+	building_created.emit(
+		building,
 		tile_map_ground.map_to_local(place_cell)
 	)
 
