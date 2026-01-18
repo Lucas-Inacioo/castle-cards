@@ -5,18 +5,23 @@ extends Node2D
 @export var slots_container: HBoxContainer
 @export var world_tile_controller: Node2D
 @export var enemies_controller: Node2D
+@export var waves_controller: Node2D
 #endregion
 
 func _ready() -> void:
 	get_window().content_scale_factor = 0.1
 
 	world_tile_controller.building_created.connect(enemies_controller.building_created)
+	world_tile_controller.building_created.connect(waves_controller.building_created)
+
+	waves_controller.wave_created.connect(enemies_controller.wave_created)
 
 func _end_day_button_pressed() -> void:
 	GameData.current_day += 1
 
 	_check_cards_upgrade()
 	_set_cards_for_new_day()
+	waves_controller.check_waves()
 
 	card_container.start_new_day()
 	slots_container.start_new_day()

@@ -10,7 +10,8 @@ func building_created(building_type: GameData.BuildingType, place_position: Vect
 	var building_instance: Node2D = load(building_scene).instantiate()
 
 	# marker in building space (since instance is at 0,0 and not really placed)
-	var marker_pos_in_building_space: Vector2 = building_instance.get_node("EnemySpawner").global_position
+	var enemy_spawner = building_instance.get_node("EnemySpawner")
+	var marker_pos_in_building_space: Vector2 = enemy_spawner.global_position
 
 	# compute anchor cell (top-left used cell) like your stamping code
 	var tilemap_root: Node = building_instance.get_node("Tilemap")
@@ -19,14 +20,16 @@ func building_created(building_type: GameData.BuildingType, place_position: Vect
 		if child is TileMapLayer:
 			layers.append(child)
 
-	var anchor_cell := Vector2i.ZERO
+	var anchor_cell = Vector2i.ZERO
 	for layer in layers:
-		var rect := layer.get_used_rect()
+		var rect = layer.get_used_rect()
 		anchor_cell.x = min(anchor_cell.x, rect.position.x)
 		anchor_cell.y = min(anchor_cell.y, rect.position.y)
 
 	var ref_layer: TileMapLayer = layers[0]
-	var anchor_pos_in_building_space: Vector2 = ref_layer.to_global(ref_layer.map_to_local(anchor_cell))
+	var anchor_pos_in_building_space: Vector2 = ref_layer.to_global(
+		ref_layer.map_to_local(anchor_cell)
+	)
 
 	# now convert your placed position (anchor) into building origin
 	var building_origin_world: Vector2 = place_position - anchor_pos_in_building_space
@@ -39,5 +42,48 @@ func building_created(building_type: GameData.BuildingType, place_position: Vect
 
 		for i in range(3):
 			var enemy = enemy_scene.instantiate()
-			enemy.setup(spawn_world)
+			enemy.setup(spawn_world, false)
 			add_child(enemy)
+
+func wave_created(
+	building_type: GameData.BuildingType,
+	wave_start_position: Vector2,
+	number_of_enemies: int,
+) -> void:
+	var vector_to_castle = (Vector2.ZERO - wave_start_position).normalized()
+	var spawn_offset_distance = 50.0
+	var spawn_position = wave_start_position + vector_to_castle * spawn_offset_distance
+
+	# Root node representing the wave in WORLD space
+	var wave_root = Node2D.new()
+	wave_root.global_position = spawn_position
+	add_child(wave_root)
+
+	# Indicator ABOVE the wave (LOCAL space under wave_root)
+	var rounds_until_castle = 5
+	var rounds_indicator = load("res://scenes/rounds_until_castle.tscn").instantiate()
+	rounds_indicator.setup(rounds_until_castle)
+	rounds_indicator.position = Vector2(0, -30)
+	rounds_indicator.z_index = 1000
+	wave_root.add_child(rounds_indicator)
+
+	# Optional: container just to organize the scene tree
+	var enemies_container = Node2D.new()
+	enemies_container.position = Vector2.ZERO
+	wave_root.add_child(enemies_container)
+
+	# Spawn enemies (GLOBAL positions because enemy.setup uses global_position)
+	var building_data = GameData.building_data.get(building_type)
+	var enemy_type = building_data.get("enemy_type")
+	if enemy_type == null:
+		return
+
+	var enemy_scene = load(enemy_type)
+
+	for i in range(number_of_enemies):
+		var random_offset = Vector2(randi_range(-6, 6), randi_range(-6, 6))
+		var enemy: AnimatedSprite2D = enemy_scene.instantiate()
+		enemies_container.add_child(enemy)
+
+		# IMPORTANT: pass GLOBAL
+		enemy.setup(spawn_position + random_offset, true)

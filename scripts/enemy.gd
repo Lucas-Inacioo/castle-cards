@@ -6,10 +6,14 @@ extends AnimatedSprite2D
 var anchor_global_position: Vector2
 var target_global_position: Vector2
 
-func setup(anchor_pos: Vector2) -> void:
+var is_from_wave: bool = false
+
+func setup(anchor_pos: Vector2, is_from_wave: bool) -> void:
 	global_position = anchor_pos
 	anchor_global_position = anchor_pos
+	self.is_from_wave = is_from_wave
 
+	# Enemies from waves should not wander around the spawn point
 	_pick_new_target()
 
 func _ready() -> void:
@@ -26,6 +30,11 @@ func _process(delta: float) -> void:
 		play("Walk")
 
 func _pick_new_target() -> void:
+	if is_from_wave:
+		# Stay at the anchor position
+		target_global_position = anchor_global_position
+		return
+
 	# Always pick relative to anchor, so it NEVER drifts out of range
 	var ox := randi_range(-32, 32)
 	var oy := randi_range(-32, 32)
