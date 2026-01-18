@@ -71,14 +71,16 @@ func _set_cards_for_new_day() -> void:
 	# Apply the effects of the selected resource card
 	match current_resource_card:
 		GameData.CardType.HEALTH:
-			# Heal castle
 			var current_health_level = GameData.cards_status[GameData.CardType.HEALTH].upgrade_level
-			GameData.current_castle_health = max(
+			GameData.current_castle_health = min(
 				GameData.current_castle_health + 5 * (1 + current_health_level),
 				GameData.max_castle_health,
 			)
+
 		GameData.CardType.PEOPLE:
-			pass
+			var people_level := int(GameData.cards_status[GameData.CardType.PEOPLE].upgrade_level)
+			var units_gained := 1 + people_level
+			GameData.available_units += units_gained
 
 func _build_defense_overlay() -> void:
 	var ui_root: Control = $UI/Control
@@ -176,13 +178,14 @@ func _apply_planned_defense() -> void:
 	if GameData.planned_defense_base_ids.is_empty():
 		return
 
+	var units_spent := GameData.planned_defense_base_ids.size()
+	GameData.available_units = max(1, GameData.available_units - units_spent)
+
 	for base_id in GameData.planned_defense_base_ids:
 		wave_manager.reset_base_timer(base_id)
 		wave_manager.schedule_fight(base_id)
 
 	GameData.planned_defense_base_ids.clear()
-
-	# Optional: clear highlights now that it’s committed
 	wave_manager.clear_all_base_selections()
 
 func _build_attack_overlay() -> void:
@@ -286,10 +289,14 @@ func _apply_planned_attack() -> void:
 	if GameData.planned_attack_base_ids.is_empty():
 		return
 
+	var units_spent := GameData.planned_attack_base_ids.size()
+	GameData.available_units = max(1, GameData.available_units - units_spent)
+
 	for base_id in GameData.planned_attack_base_ids:
 		wave_manager.schedule_attack(base_id)
 
 	GameData.planned_attack_base_ids.clear()
+	wave_manager.clear_all_base_selections()
 
 func _on_wave_manager_base_clicked(base_id: int) -> void:
 	if base_id == 0:
