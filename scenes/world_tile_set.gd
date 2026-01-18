@@ -18,6 +18,10 @@ func _ready() -> void:
 	# Register the ground layer as the layer for its z_index
 	world_layer_by_z_index[tile_map_ground.z_index] = tile_map_ground
 
+	# Defer initial spawning to allow other nodes to initialize first
+	call_deferred("_spawn_initial")
+
+func _spawn_initial() -> void:
 	# Spawn player castle at origin
 	stamp_structure_scene(GameData.BuildingType.PLAYER_CASTLE, Vector2i(0, 0))
 

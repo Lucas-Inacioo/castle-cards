@@ -107,7 +107,6 @@ sources/0 = SubResource("TileSetAtlasSource_a1412")
 [node name="EnemyVariant1" type="Node2D"]
 
 [node name="Tilemap" type="Node2D" parent="."]
-position = Vector2(500, 0)
 
 [node name="TileMapLayer0" type="TileMapLayer" parent="Tilemap"]
 z_index = -1
@@ -138,3 +137,6 @@ tile_set = SubResource("TileSet_ejytf")
 z_index = 5
 tile_map_data = PackedByteArray("AAD5//z/AAAHAAYAAAD6//z/AAAHAAYAAAD7//z/AAAHAAYAAAD8//z/AAAHAAYAAAD9//z/AAAHAAYAAAD9//v/AAAHAAYAAAD9//r/AAAHAAYAAAD9//n/AAAHAAYAAAD9//j/AAAHAAYAAAD9//f/AAAHAAYAAAD8//f/AAAHAAYAAAD7//f/AAAHAAYAAAD6//f/AAAHAAYAAAD5//f/AAAHAAYAAAD5//j/AAAHAAYAAAD5//n/AAAHAAYAAAD5//r/AAAHAAYAAAD5//v/AAAHAAYAAAD6//v/AAAHAAYAAAD8//v/AAAHAAYAAAD8//r/AAAHAAYAAAD7//v/AAAHAAYAAAD7//r/AAAHAAYAAAD7//n/AAAHAAYAAAD6//n/AAAHAAYAAAD6//j/AAAHAAYAAAD6//r/AAAHAAYAAAD7//j/AAAHAAYAAAD8//j/AAAHAAYAAAD8//n/AAAHAAYAAAA=")
 tile_set = SubResource("TileSet_ejytf")
+
+[node name="EnemySpawner" type="Marker2D" parent="."]
+position = Vector2(74, 31)
