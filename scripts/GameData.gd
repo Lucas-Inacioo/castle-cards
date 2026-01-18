@@ -4,6 +4,7 @@ enum UnitType {
   SOLDIER,
   ORC,
   SKELETON,
+  ATTACK_PLACEHOLDER
 }
 
 enum CardType {
@@ -79,6 +80,10 @@ var units_data = {
     "hp": 1,
     "damage": 1,
     "scene": load("res://scenes/units/skeleton.tscn"),
+  },
+  GameData.UnitType.ATTACK_PLACEHOLDER: {
+    "hp": 1,
+    "damage": 1000,
   },
 }
 
