@@ -1,0 +1,105 @@
+[gd_scene load_steps=12 format=3 uid="uid://l08g2o6q8g2k"]
+
+[ext_resource type="Script" uid="uid://cv1f00dgi0cq" path="res://scenes/base_ui.gd" id="1_0npyl"]
+[ext_resource type="Texture2D" uid="uid://y56tqwddrft5" path="res://assets/ui/Clock.png" id="1_v4nhd"]
+[ext_resource type="Script" uid="uid://blntiav533u5f" path="res://scripts/base/base_ui_element.gd" id="2_0npyl"]
+[ext_resource type="Texture2D" uid="uid://lm816he2m336" path="res://assets/ui/cards/Shield.png" id="3_n4qwd"]
+[ext_resource type="Texture2D" uid="uid://gpq1387ux8bh" path="res://assets/ui/cards/Sword.png" id="4_im2qt"]
+[ext_resource type="Texture2D" uid="uid://tddscnpnxcsb" path="res://assets/ui/block_numbers_gb_01.png" id="5_jkjla"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_rmb5h"]
+load_path = "res://.godot/imported/block_numbers_gb_01.png-947f424462dc0e701adede69791040dc.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w0jna"]
+atlas = SubResource("CompressedTexture2D_rmb5h")
+region = Rect2(0, 0, 8, 16)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_eoo36"]
+load_path = "res://.godot/imported/block_numbers_gb_01.png-947f424462dc0e701adede69791040dc.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6o2m2"]
+atlas = SubResource("CompressedTexture2D_eoo36")
+region = Rect2(0, 0, 8, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e0jet"]
+atlas = ExtResource("5_jkjla")
+region = Rect2(0, 0, 8, 16)
+
+[node name="BaseUI" type="Control" node_paths=PackedStringArray("clock_container", "clock_element", "shield_element", "attack_element")]
+z_index = 10
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("1_0npyl")
+clock_container = NodePath("PanelContainer/MarginContainer/ListOfAttributes/ClockContainer")
+clock_element = NodePath("PanelContainer/MarginContainer/ListOfAttributes/ClockContainer/RoundsCount")
+shield_element = NodePath("PanelContainer/MarginContainer/ListOfAttributes/ShieldContainer/ShieldCount")
+attack_element = NodePath("PanelContainer/MarginContainer/ListOfAttributes/AttackContainer/AttackCount")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="ListOfAttributes" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="ClockContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/ListOfAttributes"]
+layout_mode = 2
+
+[node name="ClockIcon" type="TextureRect" parent="PanelContainer/MarginContainer/ListOfAttributes/ClockContainer"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+texture = ExtResource("1_v4nhd")
+expand_mode = 1
+
+[node name="RoundsCount" type="TextureRect" parent="PanelContainer/MarginContainer/ListOfAttributes/ClockContainer"]
+custom_minimum_size = Vector2(8, 16)
+layout_mode = 2
+texture = SubResource("AtlasTexture_w0jna")
+expand_mode = 1
+script = ExtResource("2_0npyl")
+
+[node name="ShieldContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/ListOfAttributes"]
+layout_mode = 2
+
+[node name="ShieldIcon" type="TextureRect" parent="PanelContainer/MarginContainer/ListOfAttributes/ShieldContainer"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+texture = ExtResource("3_n4qwd")
+expand_mode = 1
+
+[node name="ShieldCount" type="TextureRect" parent="PanelContainer/MarginContainer/ListOfAttributes/ShieldContainer"]
+custom_minimum_size = Vector2(8, 16)
+layout_mode = 2
+texture = SubResource("AtlasTexture_6o2m2")
+expand_mode = 1
+script = ExtResource("2_0npyl")
+
+[node name="AttackContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/ListOfAttributes"]
+layout_mode = 2
+
+[node name="AttackIcon" type="TextureRect" parent="PanelContainer/MarginContainer/ListOfAttributes/AttackContainer"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+texture = ExtResource("4_im2qt")
+expand_mode = 1
+
+[node name="AttackCount" type="TextureRect" parent="PanelContainer/MarginContainer/ListOfAttributes/AttackContainer"]
+custom_minimum_size = Vector2(8, 16)
+layout_mode = 2
+texture = SubResource("AtlasTexture_e0jet")
+expand_mode = 1
+script = ExtResource("2_0npyl")

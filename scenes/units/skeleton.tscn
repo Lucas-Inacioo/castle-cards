@@ -348,7 +348,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"Walk",
-"speed": 5.0
+"speed": 10.0
 }]
 
 [node name="Skeleton" type="CharacterBody2D" node_paths=PackedStringArray("animation")]

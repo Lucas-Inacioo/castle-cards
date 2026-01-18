@@ -1,11 +1,12 @@
-[gd_scene load_steps=26 format=4 uid="uid://cesq67uqhe7y4"]
+[gd_scene load_steps=27 format=4 uid="uid://cesq67uqhe7y4"]
 
 [ext_resource type="Texture2D" path="res://assets/tiles/blocks.tres" id="1_tbgi4"]
 [ext_resource type="Script" uid="uid://bam1fem48gc3w" path="res://scripts/camera/camera_movement.gd" id="1_tefeu"]
 [ext_resource type="Script" uid="uid://cy4kbwj1i34ey" path="res://scenes/main.gd" id="1_tipki"]
-[ext_resource type="Script" uid="uid://024d6tinoqun" path="res://scripts/wave_manager.gd" id="2_o6xl0"]
-[ext_resource type="Script" uid="uid://b4sw57y16w4pa" path="res://scripts/base.gd" id="4_eb6dy"]
+[ext_resource type="Script" uid="uid://024d6tinoqun" path="res://scripts/base/wave_manager.gd" id="2_o6xl0"]
+[ext_resource type="Script" uid="uid://b4sw57y16w4pa" path="res://scripts/base/base.gd" id="4_eb6dy"]
 [ext_resource type="Texture2D" uid="uid://pfr2n6jbno3r" path="res://assets/ui/cards/Cards.png" id="5_tefeu"]
+[ext_resource type="PackedScene" uid="uid://l08g2o6q8g2k" path="res://scenes/base_ui.tscn" id="5_trceg"]
 [ext_resource type="Script" uid="uid://dkrfncih148n2" path="res://scripts/cards/cards_container.gd" id="5_ya4ey"]
 [ext_resource type="Texture2D" uid="uid://cmqdmrted7qy2" path="res://assets/ui/Moon.png" id="6_tefeu"]
 [ext_resource type="Script" uid="uid://cdlaxu23bgm8" path="res://scripts/cards/card_instance.gd" id="7_eb6dy"]
@@ -164,19 +165,28 @@ enemy_base_markers = NodePath("EnemyBases")
 
 [node name="EnemyBases" type="Node2D" parent="WaveManager"]
 
-[node name="0" type="Marker2D" parent="WaveManager/EnemyBases"]
+[node name="0" type="Marker2D" parent="WaveManager/EnemyBases" node_paths=PackedStringArray("base_ui_element")]
 position = Vector2(56, 34)
 script = ExtResource("4_eb6dy")
+base_ui_element = NodePath("BaseUI0")
 
-[node name="1" type="Marker2D" parent="WaveManager/EnemyBases"]
+[node name="BaseUI0" parent="WaveManager/EnemyBases/0" instance=ExtResource("5_trceg")]
+
+[node name="1" type="Marker2D" parent="WaveManager/EnemyBases" node_paths=PackedStringArray("base_ui_element")]
 position = Vector2(325, -332)
 script = ExtResource("4_eb6dy")
 enemy_type = 1
+base_ui_element = NodePath("BaseUI1")
 
-[node name="2" type="Marker2D" parent="WaveManager/EnemyBases"]
+[node name="BaseUI1" parent="WaveManager/EnemyBases/1" instance=ExtResource("5_trceg")]
+
+[node name="2" type="Marker2D" parent="WaveManager/EnemyBases" node_paths=PackedStringArray("base_ui_element")]
 position = Vector2(-241, 499)
 script = ExtResource("4_eb6dy")
 enemy_type = 2
+base_ui_element = NodePath("BaseUI2")
+
+[node name="BaseUI2" parent="WaveManager/EnemyBases/2" instance=ExtResource("5_trceg")]
 
 [node name="TileSet" type="Node2D" parent="."]
 

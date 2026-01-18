@@ -77,8 +77,25 @@ var units_data = {
   },
   GameData.UnitType.SKELETON: {
     "hp": 1,
-    "damage": 3,
+    "damage": 1,
     "scene": load("res://scenes/units/skeleton.tscn"),
+  },
+}
+
+var bases_data = {
+  0: {
+    "base_attack": 1,
+    "base_shield": 50,
+  },
+  1: {
+    "rounds_between_attacks": 4,
+    "base_attack": 2,
+    "base_shield": 4,
+  },
+  2: {
+    "rounds_between_attacks": 2,
+    "base_attack": 5,
+    "base_shield": 3,
   },
 }
 

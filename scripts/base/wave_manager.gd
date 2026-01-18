@@ -14,10 +14,15 @@ var enemy_wave_id = 0
 func _ready() -> void:
 	# Initialize enemy base positions using marker ID
 	for base in enemy_base_markers.get_children():
+		var base_data = GameData.bases_data.get(int(base.name))
 		bases[base.name] = {
 			"position": base.global_position,
 			"enemy_type": base.get("enemy_type"),
+			"rounds_between_attacks": base_data.get("rounds_between_attacks"),
+			"shield": base_data.get("base_shield"),
+			"attack": base_data.get("base_attack")
 		}
+		base.base_ui_element.setup(base_data)
 
 func schedule_fight(base_id: int) -> void:
 	scheduled_fights.append(base_id)
