@@ -13,6 +13,12 @@ enum SlotType {
 	UPGRADE,
 }
 
+enum BuildingType {
+	PLAYER_CASTLE,
+	ENEMY_BASE_VARIANT_1,
+	ENEMY_BASE_VARIANT_2,
+}
+
 var card_data = {
 	CardType.ATTACK: {
 		"name": "Attack",
@@ -56,6 +62,24 @@ var cards_status = {
 		upgrade_level = 0,
 		is_upgrading = false,
 		rounds_until_upgrade_complete = 0,
+	},
+}
+
+var building_data = {
+	BuildingType.PLAYER_CASTLE: {
+		"max_health": 100,
+		"enemy_type": null,
+		"scene": "res://scenes/player_castle.tscn",
+	},
+	BuildingType.ENEMY_BASE_VARIANT_1: {
+		"max_health": 50,
+		"enemy_type": "res://scenes/enemy_orc.tscn",
+		"scene": "res://scenes/enemy_1.tscn",
+	},
+	BuildingType.ENEMY_BASE_VARIANT_2: {
+		"max_health": 75,
+		"enemy_type": "res://scenes/enemy_skeleton.tscn",
+		"scene": "res://scenes/enemy_2.tscn",
 	},
 }
 

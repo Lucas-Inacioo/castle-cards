@@ -1,0 +1,126 @@
+[gd_scene load_steps=18 format=3 uid="uid://epxdeswsfenc"]
+
+[ext_resource type="Texture2D" uid="uid://f7qjscsxb5ua" path="res://assets/Orc.png" id="1_45yem"]
+[ext_resource type="Script" uid="uid://bvupmen812opf" path="res://scripts/enemy.gd" id="2_b40mg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cjnld"]
+atlas = ExtResource("1_45yem")
+region = Rect2(0, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5b571"]
+atlas = ExtResource("1_45yem")
+region = Rect2(100, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4yoeb"]
+atlas = ExtResource("1_45yem")
+region = Rect2(200, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_go3w7"]
+atlas = ExtResource("1_45yem")
+region = Rect2(300, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aild4"]
+atlas = ExtResource("1_45yem")
+region = Rect2(400, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ud7aq"]
+atlas = ExtResource("1_45yem")
+region = Rect2(500, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b40mg"]
+atlas = ExtResource("1_45yem")
+region = Rect2(0, 100, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4jwpi"]
+atlas = ExtResource("1_45yem")
+region = Rect2(100, 100, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h514j"]
+atlas = ExtResource("1_45yem")
+region = Rect2(200, 100, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nd266"]
+atlas = ExtResource("1_45yem")
+region = Rect2(300, 100, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oigoq"]
+atlas = ExtResource("1_45yem")
+region = Rect2(400, 100, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ol7oi"]
+atlas = ExtResource("1_45yem")
+region = Rect2(500, 100, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_je7cb"]
+atlas = ExtResource("1_45yem")
+region = Rect2(600, 100, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_shmdr"]
+atlas = ExtResource("1_45yem")
+region = Rect2(700, 100, 100, 100)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_57a42"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cjnld")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5b571")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4yoeb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_go3w7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aild4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ud7aq")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 13.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b40mg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4jwpi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h514j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nd266")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oigoq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ol7oi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_je7cb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shmdr")
+}],
+"loop": true,
+"name": &"Walk",
+"speed": 5.0
+}]
+
+[node name="EnemyOrc" type="AnimatedSprite2D" node_paths=PackedStringArray("walk_timer")]
+z_index = 3
+sprite_frames = SubResource("SpriteFrames_57a42")
+animation = &"Walk"
+frame_progress = 0.8191361
+script = ExtResource("2_b40mg")
+walk_timer = NodePath("WalkTimer")
+
+[node name="WalkTimer" type="Timer" parent="."]
+wait_time = 5.0

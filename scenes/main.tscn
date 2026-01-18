@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=4 uid="uid://cesq67uqhe7y4"]
+[gd_scene load_steps=27 format=4 uid="uid://cesq67uqhe7y4"]
 
 [ext_resource type="Script" uid="uid://j26ihxg5u3dv" path="res://scripts/main.gd" id="1_ig7tw"]
 [ext_resource type="Texture2D" uid="uid://cbqmfg4bv8leq" path="res://assets/blocks.tres" id="2_0wfyh"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://dx40q28ygu1k5" path="res://assets/Heart.png" id="10_eb6dy"]
 [ext_resource type="Script" uid="uid://dcw2mh34ub2on" path="res://scripts/slots.gd" id="10_ya4ey"]
 [ext_resource type="Texture2D" uid="uid://cgs3bmdwkhfv0" path="res://assets/Numbers.png" id="11_trceg"]
+[ext_resource type="AudioStream" uid="uid://dpojbe4a5kn53" path="res://assets/SimpleMusic.wav" id="13_trceg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sugp2"]
 texture = ExtResource("2_0wfyh")
@@ -157,11 +158,11 @@ region = Rect2(251, 73, 23, 34)
 atlas = ExtResource("5_tefeu")
 region = Rect2(251, 109, 23, 34)
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("card_container", "slots_container", "tileMapGround")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("card_container", "slots_container", "tile_map_ground")]
 script = ExtResource("1_ig7tw")
 card_container = NodePath("UI/Control/CardsMargin/CenterContainer/CardsAvailable")
 slots_container = NodePath("UI/Control/SlotsMargin/SlotsCenter/SlotsContainer")
-tileMapGround = NodePath("TileSet/TileMapGround")
+tile_map_ground = NodePath("TileSet/TileMapGround")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 script = ExtResource("2_o6xl0")
@@ -393,5 +394,12 @@ texture = SubResource("AtlasTexture_ya4ey")
 expand_mode = 1
 script = ExtResource("8_tipki")
 slot_type = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_trceg")
+volume_db = -15.0
+autoplay = true
+
+[node name="Enemies" type="Node2D" parent="."]
 
 [connection signal="pressed" from="UI/Control/MoonMargin/MoonButton" to="." method="_end_day_button_pressed"]
