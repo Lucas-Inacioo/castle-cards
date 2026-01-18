@@ -1,5 +1,7 @@
 extends Node2D
 
+signal base_clicked(base_id: int)
+
 #region Children Nodes
 @export var enemy_base_markers: Node2D
 #endregion
@@ -10,6 +12,7 @@ var scheduled_fights = []
 
 var ally_wave_id = 0
 var enemy_wave_id = 0
+var _defense_selection_enabled = false
 
 func _ready() -> void:
 	# Initialize enemy base positions using marker ID
@@ -59,8 +62,8 @@ func fight_waves() -> void:
 		if base_position and castle_position:
 			var enemy_type = bases[ str(base_id) ].enemy_type
 
-			var ally := _spawn_ally(castle_position.position)
-			var enemy := _spawn_enemy(base_position.position, enemy_type)
+			var ally = _spawn_ally(castle_position.position)
+			var enemy = _spawn_enemy(base_position.position, enemy_type)
 
 			ally.set_attributes(GameData.UnitType.SOLDIER)
 			enemy.set_attributes(enemy_type)
@@ -76,8 +79,8 @@ func attack_castle(base_id: int) -> void:
 	if base_position and castle_position:
 		var enemy_type = bases[ str(base_id) ].enemy_type
 
-		var ally := _spawn_ally(castle_position.position)
-		var enemy := _spawn_enemy(base_position.position, enemy_type)
+		var ally = _spawn_ally(castle_position.position)
+		var enemy = _spawn_enemy(base_position.position, enemy_type)
 
 		ally.set_attributes(GameData.UnitType.ATTACK_PLACEHOLDER)
 		enemy.set_attributes(enemy_type)
@@ -106,3 +109,46 @@ func _spawn_enemy(pos: Vector2, enemy_type: GameData.UnitType) -> Node2D:
 	inst.global_position = pos
 	get_parent().add_child(inst)
 	return inst
+
+func enable_defense_selection(enabled: bool) -> void:
+	if _defense_selection_enabled == enabled:
+		return
+	_defense_selection_enabled = enabled
+
+	for base in enemy_base_markers.get_children():
+		if base.name == "0":
+			continue
+		base.set_selectable(enabled)
+
+		if enabled:
+			if !base.clicked.is_connected(_on_base_clicked):
+				base.clicked.connect(_on_base_clicked)
+		else:
+			if base.clicked.is_connected(_on_base_clicked):
+				base.clicked.disconnect(_on_base_clicked)
+
+func set_base_selected(base_id: int, selected: bool) -> void:
+	var base_node = enemy_base_markers.get_node_or_null(str(base_id))
+	if base_node == null:
+		return
+	base_node.set_selected(selected)
+
+func clear_all_base_selections() -> void:
+	for base in enemy_base_markers.get_children():
+		if base.name == "0":
+			continue
+		base.set_selected(false)
+		base.set_selectable(false)
+
+func _on_base_clicked(base_id: int) -> void:
+	base_clicked.emit(base_id)
+
+func reset_base_timer(base_id: int) -> void:
+	var base_key = str(base_id)
+	var base_info = bases.get(base_key, null)
+	if base_info == null:
+		return
+
+	# So that check_waves() increments it to 0 on the same day
+	base_info.rounds_since_last_attack = -1
+	bases[base_key] = base_info

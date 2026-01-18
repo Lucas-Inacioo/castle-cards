@@ -109,3 +109,6 @@ var current_upgrade_card: GameData.CardType = GameData.CardType.NONE
 
 var current_castle_health: int = 100
 var max_castle_health: int = 100
+
+var available_units: int = 1 
+var planned_defense_base_ids: Array[int] = []

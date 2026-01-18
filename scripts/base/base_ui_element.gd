@@ -1,7 +1,7 @@
 extends TextureRect
 
-const NUMBER_WIDTH := 8
-const NUMBER_HEIGHT := 16
+const NUMBER_WIDTH = 8
+const NUMBER_HEIGHT = 16
 
 func setup(value: int) -> void:
 	# Make atlas texture unique

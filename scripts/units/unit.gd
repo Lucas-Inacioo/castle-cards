@@ -8,7 +8,7 @@ extends CharacterBody2D
 @export var return_range: float = 4.0
 
 var spawn_position: Vector2
-var returning := false
+var returning = false
 
 var opponent = null
 var in_combat = false
