@@ -1,12 +1,16 @@
-[gd_scene load_steps=22 format=4 uid="uid://cesq67uqhe7y4"]
+[gd_scene load_steps=26 format=4 uid="uid://cesq67uqhe7y4"]
 
 [ext_resource type="Texture2D" path="res://assets/tiles/blocks.tres" id="1_tbgi4"]
 [ext_resource type="Script" uid="uid://bam1fem48gc3w" path="res://scripts/camera/camera_movement.gd" id="1_tefeu"]
 [ext_resource type="Script" uid="uid://cy4kbwj1i34ey" path="res://scenes/main.gd" id="1_tipki"]
 [ext_resource type="Script" uid="uid://024d6tinoqun" path="res://scripts/wave_manager.gd" id="2_o6xl0"]
-[ext_resource type="Texture2D" uid="uid://pfr2n6jbno3r" path="res://assets/ui/Cards.png" id="5_tefeu"]
+[ext_resource type="Script" uid="uid://b4sw57y16w4pa" path="res://scripts/base.gd" id="4_eb6dy"]
+[ext_resource type="Texture2D" uid="uid://pfr2n6jbno3r" path="res://assets/ui/cards/Cards.png" id="5_tefeu"]
+[ext_resource type="Script" uid="uid://dkrfncih148n2" path="res://scripts/cards/cards_container.gd" id="5_ya4ey"]
 [ext_resource type="Texture2D" uid="uid://cmqdmrted7qy2" path="res://assets/ui/Moon.png" id="6_tefeu"]
-[ext_resource type="Texture2D" uid="uid://dx40q28ygu1k5" path="res://assets/ui/Heart.png" id="10_eb6dy"]
+[ext_resource type="Script" uid="uid://cdlaxu23bgm8" path="res://scripts/cards/card_instance.gd" id="7_eb6dy"]
+[ext_resource type="Script" uid="uid://y2m66dbeexww" path="res://scripts/cards/card_slot.gd" id="8_85g3d"]
+[ext_resource type="Texture2D" uid="uid://dx40q28ygu1k5" path="res://assets/ui/cards/Heart.png" id="10_eb6dy"]
 [ext_resource type="AudioStream" uid="uid://dpojbe4a5kn53" path="res://assets/music/SimpleMusic.wav" id="13_trceg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tefeu"]
@@ -162,12 +166,17 @@ enemy_base_markers = NodePath("EnemyBases")
 
 [node name="0" type="Marker2D" parent="WaveManager/EnemyBases"]
 position = Vector2(56, 34)
+script = ExtResource("4_eb6dy")
 
 [node name="1" type="Marker2D" parent="WaveManager/EnemyBases"]
 position = Vector2(325, -332)
+script = ExtResource("4_eb6dy")
+enemy_type = 1
 
 [node name="2" type="Marker2D" parent="WaveManager/EnemyBases"]
 position = Vector2(-241, 499)
+script = ExtResource("4_eb6dy")
+enemy_type = 2
 
 [node name="TileSet" type="Node2D" parent="."]
 
@@ -237,12 +246,15 @@ size_flags_horizontal = 3
 [node name="CardsAvailable" type="HBoxContainer" parent="UI/Control/CardsMargin/CenterContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
+script = ExtResource("5_ya4ey")
 
 [node name="ShieldCard" type="TextureRect" parent="UI/Control/CardsMargin/CenterContainer/CardsAvailable"]
 custom_minimum_size = Vector2(46, 68)
 layout_mode = 2
 texture = SubResource("AtlasTexture_eb6dy")
 expand_mode = 1
+script = ExtResource("7_eb6dy")
+card_type = 2
 
 [node name="PendentRounds1" type="TextureRect" parent="UI/Control/CardsMargin/CenterContainer/CardsAvailable/ShieldCard"]
 visible = false
@@ -265,6 +277,8 @@ custom_minimum_size = Vector2(46, 68)
 layout_mode = 2
 texture = SubResource("AtlasTexture_tipki")
 expand_mode = 1
+script = ExtResource("7_eb6dy")
+card_type = 3
 
 [node name="PendentRounds1" type="TextureRect" parent="UI/Control/CardsMargin/CenterContainer/CardsAvailable/HeartsCard"]
 visible = false
@@ -287,6 +301,8 @@ custom_minimum_size = Vector2(46, 68)
 layout_mode = 2
 texture = SubResource("AtlasTexture_85g3d")
 expand_mode = 1
+script = ExtResource("7_eb6dy")
+card_type = 1
 
 [node name="PendentRounds1" type="TextureRect" parent="UI/Control/CardsMargin/CenterContainer/CardsAvailable/SwordCard"]
 visible = false
@@ -309,6 +325,8 @@ custom_minimum_size = Vector2(46, 68)
 layout_mode = 2
 texture = SubResource("AtlasTexture_choun")
 expand_mode = 1
+script = ExtResource("7_eb6dy")
+card_type = 4
 
 [node name="PendentRounds1" type="TextureRect" parent="UI/Control/CardsMargin/CenterContainer/CardsAvailable/PersonCard"]
 visible = false
@@ -405,12 +423,15 @@ custom_minimum_size = Vector2(46, 68)
 layout_mode = 2
 texture = SubResource("AtlasTexture_jkv2x")
 expand_mode = 1
+script = ExtResource("8_85g3d")
 
 [node name="CardSlotUpgrade" type="TextureRect" parent="UI/Control/SlotsMargin/SlotsCenter/SlotsContainer"]
 custom_minimum_size = Vector2(46, 68)
 layout_mode = 2
 texture = SubResource("AtlasTexture_ya4ey")
 expand_mode = 1
+script = ExtResource("8_85g3d")
+slot_type = 1
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_trceg")

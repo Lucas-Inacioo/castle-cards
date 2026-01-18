@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dus5kesdfqjot"
-path="res://.godot/imported/Person.png-629bf8a8b580b71abcb4d2274e55ace1.ctex"
+uid="uid://lm816he2m336"
+path="res://.godot/imported/Shield.png-b43a4a1e620c4baacfa1457436acdc5e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/Person.png"
-dest_files=["res://.godot/imported/Person.png-629bf8a8b580b71abcb4d2274e55ace1.ctex"]
+source_file="res://assets/ui/cards/Shield.png"
+dest_files=["res://.godot/imported/Shield.png-b43a4a1e620c4baacfa1457436acdc5e.ctex"]
 
 [params]
 

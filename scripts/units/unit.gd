@@ -15,7 +15,7 @@ var in_combat = false
 var dead = false
 var _combat_loop_running = false
 
-func set_attributes(unit_type: String) -> void:
+func set_attributes(unit_type: GameData.UnitType) -> void:
 	var attrs = GameData.units_data.get(unit_type)
 	hp = attrs.get("hp", hp)
 	damage = attrs.get("damage", damage)
