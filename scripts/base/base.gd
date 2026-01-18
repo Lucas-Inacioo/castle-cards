@@ -5,8 +5,6 @@ signal clicked(base_id: int)
 @export var enemy_type: GameData.UnitType
 @export var base_ui_element: Control
 
-var highlight_overlay: ColorRect
-
 var _base_id: int
 var _is_selectable = false
 var _is_selected = false
@@ -34,26 +32,6 @@ func _ready() -> void:
 
 	_click_area.input_event.connect(_on_click_area_input_event)
 
-	highlight_overlay = ColorRect.new()
-	highlight_overlay.name = "HighlightOverlay"
-	highlight_overlay.anchor_left = 0
-	highlight_overlay.anchor_top = 0
-	highlight_overlay.anchor_right = 1
-	highlight_overlay.anchor_bottom = 1
-	highlight_overlay.offset_left = 0
-	highlight_overlay.offset_top = 0
-	highlight_overlay.offset_right = 0
-	highlight_overlay.offset_bottom = 0
-
-	highlight_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	highlight_overlay.visible = false
-
-	# soft red tint for selectable state
-	highlight_overlay.color = Color(1, 0.3, 0.3, 0.18)
-
-	base_ui_element.add_child(highlight_overlay)
-	base_ui_element.move_child(highlight_overlay, base_ui_element.get_child_count() - 1) # on top
-
 func set_selectable(enabled: bool) -> void:
 	_is_selectable = enabled
 	_click_area.input_pickable = enabled
@@ -65,17 +43,15 @@ func set_selected(selected: bool) -> void:
 	_update_visual()
 
 func _update_visual() -> void:
-	if highlight_overlay == null:
+	if base_ui_element == null:
 		return
 
 	if _is_selected:
-		highlight_overlay.visible = true
-		highlight_overlay.color = Color(1, 0.2, 0.2, 0.35) # stronger
+		base_ui_element.modulate = Color(0.7, 1.0, 0.7) # selected
 	elif _is_selectable:
-		highlight_overlay.visible = true
-		highlight_overlay.color = Color(1, 0.3, 0.3, 0.18) # lighter
+		base_ui_element.modulate = Color(1.0, 1.0, 0.7) # selectable
 	else:
-		highlight_overlay.visible = false
+		base_ui_element.modulate = _default_modulate
 
 func _on_click_area_input_event(_viewport: Viewport, event: InputEvent, _shape_idx: int) -> void:
 	if !_is_selectable:
