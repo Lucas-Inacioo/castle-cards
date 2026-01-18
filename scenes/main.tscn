@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=4 uid="uid://cesq67uqhe7y4"]
+[gd_scene load_steps=28 format=4 uid="uid://cesq67uqhe7y4"]
 
 [ext_resource type="Texture2D" path="res://assets/tiles/blocks.tres" id="1_tbgi4"]
 [ext_resource type="Script" uid="uid://bam1fem48gc3w" path="res://scripts/camera/camera_movement.gd" id="1_tefeu"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://cdlaxu23bgm8" path="res://scripts/cards/card_instance.gd" id="7_eb6dy"]
 [ext_resource type="Script" uid="uid://y2m66dbeexww" path="res://scripts/cards/card_slot.gd" id="8_85g3d"]
 [ext_resource type="Texture2D" uid="uid://dx40q28ygu1k5" path="res://assets/ui/cards/Heart.png" id="10_eb6dy"]
+[ext_resource type="Texture2D" uid="uid://dus5kesdfqjot" path="res://assets/ui/cards/Person.png" id="12_a8y0u"]
 [ext_resource type="AudioStream" uid="uid://dpojbe4a5kn53" path="res://assets/music/SimpleMusic.wav" id="13_trceg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tefeu"]
@@ -155,7 +156,7 @@ region = Rect2(251, 109, 23, 34)
 [node name="Main" type="Node2D" node_paths=PackedStringArray("wave_manager", "end_day_button", "card_container", "resource_slots_container", "upgrade_slots_container")]
 script = ExtResource("1_tipki")
 wave_manager = NodePath("WaveManager")
-end_day_button = NodePath("UI/Control/MoonMargin/MoonButton")
+end_day_button = NodePath("UI/Control/MoonMargin/PanelContainer/MoonButton")
 card_container = NodePath("UI/Control/CardsMargin/CenterContainer/CardsAvailable")
 resource_slots_container = NodePath("UI/Control/SlotsMargin/SlotsCenter/SlotsContainer/CardSlotResource")
 upgrade_slots_container = NodePath("UI/Control/SlotsMargin/SlotsCenter/SlotsContainer/CardSlotUpgrade")
@@ -185,7 +186,7 @@ base_ui_element = NodePath("BaseUI1")
 [node name="BaseUI1" parent="WaveManager/EnemyBases/1" instance=ExtResource("5_trceg")]
 
 [node name="2" type="Marker2D" parent="WaveManager/EnemyBases" node_paths=PackedStringArray("base_ui_element")]
-position = Vector2(-241, 499)
+position = Vector2(-241, 457)
 script = ExtResource("4_eb6dy")
 enemy_type = 2
 base_ui_element = NodePath("BaseUI2")
@@ -369,12 +370,15 @@ grow_horizontal = 0
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 
-[node name="MoonButton" type="TextureButton" parent="UI/Control/MoonMargin"]
+[node name="PanelContainer" type="PanelContainer" parent="UI/Control/MoonMargin"]
+layout_mode = 2
+
+[node name="MoonButton" type="TextureButton" parent="UI/Control/MoonMargin/PanelContainer"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_vertical = 4
 texture_normal = ExtResource("6_tefeu")
-stretch_mode = 4
+stretch_mode = 5
 
 [node name="HealthMargin" type="MarginContainer" parent="UI/Control"]
 layout_mode = 1
@@ -383,10 +387,16 @@ offset_bottom = 80.0
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 
-[node name="HealthHbox" type="HBoxContainer" parent="UI/Control/HealthMargin"]
+[node name="PanelContainer" type="PanelContainer" parent="UI/Control/HealthMargin"]
 layout_mode = 2
 
-[node name="HealthIcon" type="TextureRect" parent="UI/Control/HealthMargin/HealthHbox"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/HealthMargin/PanelContainer"]
+layout_mode = 2
+
+[node name="HealthHbox" type="HBoxContainer" parent="UI/Control/HealthMargin/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HealthIcon" type="TextureRect" parent="UI/Control/HealthMargin/PanelContainer/VBoxContainer/HealthHbox"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -394,14 +404,39 @@ size_flags_vertical = 4
 texture = ExtResource("10_eb6dy")
 expand_mode = 1
 
-[node name="Number1" type="TextureRect" parent="UI/Control/HealthMargin/HealthHbox"]
+[node name="Number1" type="TextureRect" parent="UI/Control/HealthMargin/PanelContainer/VBoxContainer/HealthHbox"]
 custom_minimum_size = Vector2(14, 20)
 layout_mode = 2
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_jbj1t")
 expand_mode = 1
 
-[node name="Number2" type="TextureRect" parent="UI/Control/HealthMargin/HealthHbox"]
+[node name="Number2" type="TextureRect" parent="UI/Control/HealthMargin/PanelContainer/VBoxContainer/HealthHbox"]
+custom_minimum_size = Vector2(14, 20)
+layout_mode = 2
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_muem4")
+expand_mode = 1
+
+[node name="PeopleHBox" type="HBoxContainer" parent="UI/Control/HealthMargin/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HealthIcon" type="TextureRect" parent="UI/Control/HealthMargin/PanelContainer/VBoxContainer/PeopleHBox"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("12_a8y0u")
+expand_mode = 1
+
+[node name="Number1" type="TextureRect" parent="UI/Control/HealthMargin/PanelContainer/VBoxContainer/PeopleHBox"]
+custom_minimum_size = Vector2(14, 20)
+layout_mode = 2
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_jbj1t")
+expand_mode = 1
+
+[node name="Number2" type="TextureRect" parent="UI/Control/HealthMargin/PanelContainer/VBoxContainer/PeopleHBox"]
 custom_minimum_size = Vector2(14, 20)
 layout_mode = 2
 size_flags_vertical = 4
