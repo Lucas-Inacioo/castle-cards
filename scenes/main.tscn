@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=4 uid="uid://cesq67uqhe7y4"]
+[gd_scene load_steps=32 format=4 uid="uid://cesq67uqhe7y4"]
 
 [ext_resource type="Script" uid="uid://j26ihxg5u3dv" path="res://scripts/main.gd" id="1_ig7tw"]
 [ext_resource type="Texture2D" uid="uid://cbqmfg4bv8leq" path="res://assets/blocks.tres" id="2_0wfyh"]
@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://dcw2mh34ub2on" path="res://scripts/slots.gd" id="10_ya4ey"]
 [ext_resource type="Texture2D" uid="uid://cgs3bmdwkhfv0" path="res://assets/Numbers.png" id="11_trceg"]
 [ext_resource type="AudioStream" uid="uid://dpojbe4a5kn53" path="res://assets/SimpleMusic.wav" id="13_trceg"]
+[ext_resource type="Script" uid="uid://coh7ugasdmyw6" path="res://scripts/current_waves_list.gd" id="15_dp3eg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sugp2"]
 texture = ExtResource("2_0wfyh")
@@ -162,7 +163,7 @@ region = Rect2(251, 73, 23, 34)
 atlas = ExtResource("5_tefeu")
 region = Rect2(251, 109, 23, 34)
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("card_container", "resource_slot", "slots_container", "world_tile_controller", "enemies_controller", "waves_controller")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("card_container", "resource_slot", "slots_container", "world_tile_controller", "enemies_controller", "waves_controller", "current_waves_list")]
 script = ExtResource("1_ig7tw")
 card_container = NodePath("UI/Control/CardsMargin/CenterContainer/CardsAvailable")
 resource_slot = NodePath("UI/Control/SlotsMargin/SlotsCenter/SlotsContainer/CardSlotResource")
@@ -170,6 +171,7 @@ slots_container = NodePath("UI/Control/SlotsMargin/SlotsCenter/SlotsContainer")
 world_tile_controller = NodePath("TileSet")
 enemies_controller = NodePath("Enemies")
 waves_controller = NodePath("Waves")
+current_waves_list = NodePath("UI/Control/CurrentWaves/ScrollContainer/CurrentWavesList")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 script = ExtResource("2_o6xl0")
@@ -372,6 +374,30 @@ layout_mode = 2
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_muem4")
 expand_mode = 1
+
+[node name="CurrentWaves" type="MarginContainer" parent="UI/Control"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/margin_right = 16
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/Control/CurrentWaves"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+
+[node name="CurrentWavesList" type="VBoxContainer" parent="UI/Control/CurrentWaves/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("15_dp3eg")
 
 [node name="SlotsMargin" type="MarginContainer" parent="UI/Control"]
 layout_mode = 1

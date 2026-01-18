@@ -21,7 +21,7 @@ func _ready() -> void:
 
 	waves_controller.wave_created.connect(enemies_controller.wave_created)
 
-	waves_controller.wave_created.connect(current_waves_list.wave_created)
+	enemies_controller.wave_spawned.connect(current_waves_list.wave_spawned)
 
 func _end_day_button_pressed() -> void:
 	GameData.current_day += 1

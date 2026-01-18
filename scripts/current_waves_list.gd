@@ -1,12 +1,20 @@
 extends VBoxContainer
 
-func wave_created(
-  building_type: GameData.BuildingType,
-	wave_start_position: Vector2,
-	number_of_enemies: int
-) -> void:
-  var wave_ui_element_scene = load("res://scenes/wave_ui_element.tscn")
-  var wave_ui_element = wave_ui_element_scene.instantiate()
-  wave_ui_element.setup(building_type, wave_start_position, number_of_enemies)
-  add_child(wave_ui_element)
-  waves.append(wave_ui_element)
+signal wave_selected(wave)
+
+var wave_rows_by_id: Dictionary = {}
+
+func wave_spawned(wave) -> void:
+  var row_scene = load("res://scenes/wave_list_item.tscn")
+  var row = row_scene.instantiate()
+
+  row.bind_to_wave(wave)
+  row.pressed.connect(func(): wave_selected.emit(wave))
+
+  add_child(row)
+  wave_rows_by_id[wave.get_instance_id()] = row
+
+  # Extra safety: if wave gets freed some other way
+  wave.cleared.connect(func():
+    wave_rows_by_id.erase(wave.get_instance_id())
+  )

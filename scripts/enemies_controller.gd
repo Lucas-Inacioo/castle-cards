@@ -1,5 +1,7 @@
 extends Node2D
 
+signal wave_spawned(wave)
+
 func building_created(building_type: GameData.BuildingType, place_position: Vector2) -> void:
 	if building_type == GameData.BuildingType.PLAYER_CASTLE:
 		return  # No enemies spawn from player castle
@@ -59,25 +61,30 @@ func wave_created(
 	var wave_defense_value = building_data.get("defense") * number_of_enemies
 	var wave_attack_value = building_data.get("attack") * number_of_enemies
 
-	# Root node representing the wave in WORLD space
-	var wave_root = Node2D.new()
-	wave_root.global_position = spawn_position
-	add_child(wave_root)
-
-	# Indicator ABOVE the wave (LOCAL space under wave_root)
 	var rounds_until_castle = 5
+
+	# Wave node (the thing the UI will reference)
+	var wave = load("res://scenes/wave_instance.tscn").instantiate()
+	wave.setup(
+		building_type,
+		wave_start_position,
+		rounds_until_castle,
+		wave_attack_value,
+		wave_defense_value
+	)
+	wave.global_position = spawn_position
+	add_child(wave)
+
+	# World indicator UI above the wave
 	var waves_ui = load("res://scenes/wave_ui.tscn").instantiate()
 	waves_ui.setup(rounds_until_castle, wave_defense_value, wave_attack_value)
 	waves_ui.position = Vector2(0, -75)
 	waves_ui.z_index = 1000
-	wave_root.add_child(waves_ui)
+	wave.add_child(waves_ui)
 
-	# Optional: container just to organize the scene tree
 	var enemies_container = Node2D.new()
-	enemies_container.position = Vector2.ZERO
-	wave_root.add_child(enemies_container)
+	wave.add_child(enemies_container)
 
-	# Spawn enemies (GLOBAL positions because enemy.setup uses global_position)
 	var enemy_type = building_data.get("enemy_type")
 	if enemy_type == null:
 		return
@@ -86,8 +93,11 @@ func wave_created(
 
 	for i in range(number_of_enemies):
 		var random_offset = Vector2(randi_range(-6, 6), randi_range(-6, 6))
-		var enemy: AnimatedSprite2D = enemy_scene.instantiate()
+		var enemy = enemy_scene.instantiate()
 		enemies_container.add_child(enemy)
-
-		# IMPORTANT: pass GLOBAL
 		enemy.setup(spawn_position + random_offset, true)
+
+		wave.add_enemy(enemy)
+
+	# Tell UI: “here’s the actual wave object”
+	wave_spawned.emit(wave)
