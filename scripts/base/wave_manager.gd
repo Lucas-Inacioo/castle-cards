@@ -9,10 +9,12 @@ signal base_clicked(base_id: int)
 var bases = {}
 
 var scheduled_fights = []
-
+var scheduled_attacks = []
 var ally_wave_id = 0
 var enemy_wave_id = 0
 var _defense_selection_enabled = false
+
+var _base_selection_enabled := false
 
 func _ready() -> void:
 	# Initialize enemy base positions using marker ID
@@ -54,6 +56,9 @@ func check_waves() -> void:
 func schedule_fight(base_id: int) -> void:
 	scheduled_fights.append(base_id)
 
+func schedule_attack(base_id: int) -> void:
+	scheduled_attacks.append(base_id)
+
 func fight_waves() -> void:
 	var castle_id = 0
 	for base_id in scheduled_fights:
@@ -71,7 +76,11 @@ func fight_waves() -> void:
 			ally.move_towards(enemy)
 			enemy.move_towards(ally)
 
+	for base_id in scheduled_attacks:
+		attack_base(int(base_id))
+
 	scheduled_fights.clear()
+	scheduled_attacks.clear()
 
 func attack_castle(base_id: int) -> void:
 	var base_position = bases.get(str(base_id))
@@ -96,6 +105,26 @@ func attack_castle(base_id: int) -> void:
 		GameData.current_castle_health -= enemy_damage
 		print("Castle attacked! Current health: ", GameData.current_castle_health)
 
+func attack_base(base_id: int) -> void:
+	var base_info = bases.get(str(base_id))
+	var castle_info = bases.get("0")
+	if base_info == null or castle_info == null:
+		return
+
+	var enemy_type = base_info.enemy_type
+
+	var ally = _spawn_ally(castle_info.position)
+	var enemy = _spawn_enemy(base_info.position, enemy_type)
+
+	ally.set_attributes(GameData.UnitType.SOLDIER)
+	enemy.set_attributes(enemy_type)
+
+	# Make the enemy not move (stationary defender)
+	enemy.move_speed = 0.0
+
+	ally.move_towards(enemy)
+	enemy.move_towards(ally)
+
 func _spawn_ally(pos: Vector2) -> Node2D:
 	var scene = load("res://scenes/units/soldier.tscn")
 	var inst = scene.instantiate()
@@ -109,23 +138,6 @@ func _spawn_enemy(pos: Vector2, enemy_type: GameData.UnitType) -> Node2D:
 	inst.global_position = pos
 	get_parent().add_child(inst)
 	return inst
-
-func enable_defense_selection(enabled: bool) -> void:
-	if _defense_selection_enabled == enabled:
-		return
-	_defense_selection_enabled = enabled
-
-	for base in enemy_base_markers.get_children():
-		if base.name == "0":
-			continue
-		base.set_selectable(enabled)
-
-		if enabled:
-			if !base.clicked.is_connected(_on_base_clicked):
-				base.clicked.connect(_on_base_clicked)
-		else:
-			if base.clicked.is_connected(_on_base_clicked):
-				base.clicked.disconnect(_on_base_clicked)
 
 func set_base_selected(base_id: int, selected: bool) -> void:
 	var base_node = enemy_base_markers.get_node_or_null(str(base_id))
@@ -152,3 +164,30 @@ func reset_base_timer(base_id: int) -> void:
 	# So that check_waves() increments it to 0 on the same day
 	base_info.rounds_since_last_attack = -1
 	bases[base_key] = base_info
+
+func enable_base_selection(enabled: bool) -> void:
+	if _base_selection_enabled == enabled:
+		return
+	_base_selection_enabled = enabled
+
+	for base in enemy_base_markers.get_children():
+		# Never allow selecting the castle
+		if base.name == "0":
+			continue
+
+		# If you track destroyed bases, don't allow selecting them
+		var base_info = bases.get(base.name, null)
+		if base_info != null and base_info.get("destroyed", false):
+			base.set_selectable(false)
+			base.set_selected(false)
+			continue
+
+		base.set_selectable(enabled)
+
+		# Connect/disconnect the click relay
+		if enabled:
+			if !base.clicked.is_connected(_on_base_clicked):
+				base.clicked.connect(_on_base_clicked)
+		else:
+			if base.clicked.is_connected(_on_base_clicked):
+				base.clicked.disconnect(_on_base_clicked)

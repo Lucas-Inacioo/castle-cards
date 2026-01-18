@@ -112,3 +112,4 @@ var max_castle_health: int = 100
 
 var available_units: int = 1
 var planned_defense_base_ids: Array[int] = []
+var planned_attack_base_ids: Array[int] = []

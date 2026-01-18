@@ -31,9 +31,11 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 
 	match slot_type:
 		GameData.SlotType.RESOURCE:
-			# Clean up planned_defense_base_ids
+			# Clean up planned selections
 			GameData.planned_defense_base_ids = []
+			GameData.planned_attack_base_ids = []
 			GameData.current_resource_card = card_type
+
 			if card_type == GameData.CardType.DEFENSE:
 				defense_card_dropped.emit()
 			if card_type == GameData.CardType.ATTACK:
