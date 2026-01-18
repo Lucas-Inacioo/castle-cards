@@ -236,7 +236,7 @@ tile_set = SubResource("TileSet_o6xl0")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="Control" type="Control" parent="UI"]
+[node name="Control" type="Control" parent="UI" node_paths=PackedStringArray("_health_digit_1", "_health_digit_2", "_people_digit_1", "_people_digit_2")]
 custom_minimum_size = Vector2(640, 360)
 layout_mode = 3
 anchors_preset = 15
@@ -246,6 +246,10 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("7_muem4")
+_health_digit_1 = NodePath("HealthMargin/PanelContainer/MarginContainer/VBoxContainer/HealthHbox/Number1")
+_health_digit_2 = NodePath("HealthMargin/PanelContainer/MarginContainer/VBoxContainer/HealthHbox/Number2")
+_people_digit_1 = NodePath("HealthMargin/PanelContainer/MarginContainer/VBoxContainer/PeopleHBox/Number1")
+_people_digit_2 = NodePath("HealthMargin/PanelContainer/MarginContainer/VBoxContainer/PeopleHBox/Number2")
 
 [node name="CardsMargin" type="MarginContainer" parent="UI/Control"]
 layout_mode = 1
@@ -392,17 +396,25 @@ offset_right = 80.0
 offset_bottom = 80.0
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
 
 [node name="PanelContainer" type="PanelContainer" parent="UI/Control/HealthMargin"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/HealthMargin/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/Control/HealthMargin/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Control/HealthMargin/PanelContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="HealthHbox" type="HBoxContainer" parent="UI/Control/HealthMargin/PanelContainer/VBoxContainer"]
+[node name="HealthHbox" type="HBoxContainer" parent="UI/Control/HealthMargin/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="HealthIcon" type="TextureRect" parent="UI/Control/HealthMargin/PanelContainer/VBoxContainer/HealthHbox"]
+[node name="HealthIcon" type="TextureRect" parent="UI/Control/HealthMargin/PanelContainer/MarginContainer/VBoxContainer/HealthHbox"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -410,7 +422,7 @@ size_flags_vertical = 4
 texture = ExtResource("10_eb6dy")
 expand_mode = 1
 
-[node name="Number1" type="TextureRect" parent="UI/Control/HealthMargin/PanelContainer/VBoxContainer/HealthHbox"]
+[node name="Number1" type="TextureRect" parent="UI/Control/HealthMargin/PanelContainer/MarginContainer/VBoxContainer/HealthHbox"]
 custom_minimum_size = Vector2(14, 20)
 layout_mode = 2
 size_flags_vertical = 4
@@ -418,7 +430,7 @@ texture = SubResource("AtlasTexture_jbj1t")
 expand_mode = 1
 script = ExtResource("14_0ld40")
 
-[node name="Number2" type="TextureRect" parent="UI/Control/HealthMargin/PanelContainer/VBoxContainer/HealthHbox"]
+[node name="Number2" type="TextureRect" parent="UI/Control/HealthMargin/PanelContainer/MarginContainer/VBoxContainer/HealthHbox"]
 custom_minimum_size = Vector2(14, 20)
 layout_mode = 2
 size_flags_vertical = 4
@@ -426,10 +438,10 @@ texture = SubResource("AtlasTexture_muem4")
 expand_mode = 1
 script = ExtResource("14_0ld40")
 
-[node name="PeopleHBox" type="HBoxContainer" parent="UI/Control/HealthMargin/PanelContainer/VBoxContainer"]
+[node name="PeopleHBox" type="HBoxContainer" parent="UI/Control/HealthMargin/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="HealthIcon" type="TextureRect" parent="UI/Control/HealthMargin/PanelContainer/VBoxContainer/PeopleHBox"]
+[node name="HealthIcon" type="TextureRect" parent="UI/Control/HealthMargin/PanelContainer/MarginContainer/VBoxContainer/PeopleHBox"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -437,7 +449,7 @@ size_flags_vertical = 4
 texture = ExtResource("12_a8y0u")
 expand_mode = 1
 
-[node name="Number1" type="TextureRect" parent="UI/Control/HealthMargin/PanelContainer/VBoxContainer/PeopleHBox"]
+[node name="Number1" type="TextureRect" parent="UI/Control/HealthMargin/PanelContainer/MarginContainer/VBoxContainer/PeopleHBox"]
 custom_minimum_size = Vector2(14, 20)
 layout_mode = 2
 size_flags_vertical = 4
@@ -445,7 +457,7 @@ texture = SubResource("AtlasTexture_jbj1t")
 expand_mode = 1
 script = ExtResource("14_0ld40")
 
-[node name="Number2" type="TextureRect" parent="UI/Control/HealthMargin/PanelContainer/VBoxContainer/PeopleHBox"]
+[node name="Number2" type="TextureRect" parent="UI/Control/HealthMargin/PanelContainer/MarginContainer/VBoxContainer/PeopleHBox"]
 custom_minimum_size = Vector2(14, 20)
 layout_mode = 2
 size_flags_vertical = 4

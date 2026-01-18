@@ -2,19 +2,11 @@ extends Control
 
 ## Updates the top-left HUD digits (castle health + available units) reactively.
 
-@onready var _health_digit_1: TextureRect = (
-	$HealthMargin/PanelContainer/VBoxContainer/HealthHbox/Number1
-)
-@onready var _health_digit_2: TextureRect = (
-	$HealthMargin/PanelContainer/VBoxContainer/HealthHbox/Number2
-)
+@export var _health_digit_1: TextureRect
+@export var _health_digit_2: TextureRect
 
-@onready var _people_digit_1: TextureRect = (
-	$HealthMargin/PanelContainer/VBoxContainer/PeopleHBox/Number1
-)
-@onready var _people_digit_2: TextureRect = (
-	$HealthMargin/PanelContainer/VBoxContainer/PeopleHBox/Number2
-)
+@export var _people_digit_1: TextureRect
+@export var _people_digit_2: TextureRect
 
 func _ready() -> void:
 	# Initial paint
