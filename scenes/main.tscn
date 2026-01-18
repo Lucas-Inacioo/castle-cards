@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=4 uid="uid://cesq67uqhe7y4"]
+[gd_scene load_steps=31 format=4 uid="uid://cesq67uqhe7y4"]
 
 [ext_resource type="Texture2D" path="res://assets/tiles/blocks.tres" id="1_tbgi4"]
 [ext_resource type="Script" uid="uid://bam1fem48gc3w" path="res://scripts/camera/camera_movement.gd" id="1_tefeu"]
@@ -10,10 +10,13 @@
 [ext_resource type="Script" uid="uid://dkrfncih148n2" path="res://scripts/cards/cards_container.gd" id="5_ya4ey"]
 [ext_resource type="Texture2D" uid="uid://cmqdmrted7qy2" path="res://assets/ui/Moon.png" id="6_tefeu"]
 [ext_resource type="Script" uid="uid://cdlaxu23bgm8" path="res://scripts/cards/card_instance.gd" id="7_eb6dy"]
+[ext_resource type="Script" uid="uid://d10ru5f31wqsb" path="res://scripts/castle_hud.gd" id="7_muem4"]
 [ext_resource type="Script" uid="uid://y2m66dbeexww" path="res://scripts/cards/card_slot.gd" id="8_85g3d"]
 [ext_resource type="Texture2D" uid="uid://dx40q28ygu1k5" path="res://assets/ui/cards/Heart.png" id="10_eb6dy"]
 [ext_resource type="Texture2D" uid="uid://dus5kesdfqjot" path="res://assets/ui/cards/Person.png" id="12_a8y0u"]
+[ext_resource type="Texture2D" uid="uid://tddscnpnxcsb" path="res://assets/ui/block_numbers_gb_01.png" id="13_dp3eg"]
 [ext_resource type="AudioStream" uid="uid://dpojbe4a5kn53" path="res://assets/music/SimpleMusic.wav" id="13_trceg"]
+[ext_resource type="Script" uid="uid://blntiav533u5f" path="res://scripts/base/base_ui_element.gd" id="14_0ld40"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tefeu"]
 texture = ExtResource("1_tbgi4")
@@ -140,10 +143,12 @@ atlas = ExtResource("5_tefeu")
 region = Rect2(1, 109, 23, 34)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jbj1t"]
-region = Rect2(0, 0, 7, 10)
+atlas = ExtResource("13_dp3eg")
+region = Rect2(0, 0, 8, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_muem4"]
-region = Rect2(40, 0, 7, 10)
+atlas = ExtResource("13_dp3eg")
+region = Rect2(0, 0, 8, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jkv2x"]
 atlas = ExtResource("5_tefeu")
@@ -240,6 +245,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+script = ExtResource("7_muem4")
 
 [node name="CardsMargin" type="MarginContainer" parent="UI/Control"]
 layout_mode = 1
@@ -410,6 +416,7 @@ layout_mode = 2
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_jbj1t")
 expand_mode = 1
+script = ExtResource("14_0ld40")
 
 [node name="Number2" type="TextureRect" parent="UI/Control/HealthMargin/PanelContainer/VBoxContainer/HealthHbox"]
 custom_minimum_size = Vector2(14, 20)
@@ -417,6 +424,7 @@ layout_mode = 2
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_muem4")
 expand_mode = 1
+script = ExtResource("14_0ld40")
 
 [node name="PeopleHBox" type="HBoxContainer" parent="UI/Control/HealthMargin/PanelContainer/VBoxContainer"]
 layout_mode = 2
@@ -435,6 +443,7 @@ layout_mode = 2
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_jbj1t")
 expand_mode = 1
+script = ExtResource("14_0ld40")
 
 [node name="Number2" type="TextureRect" parent="UI/Control/HealthMargin/PanelContainer/VBoxContainer/PeopleHBox"]
 custom_minimum_size = Vector2(14, 20)
@@ -442,6 +451,7 @@ layout_mode = 2
 size_flags_vertical = 4
 texture = SubResource("AtlasTexture_muem4")
 expand_mode = 1
+script = ExtResource("14_0ld40")
 
 [node name="SlotsMargin" type="MarginContainer" parent="UI/Control"]
 layout_mode = 1

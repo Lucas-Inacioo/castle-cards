@@ -73,7 +73,7 @@ func _set_cards_for_new_day() -> void:
 		GameData.CardType.HEALTH:
 			var current_health_level = GameData.cards_status[GameData.CardType.HEALTH].upgrade_level
 			GameData.current_castle_health = min(
-				GameData.current_castle_health + 5 * (1 + current_health_level),
+				GameData.current_castle_health + 1 * (1 + current_health_level),
 				GameData.max_castle_health,
 			)
 

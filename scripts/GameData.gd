@@ -1,5 +1,8 @@
 extends Node
 
+signal castle_health_changed(current: int, max_value: int)
+signal available_units_changed(units: int)
+
 enum UnitType {
   SOLDIER,
   ORC,
@@ -19,6 +22,39 @@ enum SlotType {
 	RESOURCE,
 	UPGRADE,
 }
+
+@export var max_castle_health: int:
+	get:
+		return _max_castle_health
+	set(value):
+		_max_castle_health = max(1, value)
+
+		if _current_castle_health > _max_castle_health:
+			_current_castle_health = _max_castle_health
+
+		castle_health_changed.emit(_current_castle_health, _max_castle_health)
+
+@export var current_castle_health: int:
+	get:
+		return _current_castle_health
+	set(value):
+		var clamped := clampi(value, 0, _max_castle_health)
+		if _current_castle_health == clamped:
+			return
+
+		_current_castle_health = clamped
+		castle_health_changed.emit(_current_castle_health, _max_castle_health)
+
+@export var available_units: int:
+	get:
+		return _available_units
+	set(value):
+		var clamped = max(0, value)
+		if _available_units == clamped:
+			return
+
+		_available_units = clamped
+		available_units_changed.emit(_available_units)
 
 var card_data = {
 	CardType.ATTACK: {
@@ -107,9 +143,9 @@ var bases_data = {
 var current_resource_card: GameData.CardType = GameData.CardType.NONE
 var current_upgrade_card: GameData.CardType = GameData.CardType.NONE
 
-var current_castle_health: int = 100
-var max_castle_health: int = 100
-
-var available_units: int = 1
 var planned_defense_base_ids: Array[int] = []
 var planned_attack_base_ids: Array[int] = []
+
+var _max_castle_health: int = 15
+var _current_castle_health: int = 15
+var _available_units: int = 1
