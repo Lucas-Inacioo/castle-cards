@@ -78,8 +78,8 @@ func _set_cards_for_new_day() -> void:
 			)
 
 		GameData.CardType.PEOPLE:
-			var people_level := int(GameData.cards_status[GameData.CardType.PEOPLE].upgrade_level)
-			var units_gained := 1 + people_level
+			var people_level = int(GameData.cards_status[GameData.CardType.PEOPLE].upgrade_level)
+			var units_gained = 1 + people_level
 			GameData.available_units += units_gained
 
 func _build_defense_overlay() -> void:
@@ -135,7 +135,7 @@ func _on_defense_card_dropped() -> void:
 	wave_manager.enable_base_selection(true)
 
 func _update_defense_overlay_text() -> void:
-	defense_info_label.text = "Select up to %d bases (%d selected)" % [
+	defense_info_label.text = "Select up to %d bases to delay attacks (%d selected)" % [
 		GameData.available_units,
 		selected_defense_base_ids.size()
 	]
@@ -178,7 +178,7 @@ func _apply_planned_defense() -> void:
 	if GameData.planned_defense_base_ids.is_empty():
 		return
 
-	var units_spent := GameData.planned_defense_base_ids.size()
+	var units_spent = GameData.planned_defense_base_ids.size()
 	GameData.available_units = max(1, GameData.available_units - units_spent)
 
 	for base_id in GameData.planned_defense_base_ids:
@@ -289,7 +289,7 @@ func _apply_planned_attack() -> void:
 	if GameData.planned_attack_base_ids.is_empty():
 		return
 
-	var units_spent := GameData.planned_attack_base_ids.size()
+	var units_spent = GameData.planned_attack_base_ids.size()
 	GameData.available_units = max(1, GameData.available_units - units_spent)
 
 	for base_id in GameData.planned_attack_base_ids:

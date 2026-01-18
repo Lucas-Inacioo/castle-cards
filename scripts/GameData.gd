@@ -3,6 +3,9 @@ extends Node
 signal castle_health_changed(current: int, max_value: int)
 signal available_units_changed(units: int)
 
+signal base_health_changed(base_id: int, current: int, max_value: int)
+signal base_destroyed(base_id: int)
+
 enum UnitType {
   SOLDIER,
   ORC,
@@ -38,7 +41,7 @@ enum SlotType {
 	get:
 		return _current_castle_health
 	set(value):
-		var clamped := clampi(value, 0, _max_castle_health)
+		var clamped = clampi(value, 0, _max_castle_health)
 		if _current_castle_health == clamped:
 			return
 
@@ -132,11 +135,15 @@ var bases_data = {
     "rounds_between_attacks": 4,
     "base_attack": 2,
     "base_shield": 1,
+    "maximum_health": 8,
+    "current_health": 8,
   },
   2: {
     "rounds_between_attacks": 2,
     "base_attack": 1,
     "base_shield": 1,
+    "maximum_health": 15,
+    "current_health": 15,
   },
 }
 
@@ -149,3 +156,67 @@ var planned_attack_base_ids: Array[int] = []
 var _max_castle_health: int = 15
 var _current_castle_health: int = 15
 var _available_units: int = 1
+
+func _ready() -> void:
+	ensure_base_health_initialized()
+
+func ensure_base_health_initialized() -> void:
+	for base_id in bases_data.keys():
+		var base_info: Dictionary = bases_data[base_id]
+		if !base_info.has("maximum_health"):
+			base_info["maximum_health"] = 1
+		if !base_info.has("current_health"):
+			base_info["current_health"] = int(base_info["maximum_health"])
+		if !base_info.has("destroyed"):
+			base_info["destroyed"] = false
+		bases_data[base_id] = base_info
+
+func is_base_destroyed(base_id: int) -> bool:
+	var base_info: Dictionary = bases_data.get(base_id, {})
+	return bool(base_info.get("destroyed", false))
+
+func get_base_max_health(base_id: int) -> int:
+	var base_info: Dictionary = bases_data.get(base_id, {})
+	return max(1, int(base_info.get("maximum_health", 1)))
+
+func get_base_current_health(base_id: int) -> int:
+	var base_info: Dictionary = bases_data.get(base_id, {})
+	if base_info.is_empty():
+		return 0
+	if base_info.has("current_health"):
+		return int(base_info["current_health"])
+	return int(base_info.get("maximum_health", 0))
+
+func set_base_current_health(base_id: int, new_value: int) -> void:
+	var base_info: Dictionary = bases_data.get(base_id, {})
+	if base_info.is_empty():
+		return
+	var max_health = get_base_max_health(base_id)
+	var clamped = clampi(new_value, 0, max_health)
+
+	base_info["current_health"] = clamped
+	bases_data[base_id] = base_info
+	base_health_changed.emit(base_id, clamped, max_health)
+
+	if clamped <= 0 and !is_base_destroyed(base_id):
+		destroy_base(base_id)
+
+func apply_damage_to_base(base_id: int, raw_damage: int) -> void:
+	if raw_damage <= 0:
+		return
+	if is_base_destroyed(base_id):
+		return
+	var current_health = get_base_current_health(base_id)
+	set_base_current_health(base_id, current_health - raw_damage)
+
+func destroy_base(base_id: int) -> void:
+	var base_info: Dictionary = bases_data.get(base_id, {})
+	if base_info.is_empty():
+		return
+	if bool(base_info.get("destroyed", false)):
+		return
+
+	base_info["destroyed"] = true
+	base_info["current_health"] = 0
+	bases_data[base_id] = base_info
+	base_destroyed.emit(base_id)

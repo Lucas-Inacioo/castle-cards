@@ -14,9 +14,13 @@ var ally_wave_id = 0
 var enemy_wave_id = 0
 var _defense_selection_enabled = false
 
-var _base_selection_enabled := false
+var _base_selection_enabled = false
 
 func _ready() -> void:
+	GameData.ensure_base_health_initialized()
+	GameData.base_health_changed.connect(_on_base_health_changed)
+	GameData.base_destroyed.connect(_on_base_destroyed)
+
 	# Initialize enemy base positions using marker ID
 	for base in enemy_base_markers.get_children():
 		var base_data = GameData.bases_data.get(int(base.name))
@@ -26,8 +30,12 @@ func _ready() -> void:
 			"rounds_between_attacks": base_data.get("rounds_between_attacks"),
 			"rounds_since_last_attack": 0,
 			"base_shield": base_data.get("base_shield"),
-			"base_attack": base_data.get("base_attack")
+			"base_attack": base_data.get("base_attack"),
+			"maximum_health": base_data.get("maximum_health"),
+			"current_health": base_data.get("current_health"),
+			"destroyed": false,
 		}
+		_sync_health_display_for_base(int(base.name))
 		base.base_ui_element.setup(base_data)
 
 func check_waves() -> void:
@@ -125,6 +133,12 @@ func attack_base(base_id: int) -> void:
 	ally.move_towards(enemy)
 	enemy.move_towards(ally)
 
+	var soldier_damage = int(GameData.units_data.get(GameData.UnitType.SOLDIER, {}).get("damage", 1))
+	var attack_level = int(GameData.cards_status[GameData.CardType.ATTACK].upgrade_level)
+	var total_damage = max(1, soldier_damage + attack_level)
+
+	GameData.apply_damage_to_base(base_id, total_damage)
+
 func _spawn_ally(pos: Vector2) -> Node2D:
 	var scene = load("res://scenes/units/soldier.tscn")
 	var inst = scene.instantiate()
@@ -191,3 +205,48 @@ func enable_base_selection(enabled: bool) -> void:
 		else:
 			if base.clicked.is_connected(_on_base_clicked):
 				base.clicked.disconnect(_on_base_clicked)
+
+func _sync_health_display_for_base(base_id: int) -> void:
+	var base_node := enemy_base_markers.get_node_or_null(str(base_id))
+	if base_node == null:
+		return
+
+	var health_display := base_node.get_node_or_null("healthDisplay")
+	if health_display == null:
+		return
+	if !(health_display is Range):
+		return
+
+	(health_display as Range).max_value = GameData.get_base_max_health(base_id)
+	(health_display as Range).value = GameData.get_base_current_health(base_id)
+
+func _on_base_health_changed(base_id: int, current: int, max_value: int) -> void:
+	var key := str(base_id)
+	if bases.has(key):
+		var base_info: Dictionary = bases[key]
+		base_info["current_health"] = current
+		base_info["maximum_health"] = max_value
+		bases[key] = base_info
+	_sync_health_display_for_base(base_id)
+
+func _on_base_destroyed(base_id: int) -> void:
+	var key := str(base_id)
+
+	# stop future interactions
+	scheduled_fights.erase(base_id)
+	scheduled_attacks.erase(base_id)
+
+	# remove visuals + node
+	var base_node := enemy_base_markers.get_node_or_null(key)
+	if base_node != null:
+		if base_node.base_ui_element != null and is_instance_valid(base_node.base_ui_element):
+			base_node.base_ui_element.queue_free()
+		var health_display := base_node.get_node_or_null("healthDisplay")
+		if health_display != null:
+			health_display.queue_free()
+		base_node.set_selectable(false)
+		base_node.set_selected(false)
+		base_node.queue_free()
+
+	# remove from wave logic
+	bases.erase(key)

@@ -25,9 +25,9 @@ func _update_people(units: int) -> void:
 
 func _set_two_digits(value: int, digit_1: TextureRect, digit_2: TextureRect) -> void:
 	# HUD only has 2 digits; clamp to a sensible range.
-	var clamped := clampi(value, 0, 99)
-	var tens := int(clamped / 10)
-	var ones := clamped % 10
+	var clamped = clampi(value, 0, 99)
+	var tens = int(clamped / 10)
+	var ones = clamped % 10
 
 	# Uses the same digit TextureRect script as the base UI elements (base_ui_element.gd)
 	digit_1.setup(tens)

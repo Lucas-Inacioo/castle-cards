@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=4 uid="uid://cesq67uqhe7y4"]
+[gd_scene load_steps=33 format=4 uid="uid://cesq67uqhe7y4"]
 
 [ext_resource type="Texture2D" path="res://assets/tiles/blocks.tres" id="1_tbgi4"]
 [ext_resource type="Script" uid="uid://bam1fem48gc3w" path="res://scripts/camera/camera_movement.gd" id="1_tefeu"]
@@ -17,6 +17,12 @@
 [ext_resource type="Texture2D" uid="uid://tddscnpnxcsb" path="res://assets/ui/block_numbers_gb_01.png" id="13_dp3eg"]
 [ext_resource type="AudioStream" uid="uid://dpojbe4a5kn53" path="res://assets/music/SimpleMusic.wav" id="13_trceg"]
 [ext_resource type="Script" uid="uid://blntiav533u5f" path="res://scripts/base/base_ui_element.gd" id="14_0ld40"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_muem4"]
+bg_color = Color(0.0932048, 0.2706543, 0.20001908, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dp3eg"]
+bg_color = Color(0, 0.7254902, 0.14509805, 1)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tefeu"]
 texture = ExtResource("1_tbgi4")
@@ -190,6 +196,17 @@ base_ui_element = NodePath("BaseUI1")
 
 [node name="BaseUI1" parent="WaveManager/EnemyBases/1" instance=ExtResource("5_trceg")]
 
+[node name="healthDisplay" type="ProgressBar" parent="WaveManager/EnemyBases/1"]
+z_index = 10
+custom_minimum_size = Vector2(40, 6)
+offset_left = -23.0
+offset_top = -25.0
+offset_right = 17.0
+offset_bottom = -19.0
+theme_override_styles/background = SubResource("StyleBoxFlat_muem4")
+theme_override_styles/fill = SubResource("StyleBoxFlat_dp3eg")
+show_percentage = false
+
 [node name="2" type="Marker2D" parent="WaveManager/EnemyBases" node_paths=PackedStringArray("base_ui_element")]
 position = Vector2(-241, 457)
 script = ExtResource("4_eb6dy")
@@ -197,6 +214,17 @@ enemy_type = 2
 base_ui_element = NodePath("BaseUI2")
 
 [node name="BaseUI2" parent="WaveManager/EnemyBases/2" instance=ExtResource("5_trceg")]
+
+[node name="healthDisplay" type="ProgressBar" parent="WaveManager/EnemyBases/2"]
+z_index = 10
+custom_minimum_size = Vector2(40, 6)
+offset_left = -31.0
+offset_top = 1.0
+offset_right = 9.0
+offset_bottom = 7.0
+theme_override_styles/background = SubResource("StyleBoxFlat_muem4")
+theme_override_styles/fill = SubResource("StyleBoxFlat_dp3eg")
+show_percentage = false
 
 [node name="TileSet" type="Node2D" parent="."]
 
