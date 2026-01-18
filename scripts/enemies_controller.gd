@@ -50,9 +50,14 @@ func wave_created(
 	wave_start_position: Vector2,
 	number_of_enemies: int,
 ) -> void:
+	var building_data = GameData.building_data.get(building_type)
+
 	var vector_to_castle = (Vector2.ZERO - wave_start_position).normalized()
 	var spawn_offset_distance = 50.0
 	var spawn_position = wave_start_position + vector_to_castle * spawn_offset_distance
+
+	var wave_defense_value = building_data.get("defense") * number_of_enemies
+	var wave_attack_value = building_data.get("attack") * number_of_enemies
 
 	# Root node representing the wave in WORLD space
 	var wave_root = Node2D.new()
@@ -61,11 +66,11 @@ func wave_created(
 
 	# Indicator ABOVE the wave (LOCAL space under wave_root)
 	var rounds_until_castle = 5
-	var rounds_indicator = load("res://scenes/rounds_until_castle.tscn").instantiate()
-	rounds_indicator.setup(rounds_until_castle)
-	rounds_indicator.position = Vector2(0, -30)
-	rounds_indicator.z_index = 1000
-	wave_root.add_child(rounds_indicator)
+	var waves_ui = load("res://scenes/wave_ui.tscn").instantiate()
+	waves_ui.setup(rounds_until_castle, wave_defense_value, wave_attack_value)
+	waves_ui.position = Vector2(0, -75)
+	waves_ui.z_index = 1000
+	wave_root.add_child(waves_ui)
 
 	# Optional: container just to organize the scene tree
 	var enemies_container = Node2D.new()
@@ -73,7 +78,6 @@ func wave_created(
 	wave_root.add_child(enemies_container)
 
 	# Spawn enemies (GLOBAL positions because enemy.setup uses global_position)
-	var building_data = GameData.building_data.get(building_type)
 	var enemy_type = building_data.get("enemy_type")
 	if enemy_type == null:
 		return

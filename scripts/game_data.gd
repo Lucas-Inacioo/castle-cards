@@ -74,12 +74,16 @@ var building_data = {
 	BuildingType.ENEMY_BASE_VARIANT_1: {
 		"max_health": 50,
 		"enemy_type": "res://scenes/enemy_orc.tscn",
+		"defense": 5,
+		"attack": 1,
 		"scene": "res://scenes/enemy_1.tscn",
 		"waves_apart_spawn": 1,
 	},
 	BuildingType.ENEMY_BASE_VARIANT_2: {
 		"max_health": 75,
 		"enemy_type": "res://scenes/enemy_skeleton.tscn",
+		"defense": 1,
+		"attack": 3,
 		"scene": "res://scenes/enemy_2.tscn",
 		"waves_apart_spawn": 6,
 	},
