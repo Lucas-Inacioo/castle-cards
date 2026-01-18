@@ -19,8 +19,8 @@ func _ready() -> void:
 			"position": base.global_position,
 			"enemy_type": base.get("enemy_type"),
 			"rounds_between_attacks": base_data.get("rounds_between_attacks"),
-			"shield": base_data.get("base_shield"),
-			"attack": base_data.get("base_attack")
+			"base_shield": base_data.get("base_shield"),
+			"base_attack": base_data.get("base_attack")
 		}
 		base.base_ui_element.setup(base_data)
 
