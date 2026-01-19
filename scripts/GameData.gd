@@ -76,8 +76,8 @@ const DEFAULT_BASES_DATA := {
 		"rounds_between_attacks": 2,
 		"base_attack": 1,
 		"base_shield": 1,
-		"maximum_health": 15,
-		"current_health": 15,
+		"maximum_health": 1,
+		"current_health": 1,
 		"destroyed": false,
 	},
 	3: {
@@ -102,6 +102,7 @@ const DEFAULT_BASES_DATA := {
     "base_shield": 12,
     "maximum_health": 35,
     "current_health": 35,
+		"destroyed": false,
   },
 }
 

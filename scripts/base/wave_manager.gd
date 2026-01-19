@@ -286,6 +286,16 @@ func _on_base_destroyed(base_id: int) -> void:
 		base_node.set_selected(false)
 		base_node.queue_free()
 
+	var explosion_scene = load("res://scenes/explosion.tscn")
+
+	for i in range(6):
+		var offset = Vector2(randf_range(-32, 32), randf_range(-32, 32))
+		var explosion_instance: AnimatedSprite2D = explosion_scene.instantiate()
+		explosion_instance.global_position = base_node.global_position + offset
+		get_parent().add_child(explosion_instance)
+		explosion_instance.play("Explode")
+		explosion_instance.animation_finished.connect(explosion_instance.queue_free)
+
 	# remove from wave logic
 	bases.erase(key)
 
