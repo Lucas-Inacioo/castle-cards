@@ -1,0 +1,217 @@
+[gd_scene load_steps=17 format=3 uid="uid://cjuvv60m3mu2u"]
+
+[ext_resource type="Script" uid="uid://bll58plknmjxq" path="res://scenes/tutorial.gd" id="1_0epgs"]
+[ext_resource type="Texture2D" uid="uid://5vt4wpo0ei1l" path="res://assets/tutorial/1.png" id="2_g2equ"]
+[ext_resource type="Texture2D" uid="uid://brn8oiuxsmtkn" path="res://assets/tutorial/2.png" id="3_tbcdj"]
+[ext_resource type="Texture2D" uid="uid://bhmsi88wccxm0" path="res://assets/tutorial/3.png" id="4_ej4tf"]
+[ext_resource type="Texture2D" uid="uid://dy2qfbsbmb4m6" path="res://assets/tutorial/4.png" id="5_0hilk"]
+[ext_resource type="Texture2D" uid="uid://mdt1ikteg1qx" path="res://assets/tutorial/5.png" id="6_wr8iv"]
+[ext_resource type="Texture2D" uid="uid://btpboyhuh12ql" path="res://assets/tutorial/6.png" id="7_e13mp"]
+[ext_resource type="Texture2D" uid="uid://bq1yi2dn7r6uf" path="res://assets/tutorial/7.png" id="8_vrdqu"]
+[ext_resource type="Texture2D" uid="uid://byyj1hnfuu8ve" path="res://assets/tutorial/8.png" id="9_cmspm"]
+[ext_resource type="Texture2D" uid="uid://c8r35qii7deui" path="res://assets/tutorial/Symbol Arrow Left.png" id="10_ikfo1"]
+[ext_resource type="Texture2D" uid="uid://ngt028suxse4" path="res://assets/tutorial/Symbol Arrow Right.png" id="11_wr8iv"]
+[ext_resource type="Texture2D" uid="uid://clcuej8v2oyun" path="res://assets/ui/Letter S.png" id="12_e13mp"]
+[ext_resource type="Texture2D" uid="uid://b1s6gyfaib8dx" path="res://assets/ui/Letter T.png" id="13_vrdqu"]
+[ext_resource type="Texture2D" uid="uid://ca2y71uayf2bb" path="res://assets/ui/Letter A.png" id="14_cmspm"]
+[ext_resource type="Texture2D" uid="uid://dpnk13b1kdrf1" path="res://assets/ui/Letter R.png" id="15_ikfo1"]
+[ext_resource type="AudioStream" uid="uid://dpojbe4a5kn53" path="res://assets/music/SimpleMusic.wav" id="16_e13mp"]
+
+[node name="Tutorial" type="Control" node_paths=PackedStringArray("previous_button", "next_button", "start_game_button", "tutorial_1", "tutorial_2", "tutorial_3", "tutorial_4", "tutorial_5", "tutorial_6", "tutorial_7", "tutorial_8")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0epgs")
+previous_button = NodePath("MarginContainer/PreviousButton")
+next_button = NodePath("MarginContainer2/NextButton")
+start_game_button = NodePath("MarginContainer3/StartGameButton")
+tutorial_1 = NodePath("1")
+tutorial_2 = NodePath("2")
+tutorial_3 = NodePath("3")
+tutorial_4 = NodePath("4")
+tutorial_5 = NodePath("5")
+tutorial_6 = NodePath("6")
+tutorial_7 = NodePath("7")
+tutorial_8 = NodePath("8")
+
+[node name="1" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_g2equ")
+expand_mode = 2
+
+[node name="2" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_tbcdj")
+expand_mode = 2
+
+[node name="3" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_ej4tf")
+expand_mode = 2
+
+[node name="4" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_0hilk")
+expand_mode = 2
+
+[node name="5" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_wr8iv")
+expand_mode = 2
+
+[node name="6" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_e13mp")
+expand_mode = 2
+
+[node name="7" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_vrdqu")
+expand_mode = 2
+
+[node name="8" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_cmspm")
+expand_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="PreviousButton" type="Button" parent="MarginContainer"]
+visible = false
+layout_mode = 2
+icon = ExtResource("10_ikfo1")
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="NextButton" type="Button" parent="MarginContainer2"]
+layout_mode = 2
+icon = ExtResource("11_wr8iv")
+
+[node name="MarginContainer3" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = -8.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="StartGameButton" type="Button" parent="MarginContainer3"]
+visible = false
+custom_minimum_size = Vector2(90, 64)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer3/StartGameButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.5
+offset_top = -20.0
+offset_right = 40.5
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="S" type="TextureRect" parent="MarginContainer3/StartGameButton/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("12_e13mp")
+
+[node name="T" type="TextureRect" parent="MarginContainer3/StartGameButton/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("13_vrdqu")
+
+[node name="A" type="TextureRect" parent="MarginContainer3/StartGameButton/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("14_cmspm")
+
+[node name="R" type="TextureRect" parent="MarginContainer3/StartGameButton/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("15_ikfo1")
+
+[node name="T2" type="TextureRect" parent="MarginContainer3/StartGameButton/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("13_vrdqu")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("16_e13mp")
+volume_db = -15.0
+autoplay = true

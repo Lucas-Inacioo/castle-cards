@@ -37,6 +37,7 @@ var _is_game_over = false
 var _is_game_won = false
 
 func _ready() -> void:
+	card_container.start_new_day()
 	end_day_button.pressed.connect(_on_end_day_button_pressed)
 
 	(resource_slots_container as TextureRect).defense_card_dropped.connect(_on_defense_card_dropped)
@@ -100,7 +101,7 @@ func _set_cards_for_new_day() -> void:
 
 	# Start upgrading the selected card
 	GameData.cards_status[current_upgrading_card].is_upgrading = true
-	GameData.cards_status[current_upgrading_card].rounds_until_upgrade_complete = 2
+	GameData.cards_status[current_upgrading_card].rounds_until_upgrade_complete = 1
 
 	# Apply the effects of the selected resource card
 	match current_resource_card:
@@ -410,4 +411,4 @@ func _show_game_over_ui() -> void:
 
 func _on_play_again_pressed() -> void:
 	GameData.reset_game()
-	get_tree().change_scene_to_file("res://scenes/main.tscn")
+	get_tree().call_deferred("reload_current_scene")

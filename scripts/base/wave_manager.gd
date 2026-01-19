@@ -149,7 +149,6 @@ func attack_castle(base_id: int) -> void:
 		var enemy_data = GameData.units_data.get(enemy_type)
 		var enemy_damage = enemy_data.get("damage", 1)
 		GameData.current_castle_health -= enemy_damage
-		print("Castle attacked! Current health: ", GameData.current_castle_health)
 
 func attack_base(base_id: int) -> void:
 	var base_info = bases.get(str(base_id))

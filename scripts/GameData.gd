@@ -29,8 +29,8 @@ enum SlotType {
 	UPGRADE,
 }
 
-const DEFAULT_MAX_CASTLE_HEALTH := 15
-const DEFAULT_CURRENT_CASTLE_HEALTH := 15
+const DEFAULT_MAX_CASTLE_HEALTH := 25
+const DEFAULT_CURRENT_CASTLE_HEALTH := 25
 const DEFAULT_AVAILABLE_UNITS := 1
 
 const DEFAULT_CARDS_STATUS := {
@@ -76,8 +76,8 @@ const DEFAULT_BASES_DATA := {
 		"rounds_between_attacks": 2,
 		"base_attack": 1,
 		"base_shield": 1,
-		"maximum_health": 1,
-		"current_health": 1,
+		"maximum_health": 10,
+		"current_health": 10,
 		"destroyed": false,
 	},
 	3: {
@@ -97,11 +97,11 @@ const DEFAULT_BASES_DATA := {
 		"destroyed": false,
 	},
   5: {
-    "rounds_between_attacks": 5,
-    "base_attack": 2,
-    "base_shield": 12,
-    "maximum_health": 35,
-    "current_health": 35,
+	"rounds_between_attacks": 5,
+	"base_attack": 2,
+	"base_shield": 12,
+	"maximum_health": 35,
+	"current_health": 35,
 		"destroyed": false,
   },
 }
@@ -166,37 +166,37 @@ var cards_status = DEFAULT_CARDS_STATUS.duplicate(true)
 
 var units_data = {
   GameData.UnitType.SOLDIER: {
-    "hp": 3,
-    "damage": 1,
+	"hp": 3,
+	"damage": 1,
   },
   GameData.UnitType.ORC: {
-    "hp": 2,
-    "damage": 1,
-    "scene": load("res://scenes/units/orc.tscn"),
+	"hp": 2,
+	"damage": 1,
+	"scene": load("res://scenes/units/orc.tscn"),
   },
   GameData.UnitType.ORC2: {
-    "hp": 1,
-    "damage": 10,
-    "scene": load("res://scenes/units/orc.tscn"),
+	"hp": 1,
+	"damage": 10,
+	"scene": load("res://scenes/units/orc.tscn"),
   },
   GameData.UnitType.SKELETON: {
-    "hp": 1,
-    "damage": 1,
-    "scene": load("res://scenes/units/skeleton.tscn"),
+	"hp": 1,
+	"damage": 1,
+	"scene": load("res://scenes/units/skeleton.tscn"),
   },
   GameData.UnitType.SKELETON2: {
-    "hp": 12,
-    "damage": 2,
-    "scene": load("res://scenes/units/skeleton.tscn"),
+	"hp": 12,
+	"damage": 2,
+	"scene": load("res://scenes/units/skeleton.tscn"),
   },
   GameData.UnitType.VAMPIRE: {
-    "hp": 3,
-    "damage": 7,
-    "scene": load("res://scenes/units/vampire.tscn"),
+	"hp": 3,
+	"damage": 7,
+	"scene": load("res://scenes/units/vampire.tscn"),
   },
   GameData.UnitType.ATTACK_PLACEHOLDER: {
-    "hp": 1,
-    "damage": 1000,
+	"hp": 1,
+	"damage": 1000,
   },
 }
 
@@ -303,8 +303,9 @@ func all_bases_destroyed() -> bool:
 
 		var destroyed := bool(info.get("destroyed", false))
 		var current_hp := int(info.get("current_health", int(info.get("maximum_health", 1))))
+		var is_castle = base_id == 0
 
-		if !destroyed and current_hp > 0:
+		if !destroyed and current_hp > 0 and is_castle == false:
 			return false
 
 	return true
