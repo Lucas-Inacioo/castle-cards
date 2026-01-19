@@ -5,6 +5,7 @@ extends Node2D
 @export var card_container: Node
 @export var resource_slots_container: TextureRect
 @export var upgrade_slots_container: TextureRect
+@export var win_label: Label
 
 var defense_planning_active = false
 var selected_defense_base_ids: Array[int] = []
@@ -31,6 +32,9 @@ func _ready() -> void:
 
 	_build_attack_overlay()
 	_build_defense_overlay()
+
+	GameData.base_destroyed.connect(_on_base_destroyed)
+	_update_victory_ui()
 
 func _on_end_day_button_pressed() -> void:
 	if GameData.current_resource_card == GameData.CardType.NONE:
@@ -333,3 +337,14 @@ func _on_wave_manager_base_clicked(base_id: int) -> void:
 		attack_confirm_button.disabled = selected_attack_base_ids.is_empty()
 		_update_attack_overlay_text()
 		return
+
+func _on_base_destroyed(_base_id: int) -> void:
+	_update_victory_ui()
+
+func _update_victory_ui() -> void:
+	var won := GameData.all_bases_destroyed()
+	win_label.visible = won
+
+	if won:
+		# Stop the game flow
+		end_day_button.disabled = true

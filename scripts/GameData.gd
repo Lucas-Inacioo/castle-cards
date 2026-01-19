@@ -240,3 +240,16 @@ func destroy_base(base_id: int) -> void:
 	base_info["current_health"] = 0
 	bases_data[base_id] = base_info
 	base_destroyed.emit(base_id)
+
+func all_bases_destroyed() -> bool:
+	# Works if you store "destroyed" and/or current_health.
+	for base_id in bases_data.keys():
+		var info: Dictionary = bases_data[base_id]
+
+		var destroyed := bool(info.get("destroyed", false))
+		var current_hp := int(info.get("current_health", int(info.get("maximum_health", 1))))
+
+		if !destroyed and current_hp > 0:
+			return false
+
+	return true
