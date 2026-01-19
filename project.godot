@@ -11,12 +11,13 @@ config_version=5
 [application]
 
 config/name="Castle cards"
-run/main_scene="uid://cesq67uqhe7y4"
+run/main_scene="uid://dtinixjrmsrbx"
 config/features=PackedStringArray("4.5", "Forward Plus")
 
 [autoload]
 
 GameData="*res://scripts/GameData.gd"
+SettingsSingleton="*res://scripts/SettingsSingleton.gd"
 
 [display]
 
