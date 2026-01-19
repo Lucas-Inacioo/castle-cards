@@ -220,7 +220,7 @@ show_percentage = false
 [node name="2" type="Marker2D" parent="WaveManager/EnemyBases" node_paths=PackedStringArray("base_ui_element")]
 position = Vector2(-241, 457)
 script = ExtResource("4_eb6dy")
-enemy_type = 2
+enemy_type = 3
 base_ui_element = NodePath("BaseUI2")
 
 [node name="BaseUI2" parent="WaveManager/EnemyBases/2" instance=ExtResource("5_trceg")]
@@ -240,7 +240,7 @@ show_percentage = false
 [node name="3" type="Marker2D" parent="WaveManager/EnemyBases" node_paths=PackedStringArray("base_ui_element")]
 position = Vector2(533, 452)
 script = ExtResource("4_eb6dy")
-enemy_type = 4
+enemy_type = 6
 base_ui_element = NodePath("BaseUI2")
 
 [node name="BaseUI2" parent="WaveManager/EnemyBases/3" instance=ExtResource("5_trceg")]
@@ -260,7 +260,7 @@ show_percentage = false
 [node name="4" type="Marker2D" parent="WaveManager/EnemyBases" node_paths=PackedStringArray("base_ui_element")]
 position = Vector2(138, -383)
 script = ExtResource("4_eb6dy")
-enemy_type = 1
+enemy_type = 2
 base_ui_element = NodePath("BaseUI2")
 
 [node name="BaseUI2" parent="WaveManager/EnemyBases/4" instance=ExtResource("5_trceg")]
@@ -280,7 +280,7 @@ show_percentage = false
 [node name="5" type="Marker2D" parent="WaveManager/EnemyBases" node_paths=PackedStringArray("base_ui_element")]
 position = Vector2(-223, -264)
 script = ExtResource("4_eb6dy")
-enemy_type = 2
+enemy_type = 4
 base_ui_element = NodePath("BaseUI2")
 
 [node name="BaseUI2" parent="WaveManager/EnemyBases/5" instance=ExtResource("5_trceg")]
