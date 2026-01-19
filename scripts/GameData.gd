@@ -9,7 +9,9 @@ signal base_destroyed(base_id: int)
 enum UnitType {
   SOLDIER,
   ORC,
+  ORC2,
   SKELETON,
+  SKELETON2,
   ATTACK_PLACEHOLDER,
   VAMPIRE,
 }
@@ -25,6 +27,82 @@ enum CardType {
 enum SlotType {
 	RESOURCE,
 	UPGRADE,
+}
+
+const DEFAULT_MAX_CASTLE_HEALTH := 15
+const DEFAULT_CURRENT_CASTLE_HEALTH := 15
+const DEFAULT_AVAILABLE_UNITS := 1
+
+const DEFAULT_CARDS_STATUS := {
+	CardType.ATTACK: {
+		upgrade_level = 0,
+		is_upgrading = false,
+		rounds_until_upgrade_complete = 0,
+	},
+	CardType.DEFENSE: {
+		upgrade_level = 0,
+		is_upgrading = false,
+		rounds_until_upgrade_complete = 0,
+	},
+	CardType.HEALTH: {
+		upgrade_level = 0,
+		is_upgrading = false,
+		rounds_until_upgrade_complete = 0,
+	},
+	CardType.PEOPLE: {
+		upgrade_level = 0,
+		is_upgrading = false,
+		rounds_until_upgrade_complete = 0,
+	},
+}
+
+const DEFAULT_BASES_DATA := {
+	0: {
+		"base_attack": 1,
+		"base_shield": 1,
+		"maximum_health": DEFAULT_MAX_CASTLE_HEALTH,
+		"current_health": DEFAULT_CURRENT_CASTLE_HEALTH,
+		"destroyed": false,
+	},
+	1: {
+		"rounds_between_attacks": 4,
+		"base_attack": 2,
+		"base_shield": 1,
+		"maximum_health": 8,
+		"current_health": 8,
+		"destroyed": false,
+	},
+	2: {
+		"rounds_between_attacks": 2,
+		"base_attack": 1,
+		"base_shield": 1,
+		"maximum_health": 15,
+		"current_health": 15,
+		"destroyed": false,
+	},
+	3: {
+		"rounds_between_attacks": 7,
+		"base_attack": 3,
+		"base_shield": 7,
+		"maximum_health": 20,
+		"current_health": 20,
+		"destroyed": false,
+	},
+	4: {
+		"rounds_between_attacks": 10,
+		"base_attack": 10,
+		"base_shield": 1,
+		"maximum_health": 50,
+		"current_health": 50,
+		"destroyed": false,
+	},
+  5: {
+    "rounds_between_attacks": 5,
+    "base_attack": 2,
+    "base_shield": 12,
+    "maximum_health": 35,
+    "current_health": 35,
+  },
 }
 
 @export var max_castle_health: int:
@@ -83,28 +161,7 @@ var card_data = {
 	},
 }
 
-var cards_status = {
-	CardType.ATTACK: {
-		upgrade_level = 0,
-		is_upgrading = false,
-		rounds_until_upgrade_complete = 0,
-	},
-	CardType.DEFENSE: {
-		upgrade_level = 0,
-		is_upgrading = false,
-		rounds_until_upgrade_complete = 0,
-	},
-	CardType.HEALTH: {
-		upgrade_level = 0,
-		is_upgrading = false,
-		rounds_until_upgrade_complete = 0,
-	},
-	CardType.PEOPLE: {
-		upgrade_level = 0,
-		is_upgrading = false,
-		rounds_until_upgrade_complete = 0,
-	},
-}
+var cards_status = DEFAULT_CARDS_STATUS.duplicate(true)
 
 var units_data = {
   GameData.UnitType.SOLDIER: {
@@ -116,9 +173,19 @@ var units_data = {
     "damage": 1,
     "scene": load("res://scenes/units/orc.tscn"),
   },
+  GameData.UnitType.ORC2: {
+    "hp": 1,
+    "damage": 10,
+    "scene": load("res://scenes/units/orc.tscn"),
+  },
   GameData.UnitType.SKELETON: {
     "hp": 1,
     "damage": 1,
+    "scene": load("res://scenes/units/skeleton.tscn"),
+  },
+  GameData.UnitType.SKELETON2: {
+    "hp": 12,
+    "damage": 2,
     "scene": load("res://scenes/units/skeleton.tscn"),
   },
   GameData.UnitType.VAMPIRE: {
@@ -132,40 +199,7 @@ var units_data = {
   },
 }
 
-var bases_data = {
-  0: {
-    "base_attack": 1,
-    "base_shield": 1,
-  },
-  1: {
-    "rounds_between_attacks": 4,
-    "base_attack": 2,
-    "base_shield": 1,
-    "maximum_health": 8,
-    "current_health": 8,
-  },
-  2: {
-    "rounds_between_attacks": 2,
-    "base_attack": 1,
-    "base_shield": 1,
-    "maximum_health": 15,
-    "current_health": 15,
-  },
-  3: {
-    "rounds_between_attacks": 7,
-    "base_attack": 3,
-    "base_shield": 7,
-    "maximum_health": 20,
-    "current_health": 20,
-  },
-  4: {
-    "rounds_between_attacks": 10,
-    "base_attack": 10,
-    "base_shield": 1,
-    "maximum_health": 50,
-    "current_health": 50,
-  },
-}
+var bases_data = DEFAULT_BASES_DATA.duplicate(true)
 
 var current_resource_card: GameData.CardType = GameData.CardType.NONE
 var current_upgrade_card: GameData.CardType = GameData.CardType.NONE
@@ -173,9 +207,29 @@ var current_upgrade_card: GameData.CardType = GameData.CardType.NONE
 var planned_defense_base_ids: Array[int] = []
 var planned_attack_base_ids: Array[int] = []
 
-var _max_castle_health: int = 15
-var _current_castle_health: int = 15
-var _available_units: int = 1
+var _max_castle_health: int = DEFAULT_MAX_CASTLE_HEALTH
+var _current_castle_health: int = DEFAULT_CURRENT_CASTLE_HEALTH
+var _available_units: int = DEFAULT_AVAILABLE_UNITS
+
+func reset_game() -> void:
+	# Reset global run state so "Play Again" (or starting a new game) is deterministic.
+	cards_status = DEFAULT_CARDS_STATUS.duplicate(true)
+	bases_data = DEFAULT_BASES_DATA.duplicate(true)
+
+	planned_defense_base_ids.clear()
+	planned_attack_base_ids.clear()
+	current_resource_card = CardType.NONE
+	current_upgrade_card = CardType.NONE
+
+	max_castle_health = DEFAULT_MAX_CASTLE_HEALTH
+	current_castle_health = DEFAULT_CURRENT_CASTLE_HEALTH
+	available_units = DEFAULT_AVAILABLE_UNITS
+
+	ensure_base_health_initialized()
+
+	# Push a refresh for any live UI elements that are already listening.
+	for base_id in bases_data.keys():
+		base_health_changed.emit(base_id, get_base_current_health(base_id), get_base_max_health(base_id))
 
 func _ready() -> void:
 	ensure_base_health_initialized()

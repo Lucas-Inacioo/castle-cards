@@ -5,7 +5,12 @@ extends Node2D
 @export var card_container: Node
 @export var resource_slots_container: TextureRect
 @export var upgrade_slots_container: TextureRect
-@export var win_label: Label
+
+@export var end_game_panel: PanelContainer
+@export var end_game_play_again_button: Button
+
+@export var game_over_panel: PanelContainer
+@export var game_over_play_again_button: Button
 
 var defense_planning_active = false
 var selected_defense_base_ids: Array[int] = []
@@ -28,6 +33,9 @@ var attack_cancel_button: Button
 @onready var cancel_audio: AudioStreamPlayer2D = $CancelAudio
 @onready var select_base_audio: AudioStreamPlayer2D = $SelectBaseAudio
 
+var _is_game_over = false
+var _is_game_won = false
+
 func _ready() -> void:
 	end_day_button.pressed.connect(_on_end_day_button_pressed)
 
@@ -39,7 +47,13 @@ func _ready() -> void:
 	_build_defense_overlay()
 
 	GameData.base_destroyed.connect(_on_base_destroyed)
+	GameData.castle_health_changed.connect(_on_castle_health_changed)
+
+	end_game_play_again_button.pressed.connect(_on_play_again_pressed)
+	game_over_play_again_button.pressed.connect(_on_play_again_pressed)
+
 	_update_victory_ui()
+	_on_castle_health_changed(GameData.current_castle_health, GameData.max_castle_health)
 
 func _on_end_day_button_pressed() -> void:
 	if GameData.current_resource_card == GameData.CardType.NONE:
@@ -356,16 +370,44 @@ func _on_wave_manager_base_clicked(base_id: int) -> void:
 		attack_confirm_button.disabled = selected_attack_base_ids.is_empty()
 		_update_attack_overlay_text()
 		return
-	
+
 	select_base_audio.play()
 
 func _on_base_destroyed(_base_id: int) -> void:
 	_update_victory_ui()
 
 func _update_victory_ui() -> void:
-	var won := GameData.all_bases_destroyed()
-	win_label.visible = won
+	if _is_game_over:
+		return
 
-	if won:
+	_is_game_won = GameData.all_bases_destroyed()
+	end_game_panel.visible = _is_game_won
+
+	if _is_game_won:
 		# Stop the game flow
 		end_day_button.disabled = true
+		game_over_panel.visible = false
+
+func _on_castle_health_changed(current: int, _max_value: int) -> void:
+	if _is_game_over or _is_game_won:
+		return
+	if current <= 0:
+		_show_game_over_ui()
+
+func _show_game_over_ui() -> void:
+	_is_game_over = true
+	end_day_button.disabled = true
+
+	# Ensure no planning overlays/base selection remain active.
+	if defense_planning_active:
+		_on_defense_cancel_pressed()
+	if attack_planning_active:
+		_on_attack_cancel_pressed()
+	wave_manager.enable_base_selection(false)
+
+	game_over_panel.visible = true
+	end_game_panel.visible = false
+
+func _on_play_again_pressed() -> void:
+	GameData.reset_game()
+	get_tree().change_scene_to_file("res://scenes/main.tscn")
