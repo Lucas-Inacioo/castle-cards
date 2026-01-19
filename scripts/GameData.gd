@@ -10,7 +10,8 @@ enum UnitType {
   SOLDIER,
   ORC,
   SKELETON,
-  ATTACK_PLACEHOLDER
+  ATTACK_PLACEHOLDER,
+  VAMPIRE,
 }
 
 enum CardType {
@@ -120,6 +121,11 @@ var units_data = {
     "damage": 1,
     "scene": load("res://scenes/units/skeleton.tscn"),
   },
+  GameData.UnitType.VAMPIRE: {
+    "hp": 3,
+    "damage": 7,
+    "scene": load("res://scenes/units/vampire.tscn"),
+  },
   GameData.UnitType.ATTACK_PLACEHOLDER: {
     "hp": 1,
     "damage": 1000,
@@ -144,6 +150,20 @@ var bases_data = {
     "base_shield": 1,
     "maximum_health": 15,
     "current_health": 15,
+  },
+  3: {
+    "rounds_between_attacks": 7,
+    "base_attack": 3,
+    "base_shield": 7,
+    "maximum_health": 20,
+    "current_health": 20,
+  },
+  4: {
+    "rounds_between_attacks": 10,
+    "base_attack": 10,
+    "base_shield": 1,
+    "maximum_health": 50,
+    "current_health": 50,
   },
 }
 

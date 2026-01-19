@@ -12,7 +12,12 @@ var scheduled_fights = []
 var scheduled_attacks = []
 var ally_wave_id = 0
 var enemy_wave_id = 0
-var _defense_selection_enabled = false
+
+# Bases the player chose to defend *this day*
+var defended_base_ids: Array[int] = []
+
+# base_id -> { ally: Unit, enemy: Unit, resolved: bool }
+var _pending_defense_battles: Dictionary = {}
 
 var _base_selection_enabled = false
 
@@ -43,11 +48,22 @@ func check_waves() -> void:
 		if base_id == "0":
 			continue  # Skip castle base
 		var base_info = bases[base_id]
+		# If this base is due to attack but currently being defended, pause it until the battle resolves.
+		if base_info.get("attack_pending", false):
+			bases[base_id] = base_info
+			continue
+
 		base_info.rounds_since_last_attack += 1
 		var rounds_between_attacks = base_info.rounds_between_attacks
 		if base_info.rounds_since_last_attack >= rounds_between_attacks:
-			attack_castle(int(base_id))
-			base_info.rounds_since_last_attack = 0
+			var base_int = int(base_id)
+			if defended_base_ids.has(base_int):
+				# Postpone the attack until we know if defense succeeded.
+				base_info["attack_pending"] = true
+			else:
+				attack_castle(base_int)
+				base_info.rounds_since_last_attack = 0
+
 		bases[base_id] = base_info
 
 	for base in enemy_base_markers.get_children():
@@ -61,6 +77,17 @@ func check_waves() -> void:
 			"base_attack": base_info.get("base_attack"),
 		})
 
+func start_defense_for_base(base_id: int) -> void:
+	# Avoid double-starting defense for same base
+	if _pending_defense_battles.has(base_id):
+		return
+
+	if !defended_base_ids.has(base_id):
+		defended_base_ids.append(base_id)
+
+	# The delay only happens if player wins (decided later)
+	schedule_fight(base_id)
+
 func schedule_fight(base_id: int) -> void:
 	scheduled_fights.append(base_id)
 
@@ -70,6 +97,9 @@ func schedule_attack(base_id: int) -> void:
 func fight_waves() -> void:
 	var castle_id = 0
 	for base_id in scheduled_fights:
+		if _pending_defense_battles.has(base_id):
+			continue  # Already in a battle
+
 		var base_position = bases.get(str(base_id))
 		var castle_position = bases.get(str(castle_id))
 		if base_position and castle_position:
@@ -83,6 +113,8 @@ func fight_waves() -> void:
 
 			ally.move_towards(enemy)
 			enemy.move_towards(ally)
+
+			_register_defense_battle(base_id, ally, enemy)
 
 	for base_id in scheduled_attacks:
 		attack_base(int(base_id))
@@ -207,11 +239,11 @@ func enable_base_selection(enabled: bool) -> void:
 				base.clicked.disconnect(_on_base_clicked)
 
 func _sync_health_display_for_base(base_id: int) -> void:
-	var base_node := enemy_base_markers.get_node_or_null(str(base_id))
+	var base_node = enemy_base_markers.get_node_or_null(str(base_id))
 	if base_node == null:
 		return
 
-	var health_display := base_node.get_node_or_null("healthDisplay")
+	var health_display = base_node.get_node_or_null("healthDisplay")
 	if health_display == null:
 		return
 	if !(health_display is Range):
@@ -221,7 +253,7 @@ func _sync_health_display_for_base(base_id: int) -> void:
 	(health_display as Range).value = GameData.get_base_current_health(base_id)
 
 func _on_base_health_changed(base_id: int, current: int, max_value: int) -> void:
-	var key := str(base_id)
+	var key = str(base_id)
 	if bases.has(key):
 		var base_info: Dictionary = bases[key]
 		base_info["current_health"] = current
@@ -230,18 +262,18 @@ func _on_base_health_changed(base_id: int, current: int, max_value: int) -> void
 	_sync_health_display_for_base(base_id)
 
 func _on_base_destroyed(base_id: int) -> void:
-	var key := str(base_id)
+	var key = str(base_id)
 
 	# stop future interactions
 	scheduled_fights.erase(base_id)
 	scheduled_attacks.erase(base_id)
 
 	# remove visuals + node
-	var base_node := enemy_base_markers.get_node_or_null(key)
+	var base_node = enemy_base_markers.get_node_or_null(key)
 	if base_node != null:
 		if base_node.base_ui_element != null and is_instance_valid(base_node.base_ui_element):
 			base_node.base_ui_element.queue_free()
-		var health_display := base_node.get_node_or_null("healthDisplay")
+		var health_display = base_node.get_node_or_null("healthDisplay")
 		if health_display != null:
 			health_display.queue_free()
 		base_node.set_selectable(false)
@@ -250,3 +282,63 @@ func _on_base_destroyed(base_id: int) -> void:
 
 	# remove from wave logic
 	bases.erase(key)
+
+func _register_defense_battle(base_id: int, ally, enemy) -> void:
+	if _pending_defense_battles.has(base_id):
+		return
+
+	_pending_defense_battles[base_id] = {
+		"ally": ally,
+		"enemy": enemy,
+		"resolved": false,
+	}
+
+	# Resolve when either unit dies; defer to handle simultaneous deaths cleanly.
+	if ally != null:
+		ally.died.connect(_on_defense_unit_died.bind(base_id))
+	if enemy != null:
+		enemy.died.connect(_on_defense_unit_died.bind(base_id))
+
+func _on_defense_unit_died(_unit: Node, base_id: int) -> void:
+	call_deferred("_resolve_defense_battle", base_id)
+
+func _resolve_defense_battle(base_id: int) -> void:
+	var battle: Dictionary = _pending_defense_battles.get(base_id, {})
+	if battle.is_empty():
+		return
+	if bool(battle.get("resolved", false)):
+		return
+
+	var enemy = battle.get("enemy")
+
+	var enemy_dead = enemy == null or !is_instance_valid(enemy) or enemy.dead
+
+	# WIN CONDITION:
+	# enemy died AND ally survived -> defense success -> delay wave
+	var defense_won = enemy_dead
+
+	# Clean up defense tracking for this base
+	defended_base_ids.erase(base_id)
+	battle["resolved"] = true
+	_pending_defense_battles[base_id] = battle
+
+	# If we postponed an attack, decide outcome now.
+	var base_key = str(base_id)
+	if bases.has(base_key):
+		var base_info: Dictionary = bases[base_key]
+		var attack_pending = bool(base_info.get("attack_pending", false))
+
+		if defense_won:
+			# Delay ONLY on victory
+			base_info.rounds_since_last_attack = -1
+			base_info["attack_pending"] = false
+			bases[base_key] = base_info
+		else:
+			# No delay on loss; if attack was postponed, apply it now
+			if attack_pending:
+				attack_castle(base_id)
+				base_info.rounds_since_last_attack = 0
+				base_info["attack_pending"] = false
+				bases[base_key] = base_info
+
+	_pending_defense_battles.erase(base_id)

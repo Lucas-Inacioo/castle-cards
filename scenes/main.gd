@@ -33,6 +33,11 @@ func _ready() -> void:
 	_build_defense_overlay()
 
 func _on_end_day_button_pressed() -> void:
+	if GameData.current_resource_card == GameData.CardType.NONE:
+		return  # cannot end day without selecting cards
+	if GameData.current_upgrade_card == GameData.CardType.NONE:
+		return  # cannot end day without selecting cards
+
 	_upgrade_cards()
 	_set_cards_for_new_day()
 
@@ -182,8 +187,8 @@ func _apply_planned_defense() -> void:
 	GameData.available_units = max(1, GameData.available_units - units_spent)
 
 	for base_id in GameData.planned_defense_base_ids:
-		wave_manager.reset_base_timer(base_id)
-		wave_manager.schedule_fight(base_id)
+		# Only delay if the player wins the defense battle:
+		wave_manager.start_defense_for_base(base_id)
 
 	GameData.planned_defense_base_ids.clear()
 	wave_manager.clear_all_base_selections()

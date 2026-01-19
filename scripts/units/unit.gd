@@ -1,4 +1,8 @@
+class_name Unit
+
 extends CharacterBody2D
+
+signal died(unit: Node)
 
 @export var move_speed: float = 80.0
 @export var attack_range: float = 32.0
@@ -168,6 +172,7 @@ func defeat() -> void:
 	if dead:
 		return
 	dead = true
+	died.emit(self)
 	in_combat = true
 	opponent = null
 	velocity = Vector2.ZERO
