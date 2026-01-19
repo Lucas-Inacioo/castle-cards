@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=4 uid="uid://cesq67uqhe7y4"]
+[gd_scene load_steps=39 format=4 uid="uid://cesq67uqhe7y4"]
 
 [ext_resource type="Texture2D" path="res://assets/tiles/blocks.tres" id="1_tbgi4"]
 [ext_resource type="Script" uid="uid://bam1fem48gc3w" path="res://scripts/camera/camera_movement.gd" id="1_tefeu"]
@@ -126,32 +126,37 @@ tile_offset_axis = 1
 tile_size = Vector2i(16, 8)
 sources/0 = SubResource("TileSetAtlasSource_tefeu")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_eb6dy"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_jscy8"]
 atlas = ExtResource("5_tefeu")
 region = Rect2(1, 1, 23, 34)
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_choun"]
-load_path = "res://.godot/imported/Cards.png-a68bad7341bcb9bee82f69eb0fb9238c.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_trceg"]
-atlas = SubResource("CompressedTexture2D_choun")
+[sub_resource type="AtlasTexture" id="AtlasTexture_2wyq8"]
+atlas = ExtResource("5_tefeu")
 region = Rect2(251, 37, 23, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_a8y0u"]
-atlas = SubResource("CompressedTexture2D_choun")
-region = Rect2(251, 1, 23, 34)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tipki"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_pm3ni"]
 atlas = ExtResource("5_tefeu")
 region = Rect2(1, 37, 23, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_85g3d"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_vxglm"]
+atlas = ExtResource("5_tefeu")
+region = Rect2(251, 37, 23, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y6deb"]
 atlas = ExtResource("5_tefeu")
 region = Rect2(1, 73, 23, 34)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_choun"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_2f3dj"]
+atlas = ExtResource("5_tefeu")
+region = Rect2(251, 37, 23, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_og1vs"]
 atlas = ExtResource("5_tefeu")
 region = Rect2(1, 109, 23, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yq6so"]
+atlas = ExtResource("5_tefeu")
+region = Rect2(251, 37, 23, 34)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jbj1t"]
 atlas = ExtResource("13_dp3eg")
@@ -375,7 +380,7 @@ script = ExtResource("5_ya4ey")
 [node name="ShieldCard" type="TextureRect" parent="UI/Control/CardsMargin/CenterContainer/CardsAvailable"]
 custom_minimum_size = Vector2(46, 68)
 layout_mode = 2
-texture = SubResource("AtlasTexture_eb6dy")
+texture = SubResource("AtlasTexture_jscy8")
 expand_mode = 1
 script = ExtResource("7_eb6dy")
 card_type = 2
@@ -384,22 +389,13 @@ card_type = 2
 visible = false
 custom_minimum_size = Vector2(46, 68)
 layout_mode = 0
-texture = SubResource("AtlasTexture_trceg")
-expand_mode = 1
-
-[node name="PendentRounds2" type="TextureRect" parent="UI/Control/CardsMargin/CenterContainer/CardsAvailable/ShieldCard"]
-visible = false
-custom_minimum_size = Vector2(46, 68)
-layout_mode = 0
-offset_right = 46.0
-offset_bottom = 68.0
-texture = SubResource("AtlasTexture_a8y0u")
+texture = SubResource("AtlasTexture_2wyq8")
 expand_mode = 1
 
 [node name="HeartsCard" type="TextureRect" parent="UI/Control/CardsMargin/CenterContainer/CardsAvailable"]
 custom_minimum_size = Vector2(46, 68)
 layout_mode = 2
-texture = SubResource("AtlasTexture_tipki")
+texture = SubResource("AtlasTexture_pm3ni")
 expand_mode = 1
 script = ExtResource("7_eb6dy")
 card_type = 3
@@ -408,22 +404,13 @@ card_type = 3
 visible = false
 custom_minimum_size = Vector2(46, 68)
 layout_mode = 0
-texture = SubResource("AtlasTexture_trceg")
-expand_mode = 1
-
-[node name="PendentRounds2" type="TextureRect" parent="UI/Control/CardsMargin/CenterContainer/CardsAvailable/HeartsCard"]
-visible = false
-custom_minimum_size = Vector2(46, 68)
-layout_mode = 0
-offset_right = 46.0
-offset_bottom = 68.0
-texture = SubResource("AtlasTexture_a8y0u")
+texture = SubResource("AtlasTexture_vxglm")
 expand_mode = 1
 
 [node name="SwordCard" type="TextureRect" parent="UI/Control/CardsMargin/CenterContainer/CardsAvailable"]
 custom_minimum_size = Vector2(46, 68)
 layout_mode = 2
-texture = SubResource("AtlasTexture_85g3d")
+texture = SubResource("AtlasTexture_y6deb")
 expand_mode = 1
 script = ExtResource("7_eb6dy")
 card_type = 1
@@ -432,22 +419,13 @@ card_type = 1
 visible = false
 custom_minimum_size = Vector2(46, 68)
 layout_mode = 0
-texture = SubResource("AtlasTexture_trceg")
-expand_mode = 1
-
-[node name="PendentRounds2" type="TextureRect" parent="UI/Control/CardsMargin/CenterContainer/CardsAvailable/SwordCard"]
-visible = false
-custom_minimum_size = Vector2(46, 68)
-layout_mode = 0
-offset_right = 46.0
-offset_bottom = 68.0
-texture = SubResource("AtlasTexture_a8y0u")
+texture = SubResource("AtlasTexture_2f3dj")
 expand_mode = 1
 
 [node name="PersonCard" type="TextureRect" parent="UI/Control/CardsMargin/CenterContainer/CardsAvailable"]
 custom_minimum_size = Vector2(46, 68)
 layout_mode = 2
-texture = SubResource("AtlasTexture_choun")
+texture = SubResource("AtlasTexture_og1vs")
 expand_mode = 1
 script = ExtResource("7_eb6dy")
 card_type = 4
@@ -456,16 +434,7 @@ card_type = 4
 visible = false
 custom_minimum_size = Vector2(46, 68)
 layout_mode = 0
-texture = SubResource("AtlasTexture_trceg")
-expand_mode = 1
-
-[node name="PendentRounds2" type="TextureRect" parent="UI/Control/CardsMargin/CenterContainer/CardsAvailable/PersonCard"]
-visible = false
-custom_minimum_size = Vector2(46, 68)
-layout_mode = 0
-offset_right = 46.0
-offset_bottom = 68.0
-texture = SubResource("AtlasTexture_a8y0u")
+texture = SubResource("AtlasTexture_yq6so")
 expand_mode = 1
 
 [node name="MoonMargin" type="MarginContainer" parent="UI/Control"]

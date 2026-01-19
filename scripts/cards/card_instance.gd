@@ -2,7 +2,6 @@ extends TextureRect
 
 @export var card_type: GameData.CardType
 
-@onready var pendent_rounds_2_tex: TextureRect = $PendentRounds2
 @onready var pendent_rounds_1_tex: TextureRect = $PendentRounds1
 
 func _get_drag_data(_at_position: Vector2) -> Variant:
@@ -45,8 +44,6 @@ func update_card_display() -> void:
 	# Update pendent rounds display
 	if card_status.is_upgrading:
 		var rounds_left = card_status.rounds_until_upgrade_complete
-		pendent_rounds_2_tex.visible = rounds_left >= 2
 		pendent_rounds_1_tex.visible = rounds_left >= 1
 	else:
-		pendent_rounds_2_tex.visible = false
 		pendent_rounds_1_tex.visible = false
