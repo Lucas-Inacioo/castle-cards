@@ -114,6 +114,12 @@ func fight_waves() -> void:
 			var ally = _spawn_ally(castle_position.position)
 			var enemy = _spawn_enemy(base_position.position, enemy_type)
 
+			var current_defense_level = int(GameData.cards_status[GameData.CardType.DEFENSE].upgrade_level)
+			var current_attack_level = int(GameData.cards_status[GameData.CardType.ATTACK].upgrade_level)
+
+			GameData.units_data[GameData.UnitType.SOLDIER]["hp"] = 1 + current_defense_level
+			GameData.units_data[GameData.UnitType.SOLDIER]["damage"] = 1 + current_attack_level
+
 			ally.set_attributes(GameData.UnitType.SOLDIER)
 			enemy.set_attributes(enemy_type)
 

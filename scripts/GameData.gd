@@ -106,6 +106,42 @@ const DEFAULT_BASES_DATA := {
   },
 }
 
+var DEFAULT_UNITS_DATA := {
+  GameData.UnitType.SOLDIER: {
+	"hp": 1,
+	"damage": 1,
+  },
+  GameData.UnitType.ORC: {
+	"hp": 2,
+	"damage": 1,
+	"scene": load("res://scenes/units/orc.tscn"),
+  },
+  GameData.UnitType.ORC2: {
+	"hp": 1,
+	"damage": 10,
+	"scene": load("res://scenes/units/orc.tscn"),
+  },
+  GameData.UnitType.SKELETON: {
+	"hp": 1,
+	"damage": 1,
+	"scene": load("res://scenes/units/skeleton.tscn"),
+  },
+  GameData.UnitType.SKELETON2: {
+	"hp": 12,
+	"damage": 2,
+	"scene": load("res://scenes/units/skeleton.tscn"),
+  },
+  GameData.UnitType.VAMPIRE: {
+	"hp": 3,
+	"damage": 7,
+	"scene": load("res://scenes/units/vampire.tscn"),
+  },
+  GameData.UnitType.ATTACK_PLACEHOLDER: {
+	"hp": 1,
+	"damage": 1000,
+  },
+}
+
 @export var max_castle_health: int:
 	get:
 		return _max_castle_health
@@ -164,41 +200,7 @@ var card_data = {
 
 var cards_status = DEFAULT_CARDS_STATUS.duplicate(true)
 
-var units_data = {
-  GameData.UnitType.SOLDIER: {
-	"hp": 3,
-	"damage": 1,
-  },
-  GameData.UnitType.ORC: {
-	"hp": 2,
-	"damage": 1,
-	"scene": load("res://scenes/units/orc.tscn"),
-  },
-  GameData.UnitType.ORC2: {
-	"hp": 1,
-	"damage": 10,
-	"scene": load("res://scenes/units/orc.tscn"),
-  },
-  GameData.UnitType.SKELETON: {
-	"hp": 1,
-	"damage": 1,
-	"scene": load("res://scenes/units/skeleton.tscn"),
-  },
-  GameData.UnitType.SKELETON2: {
-	"hp": 12,
-	"damage": 2,
-	"scene": load("res://scenes/units/skeleton.tscn"),
-  },
-  GameData.UnitType.VAMPIRE: {
-	"hp": 3,
-	"damage": 7,
-	"scene": load("res://scenes/units/vampire.tscn"),
-  },
-  GameData.UnitType.ATTACK_PLACEHOLDER: {
-	"hp": 1,
-	"damage": 1000,
-  },
-}
+var units_data = DEFAULT_UNITS_DATA.duplicate(true)
 
 var bases_data = DEFAULT_BASES_DATA.duplicate(true)
 
