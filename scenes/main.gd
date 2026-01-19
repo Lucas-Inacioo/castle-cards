@@ -23,6 +23,11 @@ var attack_info_label: Label
 var attack_confirm_button: Button
 var attack_cancel_button: Button
 
+@onready var new_day_audio: AudioStreamPlayer2D = $NewDayAudio
+@onready var confirm_audio: AudioStreamPlayer2D = $ConfirmAudio
+@onready var cancel_audio: AudioStreamPlayer2D = $CancelAudio
+@onready var select_base_audio: AudioStreamPlayer2D = $SelectBaseAudio
+
 func _ready() -> void:
 	end_day_button.pressed.connect(_on_end_day_button_pressed)
 
@@ -41,6 +46,7 @@ func _on_end_day_button_pressed() -> void:
 		return  # cannot end day without selecting cards
 	if GameData.current_upgrade_card == GameData.CardType.NONE:
 		return  # cannot end day without selecting cards
+	new_day_audio.play()
 
 	_upgrade_cards()
 	_set_cards_for_new_day()
@@ -172,6 +178,8 @@ func _on_defense_confirm_pressed() -> void:
 	end_day_button.disabled = false
 	defense_overlay.visible = false
 
+	confirm_audio.play()
+
 func _on_defense_cancel_pressed() -> void:
 	wave_manager.enable_base_selection(false)  # <-- important
 
@@ -187,6 +195,8 @@ func _on_defense_cancel_pressed() -> void:
 
 	end_day_button.disabled = false
 	defense_overlay.visible = false
+
+	cancel_audio.play()
 
 func _apply_planned_defense() -> void:
 	if GameData.planned_defense_base_ids.is_empty():
@@ -284,6 +294,8 @@ func _on_attack_confirm_pressed() -> void:
 	end_day_button.disabled = false
 	attack_overlay.visible = false
 
+	confirm_audio.play()
+
 func _on_attack_cancel_pressed() -> void:
 	wave_manager.enable_base_selection(false)
 
@@ -298,6 +310,8 @@ func _on_attack_cancel_pressed() -> void:
 
 	end_day_button.disabled = false
 	attack_overlay.visible = false
+
+	cancel_audio.play()
 
 func _apply_planned_attack() -> void:
 	if GameData.planned_attack_base_ids.is_empty():
@@ -342,6 +356,8 @@ func _on_wave_manager_base_clicked(base_id: int) -> void:
 		attack_confirm_button.disabled = selected_attack_base_ids.is_empty()
 		_update_attack_overlay_text()
 		return
+	
+	select_base_audio.play()
 
 func _on_base_destroyed(_base_id: int) -> void:
 	_update_victory_ui()

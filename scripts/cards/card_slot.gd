@@ -7,6 +7,7 @@ const EMPTY_RESOURCE_REGION = Rect2(Vector2(251, 73), Vector2(23, 34))
 const EMPTY_UPGRADE_REGION = Rect2(Vector2(251, 109), Vector2(23, 34))
 
 @export var slot_type: GameData.SlotType
+@onready var sound_player: AudioStreamPlayer2D = $Sound
 
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 	if not data.has("card_type") || not data.has("texture"):
@@ -20,6 +21,7 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 
 	# Put dropped texture in THIS slot
 	texture = dropped_tex.duplicate(true)
+	sound_player.play()
 
 	# Helper: find sibling slot by slot_type and clear it using its own clear_slot()
 	var clear_sibling_slot := func(target_slot_type: GameData.SlotType) -> void:

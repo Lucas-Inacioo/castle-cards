@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=4 uid="uid://cesq67uqhe7y4"]
+[gd_scene load_steps=38 format=4 uid="uid://cesq67uqhe7y4"]
 
 [ext_resource type="Texture2D" path="res://assets/tiles/blocks.tres" id="1_tbgi4"]
 [ext_resource type="Script" uid="uid://bam1fem48gc3w" path="res://scripts/camera/camera_movement.gd" id="1_tefeu"]
@@ -17,6 +17,11 @@
 [ext_resource type="Texture2D" uid="uid://tddscnpnxcsb" path="res://assets/ui/block_numbers_gb_01.png" id="13_dp3eg"]
 [ext_resource type="AudioStream" uid="uid://dpojbe4a5kn53" path="res://assets/music/SimpleMusic.wav" id="13_trceg"]
 [ext_resource type="Script" uid="uid://blntiav533u5f" path="res://scripts/base/base_ui_element.gd" id="14_0ld40"]
+[ext_resource type="AudioStream" uid="uid://damebt2qda2v5" path="res://assets/music/cardSelect.wav" id="17_dp3eg"]
+[ext_resource type="AudioStream" uid="uid://blp2hg2fhbv5f" path="res://assets/music/newDay.wav" id="19_0ld40"]
+[ext_resource type="AudioStream" uid="uid://ce6if045ltr55" path="res://assets/music/confirm.wav" id="20_jscy8"]
+[ext_resource type="AudioStream" uid="uid://bt2qp0cr7si33" path="res://assets/music/cancelAudio.wav" id="21_pm3ni"]
+[ext_resource type="AudioStream" uid="uid://cw0nmtsjc5o3h" path="res://assets/music/SelectBase.wav" id="22_y6deb"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_muem4"]
 bg_color = Color(0.0932048, 0.2706543, 0.20001908, 1)
@@ -567,6 +572,10 @@ texture = SubResource("AtlasTexture_jkv2x")
 expand_mode = 1
 script = ExtResource("8_85g3d")
 
+[node name="Sound" type="AudioStreamPlayer2D" parent="UI/Control/SlotsMargin/SlotsCenter/SlotsContainer/CardSlotResource"]
+stream = ExtResource("17_dp3eg")
+volume_db = -15.0
+
 [node name="CardSlotUpgrade" type="TextureRect" parent="UI/Control/SlotsMargin/SlotsCenter/SlotsContainer"]
 custom_minimum_size = Vector2(46, 68)
 layout_mode = 2
@@ -574,6 +583,10 @@ texture = SubResource("AtlasTexture_ya4ey")
 expand_mode = 1
 script = ExtResource("8_85g3d")
 slot_type = 1
+
+[node name="Sound" type="AudioStreamPlayer2D" parent="UI/Control/SlotsMargin/SlotsCenter/SlotsContainer/CardSlotUpgrade"]
+stream = ExtResource("17_dp3eg")
+volume_db = -15.0
 
 [node name="PanelContainer" type="PanelContainer" parent="UI"]
 visible = false
@@ -601,3 +614,19 @@ vertical_alignment = 1
 stream = ExtResource("13_trceg")
 volume_db = -15.0
 autoplay = true
+
+[node name="NewDayAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("19_0ld40")
+volume_db = -15.0
+
+[node name="ConfirmAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("20_jscy8")
+volume_db = -15.0
+
+[node name="CancelAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("21_pm3ni")
+volume_db = -15.0
+
+[node name="SelectBaseAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("22_y6deb")
+volume_db = -15.0
