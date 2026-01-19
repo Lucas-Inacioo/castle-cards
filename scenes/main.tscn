@@ -164,13 +164,14 @@ region = Rect2(251, 73, 23, 34)
 atlas = ExtResource("5_tefeu")
 region = Rect2(251, 109, 23, 34)
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("wave_manager", "end_day_button", "card_container", "resource_slots_container", "upgrade_slots_container")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("wave_manager", "end_day_button", "card_container", "resource_slots_container", "upgrade_slots_container", "win_label")]
 script = ExtResource("1_tipki")
 wave_manager = NodePath("WaveManager")
 end_day_button = NodePath("UI/Control/MoonMargin/PanelContainer/MoonButton")
 card_container = NodePath("UI/Control/CardsMargin/CenterContainer/CardsAvailable")
 resource_slots_container = NodePath("UI/Control/SlotsMargin/SlotsCenter/SlotsContainer/CardSlotResource")
 upgrade_slots_container = NodePath("UI/Control/SlotsMargin/SlotsCenter/SlotsContainer/CardSlotUpgrade")
+win_label = NodePath("UI/PanelContainer/MarginContainer/WinLabel")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 script = ExtResource("1_tefeu")
@@ -569,6 +570,28 @@ texture = SubResource("AtlasTexture_ya4ey")
 expand_mode = 1
 script = ExtResource("8_85g3d")
 slot_type = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="UI"]
+visible = false
+offset_left = 246.5
+offset_top = 142.5
+offset_right = 393.5
+offset_bottom = 217.5
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="WinLabel" type="Label" parent="UI/PanelContainer/MarginContainer"]
+layout_mode = 2
+text = "You win!
+
+Thanks for playing!"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("13_trceg")

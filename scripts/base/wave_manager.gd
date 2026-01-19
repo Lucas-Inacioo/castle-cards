@@ -46,9 +46,20 @@ func _ready() -> void:
 func check_waves() -> void:
 	for base_id in bases.keys():
 		if base_id == "0":
-			continue  # Skip castle base
+			continue
+
 		var base_info = bases[base_id]
-		# If this base is due to attack but currently being defended, pause it until the battle resolves.
+		var base_int := int(base_id)
+
+		# If a defense fight is scheduled for this base TODAY, don't tick the timer yet.
+		# But remember if it *would* have attacked today.
+		if scheduled_fights.has(base_int):
+			var would_attack_today = (base_info.rounds_since_last_attack + 1) >= base_info.rounds_between_attacks
+			base_info["attack_pending"] = would_attack_today
+			bases[base_id] = base_info
+			continue
+
+		# Existing "paused due to defense result" guard (ok to keep)
 		if base_info.get("attack_pending", false):
 			bases[base_id] = base_info
 			continue
@@ -56,13 +67,8 @@ func check_waves() -> void:
 		base_info.rounds_since_last_attack += 1
 		var rounds_between_attacks = base_info.rounds_between_attacks
 		if base_info.rounds_since_last_attack >= rounds_between_attacks:
-			var base_int = int(base_id)
-			if defended_base_ids.has(base_int):
-				# Postpone the attack until we know if defense succeeded.
-				base_info["attack_pending"] = true
-			else:
-				attack_castle(base_int)
-				base_info.rounds_since_last_attack = 0
+			attack_castle(base_int)
+			base_info.rounds_since_last_attack = 0
 
 		bases[base_id] = base_info
 
@@ -310,35 +316,53 @@ func _resolve_defense_battle(base_id: int) -> void:
 		return
 
 	var enemy = battle.get("enemy")
-
 	var enemy_dead = enemy == null or !is_instance_valid(enemy) or enemy.dead
 
-	# WIN CONDITION:
-	# enemy died AND ally survived -> defense success -> delay wave
+	# TIES = WIN (enemy dead is enough)
 	var defense_won = enemy_dead
 
-	# Clean up defense tracking for this base
+	# Clean up defense tracking
 	defended_base_ids.erase(base_id)
 	battle["resolved"] = true
 	_pending_defense_battles[base_id] = battle
 
-	# If we postponed an attack, decide outcome now.
 	var base_key = str(base_id)
 	if bases.has(base_key):
 		var base_info: Dictionary = bases[base_key]
-		var attack_pending = bool(base_info.get("attack_pending", false))
+		var attack_pending := bool(base_info.get("attack_pending", false))
 
 		if defense_won:
-			# Delay ONLY on victory
-			base_info.rounds_since_last_attack = -1
+			# Reset timer on win (NO -1 hack here)
+			base_info.rounds_since_last_attack = 0
 			base_info["attack_pending"] = false
 			bases[base_key] = base_info
 		else:
-			# No delay on loss; if attack was postponed, apply it now
+			# Loss: if it was due today, attack now; otherwise apply the tick we skipped
 			if attack_pending:
 				attack_castle(base_id)
 				base_info.rounds_since_last_attack = 0
-				base_info["attack_pending"] = false
-				bases[base_key] = base_info
+			else:
+				base_info.rounds_since_last_attack += 1
+
+			base_info["attack_pending"] = false
+			bases[base_key] = base_info
+
+		_refresh_base_timer_ui(base_id)
 
 	_pending_defense_battles.erase(base_id)
+
+func _refresh_base_timer_ui(base_id: int) -> void:
+	var base_node = enemy_base_markers.get_node_or_null(str(base_id))
+	if base_node == null:
+		return
+	if !bases.has(str(base_id)):
+		return
+
+	var info = bases[str(base_id)]
+	var remaining_rounds = info.rounds_between_attacks - info.rounds_since_last_attack
+
+	base_node.base_ui_element.setup({
+		"rounds_between_attacks": remaining_rounds,
+		"base_shield": info.get("base_shield"),
+		"base_attack": info.get("base_attack"),
+	})
