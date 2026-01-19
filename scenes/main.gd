@@ -68,6 +68,11 @@ func _upgrade_cards() -> void:
 				card_status.is_upgrading = false
 				card_status.upgrade_level += 1
 				GameData.cards_status[card_type] = card_status
+				if card_type == GameData.CardType.DEFENSE:
+					GameData.bases_data[0]["base_shield"] += 1  # Increase shield on upgrade
+				elif card_type == GameData.CardType.ATTACK:
+					GameData.bases_data[0]["base_attack"] += 1  # Increase attack
+				wave_manager.update_display_castle()
 
 func _set_cards_for_new_day() -> void:
 	var current_upgrading_card = GameData.current_upgrade_card

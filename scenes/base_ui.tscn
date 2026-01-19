@@ -35,6 +35,7 @@ anchor_right = 0.5
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
+mouse_filter = 2
 script = ExtResource("1_0npyl")
 clock_container = NodePath("PanelContainer/MarginContainer/ListOfAttributes/ClockContainer")
 clock_element = NodePath("PanelContainer/MarginContainer/ListOfAttributes/ClockContainer/RoundsCount")
@@ -45,9 +46,11 @@ attack_element = NodePath("PanelContainer/MarginContainer/ListOfAttributes/Attac
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
@@ -55,51 +58,61 @@ theme_override_constants/margin_bottom = 10
 
 [node name="ListOfAttributes" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="ClockContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/ListOfAttributes"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="ClockIcon" type="TextureRect" parent="PanelContainer/MarginContainer/ListOfAttributes/ClockContainer"]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
+mouse_filter = 2
 texture = ExtResource("1_v4nhd")
 expand_mode = 1
 
 [node name="RoundsCount" type="TextureRect" parent="PanelContainer/MarginContainer/ListOfAttributes/ClockContainer"]
 custom_minimum_size = Vector2(8, 16)
 layout_mode = 2
+mouse_filter = 2
 texture = SubResource("AtlasTexture_w0jna")
 expand_mode = 1
 script = ExtResource("2_0npyl")
 
 [node name="ShieldContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/ListOfAttributes"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="ShieldIcon" type="TextureRect" parent="PanelContainer/MarginContainer/ListOfAttributes/ShieldContainer"]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
+mouse_filter = 2
 texture = ExtResource("3_n4qwd")
 expand_mode = 1
 
 [node name="ShieldCount" type="TextureRect" parent="PanelContainer/MarginContainer/ListOfAttributes/ShieldContainer"]
 custom_minimum_size = Vector2(8, 16)
 layout_mode = 2
+mouse_filter = 2
 texture = SubResource("AtlasTexture_6o2m2")
 expand_mode = 1
 script = ExtResource("2_0npyl")
 
 [node name="AttackContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/ListOfAttributes"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="AttackIcon" type="TextureRect" parent="PanelContainer/MarginContainer/ListOfAttributes/AttackContainer"]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
+mouse_filter = 2
 texture = ExtResource("4_im2qt")
 expand_mode = 1
 
 [node name="AttackCount" type="TextureRect" parent="PanelContainer/MarginContainer/ListOfAttributes/AttackContainer"]
 custom_minimum_size = Vector2(8, 16)
 layout_mode = 2
+mouse_filter = 2
 texture = SubResource("AtlasTexture_e0jet")
 expand_mode = 1
 script = ExtResource("2_0npyl")

@@ -366,3 +366,15 @@ func _refresh_base_timer_ui(base_id: int) -> void:
 		"base_shield": info.get("base_shield"),
 		"base_attack": info.get("base_attack"),
 	})
+
+func update_display_castle() -> void:
+	var castle_node = enemy_base_markers.get_node_or_null("0")
+	if castle_node == null:
+		return
+
+	var info = GameData.bases_data.get(0)
+	castle_node.base_ui_element.setup({
+		"rounds_between_attacks": info.get("rounds_between_attacks"),
+		"base_shield": info.get("base_shield"),
+		"base_attack": info.get("base_attack"),
+	})

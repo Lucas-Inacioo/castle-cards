@@ -135,7 +135,7 @@ var units_data = {
 var bases_data = {
   0: {
     "base_attack": 1,
-    "base_shield": 50,
+    "base_shield": 1,
   },
   1: {
     "rounds_between_attacks": 4,

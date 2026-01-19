@@ -13,7 +13,7 @@ func setup(base_data: Dictionary) -> void:
 	if rounds_between_attacks != null:
 		clock_element.setup(rounds_between_attacks)
 	else:
-		hide()
+		clock_container.hide()
 
 	shield_element.setup(shield)
 	attack_element.setup(attack)
